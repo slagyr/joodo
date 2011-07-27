@@ -1,4 +1,4 @@
-package joodo.tsukuri;
+package joodo.kake;
 
 import org.mortbay.io.Buffer;
 import org.mortbay.jetty.MimeTypes;

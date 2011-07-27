@@ -1,17 +1,19 @@
-package joodo.tsukuri;
+package joodo.kake;
 
-import joodo.kake.JoodoServlet;
 import mmargs.Arguments;
 import org.mortbay.jetty.Handler;
 import org.mortbay.jetty.Server;
+import org.mortbay.jetty.servlet.Context;
+import org.mortbay.jetty.servlet.HashSessionManager;
 import org.mortbay.jetty.servlet.ServletHandler;
+import org.mortbay.jetty.servlet.SessionHandler;
 import org.mortbay.log.Log;
 import org.mortbay.log.StdErrLog;
 
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class JoodoDevServer
+public class JoodoServer
 {
   public String address = "127.0.0.1";
   public int port = 8080;
@@ -27,17 +29,17 @@ public class JoodoDevServer
     argSpec.addValueOption("d", "directory", "DIRECTORY", "Change the directory (default: .)");
   }
 
-  private static Logger log = Logger.getLogger(JoodoDevServer.class.getName());
+  private static Logger log = Logger.getLogger(JoodoServer.class.getName());
 
   public static void main(String[] args) throws Exception
   {
     enableConsoleLogging();
-    JoodoDevServer joodoDevServer = new JoodoDevServer();
+    JoodoServer joodoDevServer = new JoodoServer();
     joodoDevServer.parseArgs(args);
     joodoDevServer.start();
   }
 
-  public JoodoDevServer()
+  public JoodoServer()
   {
   }
 
@@ -68,10 +70,18 @@ public class JoodoDevServer
   {
     Server server = new Server(port);
 
-    final ServletHandler servletHandler = new ServletHandler();
-    servletHandler.addFilterWithMapping(StaticFileFilter.class, "/*", Handler.REQUEST);
-    servletHandler.addServletWithMapping(JoodoServlet.class, "/");
-    server.addHandler(servletHandler);
+//    final HashSessionManager sessionManager = new HashSessionManager();
+//    final SessionHandler sessionHandler = new SessionHandler(sessionManager);
+//    server.addHandler(sessionHandler);
+//
+//    final ServletHandler servletHandler = new ServletHandler();
+//    servletHandler.addFilterWithMapping(StaticFileFilter.class, "/*", Handler.REQUEST);
+//    servletHandler.addServletWithMapping(JoodoServlet.class, "/");
+//    server.addHandler(servletHandler);
+
+    final Context context = new Context(server, "/", Context.SESSIONS);
+    context.addFilter(StaticFileFilter.class, "/*", Handler.REQUEST);
+    context.addServlet(JoodoServlet.class, "/");
 
     log.info(toString() + " starting up ...");
     server.start();
@@ -89,6 +99,6 @@ public class JoodoDevServer
   private static void enableConsoleLogging()
   {
     Log.setLog(new StdErrLog());
-    Log.getLog().setDebugEnabled(true);
+//    Log.getLog().setDebugEnabled(true);
   }
 }

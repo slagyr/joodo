@@ -14,7 +14,7 @@
     [joodo.middleware.request :only (wrap-bind-request)])
   (:import
     [javax.servlet.http HttpServlet HttpServletRequest HttpServletResponse]
-    [joodo.kake GaeshiServlet]))
+    [joodo.kake JoodoServlet]))
 
 (defn update-servlet-response [^HttpServletResponse response, response-map]
   (when (not (and response (or (.isCommitted response) (:ignore-response response-map))))
@@ -78,7 +78,7 @@
 (defprotocol HandlerInstallable
   (install-handler [_ handler]))
 
-(extend-type GaeshiServlet
+(extend-type JoodoServlet
   HandlerInstallable
   (install-handler [this handler]
     (.setServiceMethod this (make-service-method handler))))
