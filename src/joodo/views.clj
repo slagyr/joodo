@@ -28,16 +28,10 @@
   (let [view-ns-sym (symbol (:ns *view-context*))]
     (require view-ns-sym)
     (binding [*ns* (the-ns view-ns-sym)]
-      (println "*ns*: " *ns*)
-      (println "content: " content)
-      (println "*view-context*: " *view-context*)
-      (println "joodo.views/*view-context*: " joodo.views/*view-context*)
       (eval content))))
 
 (defn- render [content]
-  (println "rendering content: " content)
   (let [hiccup-src (eval-content content)]
-    (println "hiccup-ssrc: " hiccup-src)
     (html hiccup-src)))
 
 (defn- render-in-layout [body]
@@ -57,12 +51,10 @@
 (def render-html render-hiccup)
 
 (defn render-template [template & kwargs]
-  (println "rendering template: " template kwargs)
   (binding [*view-context* (updated-context kwargs)]
     (let [template-name (template-name template)
           template-path (template-path template-name)
           template-src (read-template template-path)]
-      (println "template-src: " template-src)
       (render-in-layout template-src))))
 
 (defn render-partial [template & kwargs]

@@ -3,7 +3,9 @@
     [fresh.core :only (freshener ns-to-file)]))
 
 (defn- files-to-keep-fresh []
-  (filter identity (map #(ns-to-file (.name %)) (all-ns))))
+  (let [ns-es (all-ns)
+        ns-es (filter #(not (.startsWith (.toString (.name %)) "joodo")) ns-es)]
+    (filter identity (map #(ns-to-file (.name %)) ns-es))))
 
 (defn- report-refresh [report]
   (when-let [reloaded (seq (:reloaded report))]
@@ -18,7 +20,7 @@
     (require 'joodo.controllers)
     (let [controllers-ns (find-ns 'joodo.controllers)
           clear-fn (ns-resolve controllers-ns 'clear-controller-caches)]
-        (clear-fn))
+      (clear-fn))
     (catch Exception e
       (println "ON NO!!!  Can't clear controller cache." e))))
 

@@ -70,15 +70,6 @@ public class JoodoServer
   {
     Server server = new Server(port);
 
-//    final HashSessionManager sessionManager = new HashSessionManager();
-//    final SessionHandler sessionHandler = new SessionHandler(sessionManager);
-//    server.addHandler(sessionHandler);
-//
-//    final ServletHandler servletHandler = new ServletHandler();
-//    servletHandler.addFilterWithMapping(StaticFileFilter.class, "/*", Handler.REQUEST);
-//    servletHandler.addServletWithMapping(JoodoServlet.class, "/");
-//    server.addHandler(servletHandler);
-
     final Context context = new Context(server, "/", Context.SESSIONS);
     context.addFilter(StaticFileFilter.class, "/*", Handler.REQUEST);
     context.addServlet(JoodoServlet.class, "/");
