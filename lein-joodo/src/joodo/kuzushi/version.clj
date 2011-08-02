@@ -10,6 +10,6 @@
   (str
     (str/join "." (filter identity [major minor tiny]))
     (if snapshot "-SNAPSHOT" "")))
-(def summary (str "joodo/kuzushi " string))
+(def summary (str "joodo/lein-joodo " string))
 
 (def joodo-version "0.6.0-SNAPSHOT")

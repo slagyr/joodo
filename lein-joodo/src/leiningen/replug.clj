@@ -1,6 +1,6 @@
 (ns leiningen.replug
   (:use
-    [gaeshi.cmd :only (exec)]))
+    [joodo.cmd :only (exec)]))
 
 (defn replug [project]
   (exec ["lein" "unplug"])
