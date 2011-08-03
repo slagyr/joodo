@@ -1,10 +1,10 @@
-(ns joodo.kake.joodo-dev-server-spec
+(ns joodo.kake.joodo_server_spec
   (:use
     [speclj.core])
   (:import
     [joodo.kake JoodoServer]))
 
-(describe "Gaeshi Dev Server"
+(describe "Joodo Server"
   (with server (JoodoServer.))
   (with env (.getEnv @server))
 
@@ -39,6 +39,11 @@
     (.parseArgs @server (into-array String ["--directory=bang"]))
     (should= "bang" (.dir @server)))
 
+  (it "loads the joodo-env"
+    (.parseArgs @server (into-array String ["-e" "staging"]))
+    (should= "staging" (System/getProperty "joodo-env"))
+    (.parseArgs @server (into-array String ["--environment" "test"]))
+    (should= "test" (System/getProperty "joodo-env")))
   )
 
 (run-specs)

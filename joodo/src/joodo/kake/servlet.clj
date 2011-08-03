@@ -6,7 +6,7 @@
     [ring.middleware.params :only (wrap-params)]
     [ring.middleware.keyword-params :only (wrap-keyword-params)]
     [ring.middleware.cookies :only (wrap-cookies)]
-    [joodo.env :only (development-env?)]
+    [joodo.env :only (env development-env?)]
     [joodo.middleware.keyword-cookies :only (wrap-keyword-cookies)]
     [joodo.middleware.multipart-params :only (wrap-multipart-params)]
     [joodo.middleware.servlet-session :only (wrap-servlet-session)]
@@ -65,7 +65,7 @@
       wrap-servlet-session)))
 
 (defn extract-joodo-handler []
-  (let [core-namespace (System/getProperty "joodo.core.namespace")
+  (let [core-namespace (env :joodo.core.namespace)
         core-ns-sym (symbol core-namespace)
         _ (require core-ns-sym)
         core-ns (the-ns core-ns-sym)]
@@ -83,7 +83,27 @@
   (install-handler [this handler]
     (.setServiceMethod this (make-service-method handler))))
 
+(defn- read-src [src-path src-content]
+  (let [rdr (-> (java.io.StringReader. src-content) (clojure.lang.LineNumberingPushbackReader.))
+        file (java.io.File. src-path)
+        parent-path (.getParent file)
+        src-filename (.getName file)]
+    (clojure.lang.Compiler/load rdr parent-path src-filename)))
+
+(defn- load-config [ns path]
+  (let [src (slurp path)]
+    (binding [*ns* ns]
+      (use 'clojure.core)
+      (read-src path src))))
+
+(defn load-configurations []
+  (let [environment (System/getProperty "joodo-env")
+        env-ns (create-ns (gensym (str "joodo.config-")))]
+    (load-config env-ns "config/environment.clj")
+    (load-config env-ns (format "config/%s.clj" environment))))
+
 (defn initialize-joodo-servlet [servlet]
+  (load-configurations)
   (let [handler (extract-joodo-handler)
         handler (if (development-env?) (attempt-wrap handler 'joodo.middleware.refresh 'wrap-refresh) handler)]
     (install-handler servlet handler)))

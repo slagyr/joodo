@@ -15,7 +15,7 @@
 
   (it "handles the --version command"
     (should= 0 (run "--version"))
-    (should= (str "joodo/kuzushi " joodo.kuzushi.version/string endl) (to-s @output)))
+    (should= (str "joodo/lein-joodo " joodo.kuzushi.version/string endl) (to-s @output)))
 
   )
 

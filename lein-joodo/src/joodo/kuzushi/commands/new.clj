@@ -51,6 +51,15 @@
     (.file templater (format "%s/src/%s/view/index.hiccup.clj" name name) "src/app/view/index.hiccup.clj")
     (.file templater (format "%s/src/%s/view/not_found.hiccup.clj" name name) "src/app/view/not_found.hiccup.clj")))
 
+(defn- add-configs [options templater]
+  (let [name (:name options)]
+    (add-tokens templater "APP_NAME" name)
+    (.file templater (format "%s/config/environment.clj" name) "config/environment.clj")
+    (add-tokens templater "ENV" "development")
+    (.file templater (format "%s/config/development.clj" name) "config/env.clj")
+    (add-tokens templater "ENV" "production")
+    (.file templater (format "%s/config/production.clj" name) "config/env.clj")))
+
 (defn execute
   "Creates all the needed files for new Joodo project."
   [options]
@@ -59,5 +68,6 @@
     (.createDirectory (FileSystem/instance) (:name options))
     (add-misc options templater)
     (add-publics options templater)
-    (add-default-src options templater)))
+    (add-default-src options templater)
+    (add-configs options templater)))
 

@@ -55,6 +55,8 @@
       (.createTextFile @fs "/templates/src/app/view/index.hiccup.clj" "index")
       (.createTextFile @fs "/templates/src/app/view/not_found.hiccup.clj" "not_found")
       (.createTextFile @fs "/templates/project.clj" "project: !-APP_NAME-!, joodo: !-JOODO_VERSION-!")
+      (.createTextFile @fs "/templates/config/environment.clj" "default env, core: !-APP_NAME-!")
+      (.createTextFile @fs "/templates/config/env.clj" "!-ENV-! env")
       )
     (before (execute {:name "app"}))
 
@@ -77,8 +79,14 @@
       (should= "not_found" (.readTextFile @fs "/home/app/src/app/view/not_found.hiccup.clj"))
       (should= true (.exists @fs "/home/app/src/app/controller"))
       (should= true (.exists @fs "/home/app/src/app/model")))
+
+    (it "generates config"
+      (should= "default env, core: app" (.readTextFile @fs "/home/app/config/environment.clj"))
+      (should= "development env" (.readTextFile @fs "/home/app/config/development.clj"))
+      (should= "production env" (.readTextFile @fs "/home/app/config/production.clj")))
     )
   )
 
 (run-specs)
+
 

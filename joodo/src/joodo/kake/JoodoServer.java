@@ -64,6 +64,7 @@ public class JoodoServer
       if(options.containsKey("directory"))
         dir = (String) options.get("directory");
     }
+    System.setProperty("joodo-env", env);
   }
 
   private void start() throws Exception
@@ -84,7 +85,7 @@ public class JoodoServer
   @Override
   public String toString()
   {
-    return "JoodoDevServer " + env + ":" + dir + " " + address + ":" + port;
+    return "JoodoServer " + env + ":" + dir + " " + address + ":" + port;
   }
 
   private static void enableConsoleLogging()
