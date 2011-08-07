@@ -9,7 +9,6 @@
                  [ring/ring-jetty-adapter "0.3.8"]
                  [compojure "0.6.2"]
                  [hiccup "0.3.1"]]
-  :dev-dependencies [[speclj "1.4.0"]
-                     [lein-clojars "0.6.0"]]
+  :dev-dependencies [[speclj "1.4.0"]]
   :test-path "spec/"
   :java-source-path "src/")
