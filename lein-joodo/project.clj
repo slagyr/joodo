@@ -7,8 +7,7 @@
   :dependencies [[org.clojure/clojure "1.2.1"]
                  [filecabinet "1.0.4"]
                  [mmargs "1.2.0"]]
-  :dev-dependencies [[speclj "1.4.0"]
-                     [lein-clojars "0.6.0"]]
+  :dev-dependencies [[speclj "1.4.0"]]
   :test-path "spec/"
   :shell-wrapper {:main joodo.kuzushi.core
                   :bin "bin/joodo"}

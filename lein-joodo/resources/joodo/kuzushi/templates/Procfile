@@ -1,0 +1,1 @@
+web: lein run -m joodo.main production

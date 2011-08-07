@@ -31,7 +31,8 @@
 (defn- add-misc [options templater]
   (let [name (:name options)]
     (add-tokens templater "APP_NAME" name "JOODO_VERSION" joodo-version)
-    (.file templater (format "%s/project.clj" name) "project.clj")))
+    (.file templater (format "%s/project.clj" name) "project.clj")
+    (.file templater (format "%s/Procfile" name) "Procfile")))
 
 (defn- add-publics [options templater]
   (let [name (:name options)]

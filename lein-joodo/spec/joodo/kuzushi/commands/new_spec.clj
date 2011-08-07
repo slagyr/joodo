@@ -55,13 +55,15 @@
       (.createTextFile @fs "/templates/src/app/view/index.hiccup.clj" "index")
       (.createTextFile @fs "/templates/src/app/view/not_found.hiccup.clj" "not_found")
       (.createTextFile @fs "/templates/project.clj" "project: !-APP_NAME-!, joodo: !-JOODO_VERSION-!")
+      (.createTextFile @fs "/templates/Procfile" "procfile")
       (.createTextFile @fs "/templates/config/environment.clj" "default env, core: !-APP_NAME-!")
       (.createTextFile @fs "/templates/config/env.clj" "!-ENV-! env")
       )
     (before (execute {:name "app"}))
 
     (it "generates misc stuff"
-      (should= (format "project: app, joodo: %s" "0.6.0-SNAPSHOT") (.readTextFile @fs "/home/app/project.clj")))
+      (should= (format "project: app, joodo: %s" "0.6.0-SNAPSHOT") (.readTextFile @fs "/home/app/project.clj"))
+      (should= "procfile" (.readTextFile @fs "/home/app/Procfile")))
 
     (it "generated public dirs"
       (should= "joodo" (.readTextFile @fs "/home/app/public/images/joodo.png"))
