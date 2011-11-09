@@ -60,10 +60,8 @@
 (defn render-partial [template & kwargs]
   (binding [*view-context* (updated-context kwargs)]
     (let [template (template-name template)
-          parts (.split (str template) "/")
-          parts (reverse parts)
-          parts (cons (str "_" (first parts)) (rest parts))
-          parts (reverse parts)
+          parts (vec (.split (str template) "/"))
+          parts (flatten (vector (pop parts) (str "_" (last parts))))
           template-name (apply str (interpose "/" parts))
           template-path (template-path template-name)
           data (read-template template-path)]
