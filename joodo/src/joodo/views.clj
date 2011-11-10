@@ -44,20 +44,31 @@
 (defn- template-name [template]
   (if (keyword? template) (.substring (str template) 1) (name template)))
 
-(defn render-hiccup [hiccup-src & kwargs]
+(defn render-hiccup
+  "Expects hiccup data and any optional parameters. Transforms the hiccup data
+  into html code and renders it into the default layout. If a layout is supplied
+  in one of the optional parameters, it will render in the specified layout."
+  [hiccup-src & kwargs]
   (binding [*view-context* (updated-context kwargs)]
     (render-in-layout hiccup-src)))
 
 (def render-html render-hiccup)
 
 (defn render-template [template & kwargs]
+  "Expects the location of a template and any optional parameters. Returns the
+  hiccup data located in the specified template. Also adds any parameters and
+  their values to the *view-context*."
   (binding [*view-context* (updated-context kwargs)]
     (let [template-name (template-name template)
           template-path (template-path template-name)
           template-src (read-template template-path)]
       (render-in-layout template-src))))
 
-(defn render-partial [template & kwargs]
+(defn render-partial
+  "Expects the location of a partial and any optional parameters. Returns the
+  hiccup data located in the specified partial. Also adds any parameters and
+  their values to the *view-context*."
+  [template & kwargs]
   (binding [*view-context* (updated-context kwargs)]
     (let [template (template-name template)
           parts (vec (.split (str template) "/"))
