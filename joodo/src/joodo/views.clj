@@ -54,10 +54,11 @@
 
 (def render-html render-hiccup)
 
-(defn render-template [template & kwargs]
+(defn render-template
   "Expects the location of a template and any optional parameters. Returns the
   hiccup data located in the specified template. Also adds any parameters and
   their values to the *view-context*."
+  [template & kwargs]
   (binding [*view-context* (updated-context kwargs)]
     (let [template-name (template-name template)
           template-path (template-path template-name)
