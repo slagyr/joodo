@@ -1,5 +1,5 @@
 (ns joodo.middleware.servlet-session
-  "Addes session functionality that's integrated with the ServletSession")
+  "Adds session functionality that's integrated with the ServletSession")
 
 (defprotocol SessionContainer
   (entry-keys [this])

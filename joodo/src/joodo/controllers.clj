@@ -59,7 +59,9 @@
     (doseq [cache (vals @controller-caches)]
       (ref-set cache {:handlers []}))))
 
-(defn controller-router [root]
+(defn controller-router
+  "Tells the application what namespaces to look for when loading controllers."
+  [root]
   (let [cache (controller-cache root)]
     (fn [request]
       (if-let [response (apply routing request (:handlers @cache))]
