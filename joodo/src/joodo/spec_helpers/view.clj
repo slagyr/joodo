@@ -6,7 +6,9 @@
   (:import
     [speclj SpecFailure]))
 
-(defn tag-matches? [node matcher]
+(defn tag-matches?
+  "Expects two maps and returns true if they have identical contents."
+  [node matcher]
   (not
     (some
       (fn [[key value]]
@@ -25,7 +27,10 @@
         result
         (recur (rest nodes))))))
 
-(defn find-tag [node matcher]
+(defn find-tag
+  "Finds and returns a tag within a tree of hiccup data. Expects the first
+  argument to be hiccup data and the second arguement to be the tag in question."
+  [node matcher]
   (if (tag-matches? node matcher)
     node
     (find-tag* (filter map? (:content node)) matcher)))
@@ -39,14 +44,26 @@
 (defn rendered-hiccup [template & kwargs]
   (rendered-content (apply render-hiccup template kwargs)))
 
-(defn rendered-template [template & kwargs]
+(defn rendered-template
+  "Returns the hiccup data that lives in the specified template. Expects the
+  first argument to be a valid location of a hiccup file and the optional
+  additional arguments to be keys and values to be bound to *view-context*."
+  [template & kwargs]
   (rendered-content (apply render-template template kwargs)))
 
-(defmacro should-have-tag [node matcher]
+(defmacro should-have-tag
+  "Throws a SpecFailure if the specified tag isn't found in the node supplied
+  by the arguments. Expects the first argument to be hiccup data and the second
+  argument to be the tag in question."
+  [node matcher]
   `(if (not (find-tag ~node ~matcher))
     (throw (SpecFailure. (str "Failed to find tag: " ~matcher)))))
 
-(defn with-view-context [& kwargs]
+(defn with-view-context
+  "Allows your test to edit the *view-context* variable. Expects arguments
+  in key value pairs.
+  Ex. (with-view-context :template-root \"cleancoders/view\" :ns `project.views)"
+  [& kwargs]
   (let [view-context (apply hash-map kwargs)]
     (around [it]
       (binding [*view-context* (merge *view-context* view-context)]
