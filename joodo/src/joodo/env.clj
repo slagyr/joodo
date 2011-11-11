@@ -8,10 +8,16 @@
     (get @*env* (str key))
     (System/getProperty (str key))))
 
-(defn development-env? []
+(defn development-env?
+  "Returns true if the application is running in the
+  development environment and false otherwise"
+  []
   (= "development" (env :joodo-env)))
 
-(defn production-env? []
+(defn production-env?
+  "Returns true if the application is running in the
+  production environment and false otherwise"
+  []
   (= "production" (env :joodo-env)))
 
 
