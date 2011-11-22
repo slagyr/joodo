@@ -12,6 +12,7 @@
       target))
 
 (defn wrap-keyword-cookies
+  "Wraps cookie information for use in the request map"
   [handler]
   (fn [req]
     (handler (update-in req [:cookies] keyify))))
