@@ -1,4 +1,5 @@
-(ns joodo.middleware.servlet-session)
+(ns ^{:doc "This namespace holds functions that keep track of session information."}
+  joodo.middleware.servlet-session)
 
 (defprotocol SessionContainer
   (entry-keys [this])

@@ -1,4 +1,5 @@
-(ns joodo.string)
+(ns ^{:doc "This namespace contains functions that are useful when dealing with strings."}
+  joodo.string)
 
 (defn gsub
   "Matches patterns and replaces those matches with a specified value.

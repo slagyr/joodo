@@ -1,8 +1,11 @@
-(ns joodo.env)
+(ns ^{:doc "This namespace holds functions that read the current environment that the application is in (according to the system properties)."}
+  joodo.env)
 
-(def *env* (atom {:joodo-env (or (System/getProperty "joodo.env") "development")}))
+(def ^{:doc "Holds information about the current environment. That data can be
+  retrieved with the following syntax: (get @*env* :joodo-env)"}
+  *env* (atom {:joodo-env (or (System/getProperty "joodo.env") "development")}))
 
-(defn env [key]
+(defn ^{:doc "Gets information about the current environment"} env [key]
   (or
     (get @*env* (keyword key))
     (get @*env* (str key))

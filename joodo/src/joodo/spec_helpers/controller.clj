@@ -1,11 +1,13 @@
-(ns joodo.spec-helpers.controller
+(ns ^{:doc "This namespace is comprised of functions that work with the Speclj testing framework to make testing controller logic easy."}
+  joodo.spec-helpers.controller
   (:use
     [speclj.core]
     [joodo.views :only (*view-context* render-template render-html)]
     [joodo.datetime :only (minutes-from-now)]
     [joodo.middleware.request :only (*request*)]))
 
-(declare *routes*)
+(declare ^{:doc ""}
+  *routes*)
 
 (defn with-routes
   "Binds the supplied routes to the *routes* var so that tests can use those
@@ -37,9 +39,14 @@
   [resource & extras]
   (apply request :post resource extras))
 
-(def rendered-template (atom nil))
-(def rendered-html (atom nil))
-(def rendered-context (atom nil))
+(def ^{:doc ""}
+  rendered-template (atom nil))
+
+(def ^{:doc ""}
+  rendered-html (atom nil))
+
+(def ^{:doc ""}
+  rendered-context (atom nil))
 
 (defn mock-render-template
   "Sets rendered-template to the template provided in the first arguement

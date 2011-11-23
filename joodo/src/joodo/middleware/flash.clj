@@ -1,4 +1,5 @@
-(ns joodo.middleware.flash)
+(ns ^{:doc "This namespace contains functions that deal with flash messages."}
+  joodo.middleware.flash)
 
 (defn- read-flash [request]
   (let [session (:session request)

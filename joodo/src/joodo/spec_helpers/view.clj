@@ -1,4 +1,5 @@
-(ns joodo.spec-helpers.view
+(ns ^{:doc "This namespace is comprised of functions that work with the Speclj testing framework to make testing view logic easy."}
+  joodo.spec-helpers.view
   (:use
     [speclj.core :only (around)]
     [clojure.xml :only (parse)]
@@ -35,13 +36,19 @@
     node
     (find-tag* (filter map? (:content node)) matcher)))
 
-(defn rendered-content [content]
+(defn rendered-content
+  ""
+  [content]
   (parse (java.io.ByteArrayInputStream. (.getBytes content))))
 
-(defn rendered-html [template & kwargs]
+(defn rendered-html
+  ""
+  [template & kwargs]
   (rendered-content (apply render-html template kwargs)))
 
-(defn rendered-hiccup [template & kwargs]
+(defn rendered-hiccup
+  ""
+  [template & kwargs]
   (rendered-content (apply render-hiccup template kwargs)))
 
 (defn rendered-template

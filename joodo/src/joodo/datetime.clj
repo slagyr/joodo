@@ -1,4 +1,5 @@
-(ns joodo.datetime
+(ns ^{:doc "This namespace holds functions that make dealing with dates and times easy."}
+  joodo.datetime
   (:import
     [java.util Date Calendar GregorianCalendar]
     [java.text SimpleDateFormat]))
@@ -10,6 +11,10 @@
   (Date.))
 
 (defn datetime
+  "Returns a Java Date Object with the specified arguments. Expects one of the following for arguments:
+  1. year month day
+  2. year month day hour minute
+  3. year month day hour minute second"
   ([year month day] (.getTime (GregorianCalendar. year (dec month) day)))
   ([year month day hour minute] (.getTime (GregorianCalendar. year (dec month) day hour minute)))
   ([year month day hour minute second] (.getTime (GregorianCalendar. year (dec month) day hour minute second))))
@@ -36,33 +41,60 @@
     (after? date start)
     (before? date end)))
 
-(defn seconds [n] (* n 1000))
-(defn minutes [n] (* n 60000))
-(defn hours [n] (* n 3600000))
-(defn days [n] (* n 86400000))
-(defn months [n] [Calendar/MONTH n])
-(defn years [n] [Calendar/YEAR n])
+(defn seconds
+  "Converts seconds to milliseconds"
+  [n] (* n 1000))
 
-(defn to-calendar [datetime]
+(defn minutes
+  "Converts minutes to milliseconds"
+  [n] (* n 60000))
+
+(defn hours
+  "Converts hours to milliseconds"
+  [n] (* n 3600000))
+
+(defn days
+  "Converts days to milliseconds"
+  [n] (* n 86400000))
+
+(defn months
+  ""
+  [n] [Calendar/MONTH n])
+
+(defn years
+  ""
+  [n] [Calendar/YEAR n])
+
+(defn to-calendar
+  ""
+  [datetime]
   (doto (GregorianCalendar.)
     (.setTime datetime)))
 
-(defn- mod-time-by-units [time [unit n] direction]
+(defn- mod-time-by-units
+  ""
+  [time [unit n] direction]
   (let [calendar (GregorianCalendar.)
         n (direction n)]
     (.setTime calendar time)
     (.add calendar unit n)
     (.getTime calendar)))
 
-(defn- mod-time [time bit direction]
+(defn- mod-time
+  ""
+  [time bit direction]
   (cond
     (number? bit) (Date. (direction (.getTime time) bit))
     (vector? bit) (mod-time-by-units time bit direction)))
 
-(defn before [^Date time & bits]
+(defn before
+  ""
+  [^Date time & bits]
   (reduce #(mod-time %1 %2 -) time bits))
 
-(defn after [^Date time & bits]
+(defn after
+  ""
+  [^Date time & bits]
   (reduce #(mod-time %1 %2 +) time bits))
 
 (defn seconds-ago
@@ -151,7 +183,9 @@
     (= SimpleDateFormat (class format)) format
     :else (throw (Exception. (str "Unhandled date format: " format)))))
 
-(defn parse-datetime [format value]
+(defn parse-datetime
+  ""
+  [format value]
   (let [formatter (to-date-formater format)]
     (.parse formatter value)))
 

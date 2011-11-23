@@ -1,4 +1,5 @@
-(ns joodo.middleware.keyword-cookies)
+(ns ^{:doc "This namespace deals with cookie information."}
+  joodo.middleware.keyword-cookies)
 
 (defn- keyify [target]
   (cond

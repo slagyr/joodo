@@ -1,4 +1,5 @@
-(ns joodo.controllers
+(ns ^{:doc "This namespace contains functions that creates a ring-handler and dynamically loads controllers"}
+  joodo.controllers
   (:use
     [compojure.core :only (routing)])
   (:require

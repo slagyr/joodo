@@ -1,8 +1,10 @@
-(ns joodo.views
+(ns ^{:doc "This namespace contains functions that are used to display the view files."}
+  joodo.views
   (:use
     [hiccup.core]))
 
-(def *view-context* {
+(def ^{:doc "Var that holds a map with all the information required to render a page."}
+  *view-context* {
   :template-root "view"
   :layout "layout"
   :ns `joodo.kake.default-rendering
@@ -52,7 +54,10 @@
   (binding [*view-context* (updated-context kwargs)]
     (render-in-layout hiccup-src)))
 
-(def render-html render-hiccup)
+(def ^{:doc "Expects html or hiccup data and any optional parameters. Transforms
+  any hiccup data provided and renders html into the default layout. If a layout is
+  supplied in one of the optional parameters, it will render in the specified layout."}
+  render-html render-hiccup)
 
 (defn render-template
   "Expects the location of a template and any optional parameters. Returns the

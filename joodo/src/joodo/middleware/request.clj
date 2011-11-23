@@ -1,6 +1,8 @@
-(ns joodo.middleware.request)
+(ns ^{:doc "This namespace contains logic that stores information about the current HTTP request."}
+  joodo.middleware.request)
 
-(def *request* {})
+(def ^{:doc ""}
+  *request* {})
 
 (defn wrap-bind-request
   "Makes the *request* var available and sets
