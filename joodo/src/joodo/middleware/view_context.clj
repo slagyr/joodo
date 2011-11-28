@@ -1,4 +1,5 @@
-(ns joodo.middleware.view-context
+(ns ^{:doc "This namespace contains logic that incorporates a var called *view-context* with the ring-handler."}
+  joodo.middleware.view-context
   (:use
     [joodo.views :only (*view-context*)]))
 
@@ -14,5 +15,3 @@
     (fn [request]
       (binding [*view-context* view-context]
         (handler request)))))
-
-

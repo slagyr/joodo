@@ -1,4 +1,5 @@
-(ns joodo.middleware.flash)
+(ns ^{:doc "This namespace contains functions that deal with flash messages."}
+  joodo.middleware.flash)
 
 (defn- read-flash [request]
   (let [session (:session request)
@@ -16,7 +17,12 @@
         (dissoc response :flash)
         :session (assoc session :_flash (:flash response))))))
 
-(defn wrap-flash [handler]
+(defn wrap-flash
+  "Works just like ring.middleware.flash/wrap-flash:
+  If a :flash key is set on the response by the handler, a :flash key with
+  the same value will be set on the next request that shares the same session.
+  This is useful for small messages that persist across redirects."
+  [handler]
   (fn [request]
     (let [request (read-flash request)
           response (handler request)]

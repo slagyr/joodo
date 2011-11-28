@@ -1,4 +1,5 @@
-(ns joodo.middleware.refresh
+(ns ^{:doc "This namespace contains functions that interface with the fresh library. The fresh library automatically loads up files that have recently been changed."}
+  joodo.middleware.refresh
   (:use
     [fresh.core :only (freshener ns-to-file)]))
 
@@ -24,7 +25,9 @@
     (catch Exception e
       (println "ON NO!!!  Can't clear controller cache." e))))
 
-(defn wrap-refresh [handler]
+(defn wrap-refresh
+  "When integrated with the current ring handler, this function reloads newly saved files (such as controllers) while in development mode."
+  [handler]
   (let [refresh! (freshener files-to-keep-fresh report-refresh)]
     (fn [request]
       (refresh!)
