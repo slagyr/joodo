@@ -3,8 +3,7 @@
   (:use
     [joodo.util.pretty-map :only (pretty-map)]))
 
-(def ^{:doc ""}
-  request-count (atom 0))
+(def request-count (atom 0)) ;; TODO - use request count to keep track of the number of requests made
 
 (defn wrap-verbose
   "Outputs the state of the server to standard output as requests are getting made."

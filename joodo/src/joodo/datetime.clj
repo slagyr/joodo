@@ -58,21 +58,24 @@
   [n] (* n 86400000))
 
 (defn months
-  ""
+  "Converts a number into a format that the Calendar object understands to be an amount of months"
   [n] [Calendar/MONTH n])
 
 (defn years
-  ""
+  "Converts a number into a format that the Calendar object understands to be an amount of years"
   [n] [Calendar/YEAR n])
 
 (defn to-calendar
-  ""
+  "Converts a Date object into a GregorianCalendar object"
   [datetime]
   (doto (GregorianCalendar.)
     (.setTime datetime)))
 
 (defn- mod-time-by-units
-  ""
+  "Modifies the value of a Date object. Expects the first argument to be
+  a Date object, the second argument to be a vector representing the amount
+  of time to be changed, and the last argument to be either a + or - (indicating
+  which direction to modify time)."
   [time [unit n] direction]
   (let [calendar (GregorianCalendar.)
         n (direction n)]
@@ -81,19 +84,24 @@
     (.getTime calendar)))
 
 (defn- mod-time
-  ""
+  "Modifies the value of a Date object. Expects the first argument to be
+  a Date object, the second argument to be an amount of milliseconds, and
+  the last argument to be either a + or - (indicating which direction to
+  modify time)."
   [time bit direction]
   (cond
     (number? bit) (Date. (direction (.getTime time) bit))
     (vector? bit) (mod-time-by-units time bit direction)))
 
 (defn before
-  ""
+  "Rewinds the time on a Date object. Expects a Date object as the first
+  argument and a number of milliseconds to rewind time by."
   [^Date time & bits]
   (reduce #(mod-time %1 %2 -) time bits))
 
 (defn after
-  ""
+  "Fast-forwards the time on a Date object. Expects a Date object as the first
+  argument and a number of milliseconds to fast-forward time by."
   [^Date time & bits]
   (reduce #(mod-time %1 %2 +) time bits))
 
@@ -184,7 +192,8 @@
     :else (throw (Exception. (str "Unhandled date format: " format)))))
 
 (defn parse-datetime
-  ""
+  "Parses text into a Java Date object. Expects a keyword, string, or SimpleDateFormat
+  object as the first object and a string representing the date as the second argument."
   [format value]
   (let [formatter (to-date-formater format)]
     (.parse formatter value)))

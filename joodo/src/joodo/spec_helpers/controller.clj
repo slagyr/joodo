@@ -6,7 +6,8 @@
     [joodo.datetime :only (minutes-from-now)]
     [joodo.middleware.request :only (*request*)]))
 
-(declare ^{:doc ""}
+(declare ^{:doc "Holds all of the loaded routes. Can be altered for testing
+  purposes by using the with-routes function"}
   *routes*)
 
 (defn with-routes
@@ -39,13 +40,15 @@
   [resource & extras]
   (apply request :post resource extras))
 
-(def ^{:doc ""}
+(def ^{:doc "Holds the relative location and name of the file that was most
+  recently rendered."}
   rendered-template (atom nil))
 
-(def ^{:doc ""}
+(def ^{:doc "Holds the html that was most recently rendered."}
   rendered-html (atom nil))
 
-(def ^{:doc ""}
+(def ^{:doc "Holds the parameters that were passed to the view file for the most
+  recent rendering."}
   rendered-context (atom nil))
 
 (defn mock-render-template

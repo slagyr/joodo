@@ -36,18 +36,20 @@
     node
     (find-tag* (filter map? (:content node)) matcher)))
 
-(defn rendered-content
-  ""
-  [content]
+(defn rendered-content [content]
   (parse (java.io.ByteArrayInputStream. (.getBytes content))))
 
 (defn rendered-html
-  ""
+  "Returns the html data provided within the default template. Expects the
+  first argument to be the html data, and expects the additional arguments
+  to be keys and values to be bound to *view-context*."
   [template & kwargs]
   (rendered-content (apply render-html template kwargs)))
 
 (defn rendered-hiccup
-  ""
+  "Returns the hiccup data provided within the default template. Expects the
+  first argument to be the hiccup data, and expects the additional arguments
+  to be keys and values to be bound to *view-context*."
   [template & kwargs]
   (rendered-content (apply render-hiccup template kwargs)))
 
