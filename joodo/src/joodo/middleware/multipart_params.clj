@@ -1,4 +1,5 @@
-(ns joodo.middleware.multipart-params
+(ns ^{:doc "This namespace deals with multipart parameters."}
+  joodo.middleware.multipart-params
   (:import [org.apache.commons.fileupload.servlet ServletFileUpload]
     [org.apache.commons.fileupload.util Streams]
     org.apache.commons.io.IOUtils))

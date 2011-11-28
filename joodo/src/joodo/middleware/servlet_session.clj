@@ -1,5 +1,5 @@
-(ns joodo.middleware.servlet-session
-  "Addes session functionality that's integrated with the ServletSession")
+(ns ^{:doc "This namespace holds functions that keep track of session information."}
+  joodo.middleware.servlet-session)
 
 (defprotocol SessionContainer
   (entry-keys [this])
@@ -58,7 +58,9 @@
           (remove-entry http-session key)
           (set-entry http-session key value))))))
 
-(defn wrap-servlet-session [handler]
+(defn wrap-servlet-session
+  "Adds session functionality that's integrated with the ServletSession"
+  [handler]
   (fn [request]
     (let [session-map (read-session request)
           response (handler (assoc request :session session-map))]
