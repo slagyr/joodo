@@ -1,4 +1,5 @@
-(ns joodo.middleware.keyword-cookies)
+(ns ^{:doc "This namespace deals with cookie information."}
+  joodo.middleware.keyword-cookies)
 
 (defn- keyify [target]
   (cond
@@ -12,6 +13,7 @@
       target))
 
 (defn wrap-keyword-cookies
+  "Wraps cookie information for use in the request map"
   [handler]
   (fn [req]
     (handler (update-in req [:cookies] keyify))))

@@ -1,4 +1,4 @@
-(defproject joodo "0.6.1-SNAPSHOT"
+(defproject joodo "0.6.3-SNAPSHOT"
   :description "Joodo, a Clojure framework for web apps."
   :license {:name "The MIT License"
             :url "file://LICENSE"

@@ -106,8 +106,6 @@
   (it "should know the day of a date"
     (should= 1 (day (datetime 2011 1 1)))
     (should= 31 (day (datetime 2009 12 31))))
-
-
   )
 
 (run-specs)

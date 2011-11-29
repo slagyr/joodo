@@ -1,4 +1,5 @@
-(ns joodo.controllers
+(ns ^{:doc "This namespace contains functions that creates a ring-handler and dynamically loads controllers"}
+  joodo.controllers
   (:use
     [compojure.core :only (routing)])
   (:require
@@ -15,7 +16,9 @@
   (let [parts (filter #(not (empty? %)) (str/split path #"[/\.\?]"))]
     (namespaces-for-parts root parts)))
 
-(defn resolve-controller [ns-name]
+(defn resolve-controller
+  "Loads any specific controllers that don't get loaded by the controller-router function"
+  [ns-name]
   (try
     (let [controller-name (last (str/split (name ns-name) #"\."))
           ns-sym (symbol ns-name)]
@@ -59,7 +62,9 @@
     (doseq [cache (vals @controller-caches)]
       (ref-set cache {:handlers []}))))
 
-(defn controller-router [root]
+(defn controller-router
+  "Tells the application what namespaces to look for when loading controllers."
+  [root]
   (let [cache (controller-cache root)]
     (fn [request]
       (if-let [response (apply routing request (:handlers @cache))]
