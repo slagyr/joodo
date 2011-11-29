@@ -10,6 +10,7 @@
                  [compojure "0.6.2"]
                  [hiccup "0.3.1"]
                  [mmargs "1.2.0"]]
-  :dev-dependencies [[speclj "1.4.0"]]
+  :dev-dependencies [[speclj "1.5.1"]
+                     [speclj-growl "1.0.0-SNAPSHOT"]]
   :test-path "spec/"
   :java-source-path "src/")
