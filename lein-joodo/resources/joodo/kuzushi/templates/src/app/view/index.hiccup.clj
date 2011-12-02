@@ -3,7 +3,7 @@
  [:h1 "Welcomes You!"]]
 
 [:h3 "Intro"]
-[:p "Gaeshi is a clojure framework for building Google AppEngine sites. The project home is at "
+[:p "Joodo is a clojure framework for building web applications. The project home is at "
  [:a {:href "https://github.com/slagyr/joodo"} "https://github.com/slagyr/joodo"] "."
  "It consists of 3 parts"
  [:ul
