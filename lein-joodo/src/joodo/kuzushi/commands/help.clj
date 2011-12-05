@@ -64,7 +64,7 @@
 (defn usage [errors]
   (print-errors errors)
   (println)
-  (println joodo.kuzushi.version/summary ": Command line component for Gaeshi; A Clojure framework to build AppEngine web applications.")
+  (println joodo.kuzushi.version/summary ": Command line component for Joodo; A Clojure framework to build AppEngine web applications.")
   (println)
   (println "Usage: joodo" (.argString @main-arg-spec) "[command options]")
   (println)
