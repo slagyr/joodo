@@ -8,7 +8,8 @@
     [speclj SpecFailure]))
 
 (defn tag-matches?
-  "Expects two maps and returns true if they have identical contents."
+  "Expects two maps and returns true if the matcher map's keys
+  and vals are in the node's map"
   [node matcher]
   (not
     (some
