@@ -7,7 +7,7 @@
   :dependencies [[org.clojure/clojure "1.2.1"]
                  [ring/ring-core "0.3.8"]
                  [ring/ring-jetty-adapter "0.3.8"]
-                 [compojure "0.6.2"]
+                 [compojure "1.0.0"]
                  [hiccup "0.3.1"]
                  [mmargs "1.2.0"]]
   :dev-dependencies [[speclj "1.5.1"]
