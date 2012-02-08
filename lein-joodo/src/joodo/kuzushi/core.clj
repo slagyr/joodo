@@ -1,6 +1,6 @@
 (ns joodo.kuzushi.core
   (:use
-    [joodo.kuzushi.common :only (exit symbolize load-var)]
+    [joodo.kuzushi.common :only (exit symbolize load-var *project*)]
     [joodo.kuzushi.commands.help :only (usage usage-for)])
   (:require
     [joodo.kuzushi.version])
@@ -47,6 +47,10 @@
   (let [options (apply parse-args args)]
     (run-command options)
     (exit 0)))
+
+(defn run-with-project [project & args]
+  (binding [*project* project]
+    (apply run args)))
 
 (defn -main [& args]
   (apply run args))

@@ -18,9 +18,17 @@
     (catch Exception e
       nil)))
 
+(declare #^{:dynamic true} *project*)
+
 (defn load-lein-project []
   (if-let [project (read-project)]
     project
     (do
       (println "Couldn't find project.clj. Is the current directory a Gaeshi project?")
       (exit -1))))
+
+(defmacro with-lein-project [& body]
+  `(if (bound? #'*project*)
+     (do ~@body)
+     (binding [*project* (load-lein-project)]
+       (do ~@body))))

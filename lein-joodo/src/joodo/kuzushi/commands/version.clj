@@ -12,7 +12,7 @@
   (symbolize (.parse arg-spec (into-array String args))))
 
 (defn execute
-  "Prints the current version of joodo/kuzushi"
+  "Prints the current version of lein-joodo"
   [options]
   (println joodo.kuzushi.version/summary)
   (exit 0))
