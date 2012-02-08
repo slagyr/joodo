@@ -9,7 +9,7 @@
     [joodo.kuzushi.version]))
 
 
-(describe "Gaeshi main"
+(describe "Joodo main"
 
   (with-command-help)
 

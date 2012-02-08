@@ -24,7 +24,7 @@
   (if-let [project (read-project)]
     project
     (do
-      (println "Couldn't find project.clj. Is the current directory a Gaeshi project?")
+      (println "Couldn't find project.clj. Is the current directory a Joodo project?")
       (exit -1))))
 
 (defmacro with-lein-project [& body]

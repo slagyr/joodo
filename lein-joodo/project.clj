@@ -13,5 +13,4 @@
   :shell-wrapper {:main joodo.kuzushi.core
                   :bin "bin/joodo"}
   :resources-path "resources/"
-  :jar-exclusions [#"leiningen/.*"]
   )
