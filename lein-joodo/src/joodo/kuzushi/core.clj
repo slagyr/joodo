@@ -1,7 +1,7 @@
 (ns joodo.kuzushi.core
   (:use
-    [joodo.kuzushi.common :only (exit symbolize load-var *project*)]
-    [joodo.kuzushi.commands.help :only (usage usage-for)])
+    [joodo.kuzushi.common :only (exit symbolize load-var *command-root*)]
+    [joodo.kuzushi.commands.help :as help :only (usage usage-for)])
   (:require
     [joodo.kuzushi.version])
   (:import
@@ -28,30 +28,29 @@
       options
       (usage (:*errors options)))))
 
+(defn- load-command [command]
+  (let [command-ns-sym (symbol (str *command-root* "." command))
+        parse-fn (load-var command-ns-sym 'parse-args)
+        exec-fn (load-var command-ns-sym 'execute)]
+    (when-not (or parse-fn exec-fn)
+      (help/usage [(str "Invalid command: " command)]))
+    [parse-fn exec-fn]))
+
 (defn run-command [options]
   (try
     (let [command (:command options)
-          command-ns-sym (symbol (str "joodo.kuzushi.commands." command))
-          parse-fn (load-var command-ns-sym 'parse-args)
+          [parse-fn exec-fn] (load-command command)
           sub-options (apply parse-fn (:*leftover options))]
       (if-let [errors (:*errors sub-options)]
         (usage-for command errors)
-        (let [exec-fn (load-var command-ns-sym 'execute)]
-          (exec-fn sub-options))))
+        (exec-fn sub-options)))
     (catch Exception e
       (.printStackTrace e)
       (exit -1))))
 
-
 (defn run [& args]
   (let [options (apply parse-args args)]
+    (println "options: " options)
     (run-command options)
     (exit 0)))
-
-(defn run-with-project [project & args]
-  (binding [*project* project]
-    (apply run args)))
-
-(defn -main [& args]
-  (apply run args))
 

@@ -10,7 +10,7 @@
   :dev-dependencies [[speclj "2.1.1"]
                      [filecabinet "1.0.4"]]
   :test-path "spec/"
-  :shell-wrapper {:main joodo.kuzushi.core
+  :shell-wrapper {:main joodo.kuzushi.main
                   :bin "bin/joodo"}
   :resources-path "resources/"
   )

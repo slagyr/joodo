@@ -1,6 +1,6 @@
 (ns joodo.kuzushi.commands.help
   (:use
-    [joodo.kuzushi.common :only (exit symbolize load-var)])
+    [joodo.kuzushi.common :only (exit symbolize load-var *command-root* *main-name*)])
   (:require
     [clojure.string :as str]
     [joodo.kuzushi.version])
@@ -30,13 +30,14 @@
     nil))
 
 (defn all-commands []
-  (let [help-src-url (find-resource "joodo/kuzushi/commands/help.clj" "joodo/kuzushi/commands/help__init.class")
+  (let [command-root-path (.replace *command-root* "." "/")
+        help-src-url (find-resource (str command-root-path "/help.clj") (str command-root-path "/help__init.class"))
         commands-dir (.parentPath (FileSystem/instance) (.toString help-src-url))
         files (.fileListing (FileSystem/instance) commands-dir)]
     (sort (filter identity (map extract-ns-from-filename files)))))
 
 (defn- docstring-for [command]
-  (if-let [exec-fn (load-var (symbol (str "joodo.kuzushi.commands." command)) 'execute)]
+  (if-let [exec-fn (load-var (symbol (str *command-root* "." command)) 'execute)]
     (:doc (meta exec-fn))
     (do
       (println "Failed to load command:" command)
@@ -66,7 +67,7 @@
   (println)
   (println joodo.kuzushi.version/summary ": Command line component for Joodo; A Clojure framework to web applications.")
   (println)
-  (println "Usage: [lein] joodo" (.argString @main-arg-spec) "[command options]")
+  (println "Usage: [lein] " *main-name* (.argString @main-arg-spec) "[command options]")
   (println)
   (println (.parametersString @main-arg-spec))
   (println (.optionsString @main-arg-spec))
@@ -75,12 +76,12 @@
 
 (defn usage-for [command errors]
   (let [docstring (docstring-for command)
-        arg-spec @(load-var (symbol (str "joodo.kuzushi.commands." command)) 'arg-spec)]
+        arg-spec @(load-var (symbol (str *command-root* "." command)) 'arg-spec)]
     (print-errors errors)
     (println)
     (println command ":" docstring)
     (println)
-    (println "Usage: joodo" command (.argString arg-spec))
+    (println "Usage: [lein] " *main-name* command (.argString arg-spec))
     (println)
     (println (.parametersString arg-spec))
     (println (.optionsString arg-spec))
