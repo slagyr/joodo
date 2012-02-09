@@ -1,9 +1,8 @@
 (ns joodo.kuzushi.commands.help
   (:use
-    [joodo.kuzushi.common :only (exit symbolize load-var *command-root* *main-name*)])
+    [joodo.kuzushi.common :only (exit symbolize load-var *command-root* *main-name* *version-summary*)])
   (:require
-    [clojure.string :as str]
-    [joodo.kuzushi.version])
+    [clojure.string :as str])
   (:import
     [mmargs Arguments]
     [filecabinet FileSystem]))
@@ -65,7 +64,7 @@
 (defn usage [errors]
   (print-errors errors)
   (println)
-  (println joodo.kuzushi.version/summary ": Command line component for Joodo; A Clojure framework to web applications.")
+  (println *version-summary* ": Command line component for Joodo; A Clojure framework to web applications.")
   (println)
   (println "Usage: [lein] " *main-name* (.argString @main-arg-spec) "[command options]")
   (println)

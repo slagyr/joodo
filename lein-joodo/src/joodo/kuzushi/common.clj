@@ -21,6 +21,7 @@
 (declare #^{:dynamic true} *project*)
 (declare #^{:dynamic true} *command-root*)
 (declare #^{:dynamic true} *main-name*)
+(declare #^{:dynamic true} *version-ns*)
 
 (defn load-lein-project []
   (if-let [project (read-project)]
