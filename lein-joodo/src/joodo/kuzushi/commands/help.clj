@@ -1,6 +1,6 @@
 (ns joodo.kuzushi.commands.help
   (:use
-    [joodo.kuzushi.common :only (exit symbolize load-var *command-root* *main-name* *version-summary*)])
+    [joodo.kuzushi.common :only (exit symbolize load-var *command-root* *main-name* *summary*)])
   (:require
     [clojure.string :as str])
   (:import
@@ -64,9 +64,9 @@
 (defn usage [errors]
   (print-errors errors)
   (println)
-  (println *version-summary* ": Command line component for Joodo; A Clojure framework to web applications.")
+  (println *summary*)
   (println)
-  (println "Usage: [lein] " *main-name* (.argString @main-arg-spec) "[command options]")
+  (println "Usage: [lein]" *main-name* (.argString @main-arg-spec) "[command options]")
   (println)
   (println (.parametersString @main-arg-spec))
   (println (.optionsString @main-arg-spec))
@@ -80,7 +80,7 @@
     (println)
     (println command ":" docstring)
     (println)
-    (println "Usage: [lein] " *main-name* command (.argString arg-spec))
+    (println "Usage: [lein]" *main-name* command (.argString arg-spec))
     (println)
     (println (.parametersString arg-spec))
     (println (.optionsString arg-spec))
