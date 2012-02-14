@@ -36,7 +36,6 @@
     (.file templater (format "%s/spec/%s/core_spec.clj" dir-name dir-name) "spec/app/core_spec.clj")
     (.file templater (format "%s/src/%s/core.clj" dir-name dir-name) "src/app/core.clj")
     (.directory templater (format "%s/src/%s/controller" dir-name dir-name))
-    (.directory templater (format "%s/src/%s/model" dir-name dir-name))
     (.file templater (format "%s/src/%s/view/view_helpers.clj" dir-name dir-name) "src/app/view/view_helpers.clj")
     (.file templater (format "%s/src/%s/view/layout.hiccup.clj" dir-name dir-name) "src/app/view/layout.hiccup.clj")
     (.file templater (format "%s/src/%s/view/index.hiccup.clj" dir-name dir-name) "src/app/view/index.hiccup.clj")

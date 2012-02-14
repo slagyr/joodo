@@ -74,8 +74,7 @@
         (should= "layout" (.readTextFile @fs "/home/app/src/app/view/layout.hiccup.clj"))
         (should= "index" (.readTextFile @fs "/home/app/src/app/view/index.hiccup.clj"))
         (should= "not_found" (.readTextFile @fs "/home/app/src/app/view/not_found.hiccup.clj"))
-        (should= true (.exists @fs "/home/app/src/app/controller"))
-        (should= true (.exists @fs "/home/app/src/app/model")))
+        (should= true (.exists @fs "/home/app/src/app/controller")))
 
       (it "generates config"
         (should= "default env, core: app" (.readTextFile @fs "/home/app/config/environment.clj"))
