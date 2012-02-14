@@ -1,9 +1,10 @@
 (ns joodo.kuzushi.commands.new
   (:use
     [joodo.kuzushi.common :only (symbolize)]
-    [joodo.kuzushi.version :only (joodo-version)])
+    [joodo.kuzushi.version :only (joodo-version)]
+    [joodo.kuzushi.generation :only (create-templater add-tokens)])
   (:import
-    [filecabinet FileSystem Templater]
+    [filecabinet FileSystem]
     [mmargs Arguments]))
 
 (def arg-spec (Arguments.))
@@ -13,20 +14,6 @@
 
 (defn parse-args [& args]
   (symbolize (.parse arg-spec (into-array String args))))
-
-(defn create-templater [options]
-  (let [destination "."
-        templates-marker (.toString (.getResource (clojure.lang.RT/baseLoader) "joodo/kuzushi/templates/marker.txt"))
-        source (.parentPath (FileSystem/instance) templates-marker)
-        templater (Templater. destination source)]
-    (when (:force options)
-      (.setForceful templater true))
-    templater))
-
-(defn add-tokens [templater & kvargs]
-  (let [tokens (apply hash-map kvargs)]
-    (doseq [[token value] tokens]
-      (.addToken templater token value))))
 
 (defn- add-misc [options templater]
   (let [name (:name options)]

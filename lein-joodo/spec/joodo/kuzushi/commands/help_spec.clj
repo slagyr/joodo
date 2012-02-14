@@ -25,7 +25,7 @@
   (it "runs help on the help command"
     (binding [all-commands (fn [& args] [])]
       (should= 0 (run "help" "help")))
-    (should-not= -1 (.indexOf (to-s @output) "Usage: joodo help [command]")))
+    (should-not= -1 (.indexOf (to-s @output) "Usage: [lein] joodo-test help [command]")))
 
   (it "knows the right ns regex"
     (should (re-matches ns-regex "some_command.clj"))

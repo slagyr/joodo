@@ -50,7 +50,6 @@
 
 (defn run [& args]
   (let [options (apply parse-args args)]
-    (println "options: " options)
     (run-command options)
     (exit 0)))
 

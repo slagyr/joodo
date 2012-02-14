@@ -1,7 +1,10 @@
 (ns joodo.kuzushi.commands.new-spec
   (:use
     [speclj.core]
-    [joodo.kuzushi.commands.new :only (execute create-templater parse-args)])
+    [joodo.kuzushi.commands.new :only (execute parse-args)]
+    [joodo.kuzushi.generation :only (create-templater)])
+  (:require
+    [joodo.kuzushi.version :as version])
   (:import
     [java.io File]
     [filecabinet FakeFileSystem Templater Templater$TemplaterLogger]))
@@ -9,16 +12,6 @@
 (describe "New Command"
 
   (with fs (FakeFileSystem/installed))
-
-  (it "creates a templater"
-    (let [templater (create-templater {:name "foo"})]
-      (should= "." (.getDestinationRoot templater))
-      (should= (str "file:" (.getCanonicalPath (File. "resources/joodo/kuzushi/templates")))
-        (.getSourceRoot templater))))
-
-  (it "creates a forceful templater"
-    (let [templater (create-templater {:root "/foo/bar" :force "on"})]
-      (should= true (.isForceful templater))))
 
   (it "parses new command"
     (should (:*errors (parse-args)))
@@ -62,7 +55,7 @@
     (before (execute {:name "app"}))
 
     (it "generates misc stuff"
-      (should= (format "project: app, joodo: %s" "0.6.0-SNAPSHOT") (.readTextFile @fs "/home/app/project.clj"))
+      (should= (format "project: app, joodo: %s" version/string) (.readTextFile @fs "/home/app/project.clj"))
       (should= "procfile" (.readTextFile @fs "/home/app/Procfile")))
 
     (it "generated public dirs"
