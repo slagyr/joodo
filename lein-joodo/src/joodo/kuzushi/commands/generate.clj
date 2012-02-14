@@ -2,7 +2,8 @@
   (:use
     [joodo.kuzushi.common :only (symbolize exit with-lein-project *project*)]
     [joodo.kuzushi.version :only (joodo-version)]
-    [joodo.kuzushi.generation :only (create-templater add-tokens ->path ->name)])
+    [joodo.kuzushi.generation :only (create-templater add-tokens ->path ->name)]
+    [joodo.kuzushi.commands.help :only (usage-for)])
   (:import
     [filecabinet FileSystem Templater]
     [mmargs Arguments]))
@@ -28,16 +29,13 @@
     (.file templater (format "spec/%s_spec.clj" controller-path) "spec/app/controller_spec.clj")
     (.file templater (format "src/%s.clj" controller-path) "src/app/controller.clj")))
 
-(defn- unknown-generator [generator]
-  (println "Unknown generator:" generator)
-  (exit -1))
-
 (defn execute
-  "Generates file for various components"
+  "Generates files for various components at the specified namespace:
+    controller - new controller and spec file"
   [options]
   (let [templater (create-templater options)
         generator (.toLowerCase (:generator options))]
     (cond
       (= "controller" generator) (generate-controller templater options)
-      :else (unknown-generator generator))))
+      :else (usage-for "generate" [(str "Unknown generator: " generator)]))))
 
