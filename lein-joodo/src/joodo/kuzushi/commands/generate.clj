@@ -1,7 +1,6 @@
 (ns joodo.kuzushi.commands.generate
   (:use
-    [joodo.kuzushi.common :only (symbolize exit with-lein-project *project*)]
-    [joodo.kuzushi.version :only (joodo-version)]
+    [joodo.kuzushi.common :only (symbolize)]
     [joodo.kuzushi.generation :only (create-templater add-tokens ->path ->name)]
     [joodo.kuzushi.commands.help :only (usage-for)])
   (:import

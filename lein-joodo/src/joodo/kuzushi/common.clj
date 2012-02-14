@@ -19,8 +19,7 @@
       nil)))
 
 (declare #^{:dynamic true} *project*)
-(declare #^{:dynamic true} *command-root*)
-(declare #^{:dynamic true} *main-name*)
+(declare #^{:dynamic true} *lib-name*)
 (declare #^{:dynamic true} *summary*)
 
 (defn load-lein-project []

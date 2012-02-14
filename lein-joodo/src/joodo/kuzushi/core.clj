@@ -1,6 +1,6 @@
 (ns joodo.kuzushi.core
   (:use
-    [joodo.kuzushi.common :only (exit symbolize load-var *command-root*)]
+    [joodo.kuzushi.common :only (exit symbolize load-var *lib-name*)]
     [joodo.kuzushi.commands.help :as help :only (usage usage-for)])
   (:require
     [joodo.kuzushi.version])
@@ -29,7 +29,7 @@
       (usage (:*errors options)))))
 
 (defn- load-command [command]
-  (let [command-ns-sym (symbol (str *command-root* "." command))
+  (let [command-ns-sym (symbol (str *lib-name* ".kuzushi.commands." command))
         parse-fn (load-var command-ns-sym 'parse-args)
         exec-fn (load-var command-ns-sym 'execute)]
     (when-not (or parse-fn exec-fn)
