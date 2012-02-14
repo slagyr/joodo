@@ -12,7 +12,7 @@
   [:li [:b "Kake"] "- which means 'execution', is the runtime library that contains all the main APIs."]]]
 
 [:h3 "License"]
-[:p "Copyright (C) 2011 Micah Martin All Rights Reserved."]
+[:p "Copyright (C) 2011-2012 Micah Martin All Rights Reserved."]
 [:p "Distributed under the The MIT License."]
 
 [:p "This app was generated for !-APP_NAME-!."]

@@ -1,6 +1,7 @@
 (ns joodo.kuzushi.generation-spec
   (:use
     [speclj.core]
+    [joodo.kuzushi.spec-helper]
     [joodo.kuzushi.generation])
   (:import
     [java.io File]
@@ -8,6 +9,7 @@
 
 (describe "Generation"
 
+  (with-command-help)
   (with fs (FakeFileSystem/installed))
 
   (it "creates a templater"

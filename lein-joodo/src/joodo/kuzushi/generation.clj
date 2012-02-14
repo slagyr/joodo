@@ -1,10 +1,12 @@
 (ns joodo.kuzushi.generation
+  (:use
+    [joodo.kuzushi.common :only (*lib-name*)])
   (:import
     [filecabinet FileSystem Templater]))
 
 (defn create-templater [options]
   (let [destination "."
-        templates-marker (.toString (.getResource (clojure.lang.RT/baseLoader) "joodo/kuzushi/templates/marker.txt"))
+        templates-marker (.toString (.getResource (clojure.lang.RT/baseLoader) (str *lib-name* "/kuzushi/templates/marker.txt")))
         source (.parentPath (FileSystem/instance) templates-marker)
         templater (Templater. destination source)]
     (when (:force options)
