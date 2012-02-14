@@ -97,7 +97,7 @@
       (read-src path src))))
 
 (defn load-configurations []
-  (let [environment (System/getProperty "joodo-env")
+  (let [environment (System/getProperty "joodo.env")
         env-ns (create-ns (gensym (str "joodo.config-")))]
     (load-config env-ns "config/environment.clj")
     (load-config env-ns (format "config/%s.clj" environment))))
