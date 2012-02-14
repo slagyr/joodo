@@ -9,10 +9,10 @@
 (defroutes !-APP_NAME-!-routes
   (GET "/" [] (render-template "index"))
   (controller-router '!-APP_NAME-!.controller)
-  (not-found (render-template "not_found" :template-root "!-APP_NAME-!/view" :ns `!-APP_NAME-!.view.view-helpers)))
+  (not-found (render-template "not_found" :template-root "!-DIR_NAME-!/view" :ns `!-APP_NAME-!.view.view-helpers)))
 
 (def app-handler
   (->
     !-APP_NAME-!-routes
-    (wrap-view-context :template-root "!-APP_NAME-!/view" :ns `!-APP_NAME-!.view.view-helpers)))
+    (wrap-view-context :template-root "!-DIR_NAME-!/view" :ns `!-APP_NAME-!.view.view-helpers)))
 
