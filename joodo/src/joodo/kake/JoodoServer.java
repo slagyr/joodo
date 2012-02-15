@@ -4,9 +4,6 @@ import mmargs.Arguments;
 import org.mortbay.jetty.Handler;
 import org.mortbay.jetty.Server;
 import org.mortbay.jetty.servlet.Context;
-import org.mortbay.jetty.servlet.HashSessionManager;
-import org.mortbay.jetty.servlet.ServletHandler;
-import org.mortbay.jetty.servlet.SessionHandler;
 import org.mortbay.log.Log;
 import org.mortbay.log.StdErrLog;
 
@@ -64,11 +61,11 @@ public class JoodoServer
       if(options.containsKey("directory"))
         dir = (String) options.get("directory");
     }
-    System.setProperty("joodo-env", env);
   }
 
   private void start() throws Exception
   {
+    System.setProperty("joodo.env", env);
     Server server = new Server(port);
 
     final Context context = new Context(server, "/", Context.SESSIONS);

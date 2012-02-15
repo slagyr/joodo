@@ -27,6 +27,7 @@
               wrap-refresh (fake-wrapper :refresh)
               wrap-servlet-session (fake-wrapper :servlet-session)]
       (it)))
+  (after (System/setProperty "joodo.ignore.config" "false"))
 
   (it "extracts the app handler"
     (binding [build-joodo-handler (fake-wrapper :fake-joodo-handler)]
@@ -71,13 +72,14 @@
 
   (it "loads a config file from env dir"
     (.createTextFile @fs "config/environment.clj" "(use 'joodo.env)(swap! *env* assoc :root-conf *ns*)")
-    (.createTextFile @fs "config/test/environment.clj" "(use 'joodo.env)(swap! *env* assoc :env-conf *ns*)")
+    (.createTextFile @fs "config/test.clj" "(use 'joodo.env)(swap! *env* assoc :env-conf *ns*)")
     (System/setProperty "joodo.env" "test")
-    (load-configurations)
-    (should-not= nil (env :root-conf))
-    (should-not= nil (env :env-conf))
-    (should= true (.startsWith (name (.getName (env :env-conf))) "joodo.config-"))
-    (should= (env :root-conf) (env :env-conf)))
+    (System/setProperty "joodo.ignore.config" "true")
+    (reset! *env* {:joodo.core.namespace "joodo.kake.test-override-core"})
+    (initialize-joodo-servlet (FakeServlet.))
+    (should= nil (env :root-conf))
+    (should= nil (env :env-conf)))
+
 
   )
 

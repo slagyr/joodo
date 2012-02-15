@@ -8,8 +8,8 @@
 (defn ^{:doc "Retrieves an entry from the current environment. nil if not found"} env [key]
   (or
     (get @*env* (keyword key))
-    (get @*env* (str key))
-    (System/getProperty (str key))))
+    (get @*env* (name key))
+    (System/getProperty (name key))))
 
 (defn development-env?
   "Returns true if the application is running in the

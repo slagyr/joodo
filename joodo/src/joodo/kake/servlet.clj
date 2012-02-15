@@ -67,6 +67,7 @@
 
 (defn extract-joodo-handler []
   (let [core-namespace (env :joodo.core.namespace)
+       _ (println "core-namespace: " core-namespace)
         core-ns-sym (symbol core-namespace)
         _ (require core-ns-sym)
         core-ns (the-ns core-ns-sym)]
@@ -101,12 +102,15 @@
   (let [environment (System/getProperty "joodo.env")
         env-ns (create-ns (gensym (str "joodo.config-")))]
     (load-config env-ns "config/environment.clj")
-    (if (.exists (FileSystem/instance) (format "config/%s/environment.clj" environment))
-      (load-config env-ns (format "config/%s/environment.clj" environment))
-      (load-config env-ns (format "config/%s.clj" environment)))))
+    (load-config env-ns (format "config/%s.clj" environment))))
+
+(defn- load-config? []
+  (if-let [switch (System/getProperty "joodo.ignore.config")]
+    (= "false" (.toLowerCase switch))
+    true))
 
 (defn initialize-joodo-servlet [servlet]
-  (load-configurations)
+  (when (load-config?) (load-configurations))
   (let [handler (extract-joodo-handler)
         handler (if (development-env?) (attempt-wrap handler 'joodo.middleware.refresh 'wrap-refresh) handler)]
     (install-handler servlet handler)))
