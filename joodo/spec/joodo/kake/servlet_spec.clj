@@ -4,8 +4,11 @@
     [joodo.kake.servlet]
     [joodo.middleware.verbose :only (wrap-verbose)]
     [joodo.middleware.refresh :only (wrap-refresh)]
-    [joodo.env :only (*env*)]
-    [joodo.middleware.servlet-session :only (wrap-servlet-session)]))
+    [joodo.env :only (*env* env)]
+    [joodo.middleware.servlet-session :only (wrap-servlet-session)])
+  (:import
+    [filecabinet FakeFileSystem]))
+
 (deftype FakeServlet []
   joodo.kake.servlet.HandlerInstallable
   (install-handler [this handler] handler))
@@ -17,6 +20,7 @@
 
 (describe "Servlet methods"
 
+  (with fs (FakeFileSystem/installed))
   (before (swap! *env* assoc :joodo.core.namespace "joodo.kake.test-core"))
   (around [it]
     (binding [wrap-verbose (fake-wrapper :verbose)
@@ -54,6 +58,26 @@
         (should= true (:app-handler response))
         (should= true (:verbose response))
         (should= true (:refresh response)))))
+
+  (it "loads a config file"
+    (.createTextFile @fs "config/environment.clj" "(use 'joodo.env)(swap! *env* assoc :root-conf *ns*)")
+    (.createTextFile @fs "config/test.clj" "(use 'joodo.env)(swap! *env* assoc :env-conf *ns*)")
+    (System/setProperty "joodo.env" "test")
+    (load-configurations)
+    (should-not= nil (env :root-conf))
+    (should-not= nil (env :env-conf))
+    (should= true (.startsWith (name (.getName (env :env-conf))) "joodo.config-"))
+    (should= (env :root-conf) (env :env-conf)))
+
+  (it "loads a config file from env dir"
+    (.createTextFile @fs "config/environment.clj" "(use 'joodo.env)(swap! *env* assoc :root-conf *ns*)")
+    (.createTextFile @fs "config/test/environment.clj" "(use 'joodo.env)(swap! *env* assoc :env-conf *ns*)")
+    (System/setProperty "joodo.env" "test")
+    (load-configurations)
+    (should-not= nil (env :root-conf))
+    (should-not= nil (env :env-conf))
+    (should= true (.startsWith (name (.getName (env :env-conf))) "joodo.config-"))
+    (should= (env :root-conf) (env :env-conf)))
 
   )
 

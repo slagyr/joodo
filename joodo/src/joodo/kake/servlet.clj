@@ -14,7 +14,8 @@
     [joodo.middleware.request :only (wrap-bind-request)])
   (:import
     [javax.servlet.http HttpServlet HttpServletRequest HttpServletResponse]
-    [joodo.kake JoodoServlet]))
+    [joodo.kake JoodoServlet]
+    [filecabinet FileSystem]))
 
 (defn update-servlet-response [^HttpServletResponse response, response-map]
   (when (not (and response (or (.isCommitted response) (:ignore-response response-map))))
@@ -91,7 +92,7 @@
     (clojure.lang.Compiler/load rdr parent-path src-filename)))
 
 (defn- load-config [ns path]
-  (let [src (slurp path)]
+  (let [src (.readTextFile (FileSystem/instance) path)]
     (binding [*ns* ns]
       (use 'clojure.core)
       (read-src path src))))
@@ -100,7 +101,9 @@
   (let [environment (System/getProperty "joodo.env")
         env-ns (create-ns (gensym (str "joodo.config-")))]
     (load-config env-ns "config/environment.clj")
-    (load-config env-ns (format "config/%s.clj" environment))))
+    (if (.exists (FileSystem/instance) (format "config/%s/environment.clj" environment))
+      (load-config env-ns (format "config/%s/environment.clj" environment))
+      (load-config env-ns (format "config/%s.clj" environment)))))
 
 (defn initialize-joodo-servlet [servlet]
   (load-configurations)

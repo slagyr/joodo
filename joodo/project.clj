@@ -9,7 +9,8 @@
                  [ring/ring-jetty-adapter "1.0.2"]
                  [compojure "1.0.1"]
                  [hiccup "0.3.8"]
-                 [mmargs "1.2.0"]]
+                 [mmargs "1.2.0"]
+                 [filecabinet "1.0.4"]]
   :dev-dependencies [[speclj "2.1.1"]]
   :test-path "spec/"
   :java-source-path "src/")

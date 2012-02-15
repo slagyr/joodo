@@ -2,10 +2,10 @@
   joodo.env)
 
 (def ^{:doc "Holds information about the current environment. That data can be
-  retrieved with the following syntax: (get @*env* :joodo-env)"}
+  retrieved with the following syntax: (env :joodo-env)"}
   *env* (atom {:joodo-env (or (System/getProperty "joodo.env") "development")}))
 
-(defn ^{:doc "Gets information about the current environment"} env [key]
+(defn ^{:doc "Retrieves an entry from the current environment. nil if not found"} env [key]
   (or
     (get @*env* (keyword key))
     (get @*env* (str key))
