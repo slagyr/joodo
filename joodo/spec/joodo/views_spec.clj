@@ -7,8 +7,8 @@
 
 (defmacro should-contain [doc snip]
   `(let [index# (.indexOf ~doc ~snip)]
-    (if (= -1 index#)
-      (throw (speclj.SpecFailure. (str "the document doesn't contain the snip: " ~snip))))))
+     (if (= -1 index#)
+       (throw (speclj.SpecFailure. (str "the document doesn't contain the snip: " ~snip))))))
 
 (def foo "FOO")
 
@@ -49,6 +49,12 @@
       (let [html (render-html "My Content")]
         (should-contain html "<body>My Content</body>")))
 
+    (it "renders layout without .clj extension"
+      (binding [*view-context* (assoc *view-context* :layout "layout2")]
+        (let [html (render-html "My Content")]
+          (should-contain html "<title>Test Layout2</title>")
+          (should-contain html "<body>My Content</body>"))))
+
     (it "renders hiccup content"
       (let [html (render-hiccup `[:div "Hiccup!"])]
         (should-contain html "<title>Test Layout</title>")
@@ -58,6 +64,11 @@
       (let [html (render-template "test_template")]
         (should-contain html "<title>Test Layout</title>")
         (should-contain html "<body><b>Test Template</b></body>")))
+
+    (it "renders a template with no .clj extension"
+      (let [html (render-template "test_template2")]
+        (should-contain html "<title>Test Layout</title>")
+        (should-contain html "<body><i>Test Template2</i></body>")))
 
     (it "renders nested template"
       (let [html (render-template "nested/nested_template")]
@@ -73,6 +84,25 @@
       (let [html (render-hiccup `(render-partial "nested/nested_partial"))]
         (should-contain html "<title>Test Layout</title>")
         (should-contain html "<body><p>Nested Partial</p></body>")))
+
+    (it "provides nice error when template is missing"
+      (should-throw
+        Exception
+        "Template Not Found: joodo/test_view/non-existent.hiccup[.clj]"
+        (render-template "non-existent")))
+
+    (it "provides nice error when layout is missing"
+      (binding [*view-context* (assoc *view-context* :layout "missing-layout")]
+        (should-throw
+          Exception
+          "Template Not Found: joodo/test_view/missing-layout.hiccup[.clj]"
+          (render-template "test_template"))))
+
+    (it "privides nice errors when partial is missing"
+      (should-throw
+        Exception
+        "java.lang.Exception: Template Not Found: joodo/test_view/_missing-partial.hiccup[.clj] (views_spec.clj:15)"
+        (render-hiccup `(render-partial "missing-partial"))))
     )
   )
 

@@ -4,27 +4,34 @@
     [hiccup.core]))
 
 (def ^{:doc "Var that holds a map with all the information required to render a page."}
-  *view-context* {
-  :template-root "view"
-  :layout "layout"
-  :ns `joodo.kake.default-rendering
-  })
+  *view-context*
+  {:template-root "view"
+   :layout "layout"
+   :ns `joodo.kake.default-rendering
+   })
 
 (defn- updated-context [kwargs]
   (merge *view-context* (apply hash-map kwargs)))
 
-(defn- template-path [name]
-  (format "%s/%s.hiccup.clj" (:template-root *view-context*) name))
+(defn- template-path [name ext]
+  (format "%s/%s.%s" (:template-root *view-context*) name ext))
 
-(defn- read-template [path]
-  (if-let [input (.getResourceAsStream (clojure.lang.RT/baseLoader) path)]
+(defn- template-stream [name]
+  (some
+    identity
+    (map
+      #(.getResourceAsStream (clojure.lang.RT/baseLoader) (template-path name %))
+      ["hiccup" "hiccup.clj"])))
+
+(defn- read-template [name]
+  (if-let [input (template-stream name)]
     (with-open [input input]
       (let [reader (java.io.PushbackReader. (java.io.InputStreamReader. input))]
         (loop [result ['list] object (read reader false :EOF)]
           (if (= :EOF object)
             (seq result)
             (recur (conj result object) (read reader false :EOF))))))
-    (throw (Exception. (str "Template Not Found: " path)))))
+    (throw (Exception. (str "Template Not Found: " (template-path name "hiccup") "[.clj]")))))
 
 (defn- eval-content [content]
   (let [view-ns-sym (symbol (:ns *view-context*))]
@@ -38,7 +45,7 @@
 
 (defn- render-in-layout [body]
   (if-let [layout (:layout *view-context*)]
-    (let [layout-data (read-template (template-path layout))]
+    (let [layout-data (read-template layout)]
       (binding [*view-context* (assoc *view-context* :template-body body)]
         (render layout-data)))
     (render body)))
@@ -66,8 +73,7 @@
   [template & kwargs]
   (binding [*view-context* (updated-context kwargs)]
     (let [template-name (template-name template)
-          template-path (template-path template-name)
-          template-src (read-template template-path)]
+          template-src (read-template template-name)]
       (render-in-layout template-src))))
 
 (defn render-partial
@@ -80,6 +86,5 @@
           parts (vec (.split (str template) "/"))
           parts (flatten (vector (pop parts) (str "_" (last parts))))
           template-name (apply str (interpose "/" parts))
-          template-path (template-path template-name)
-          data (read-template template-path)]
+          data (read-template template-name)]
       (eval data))))

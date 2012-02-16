@@ -41,9 +41,9 @@
 
   (it "loads the joodo-env"
     (.parseArgs @server (into-array String ["-e" "staging"]))
-    (should= "staging" (System/getProperty "joodo-env"))
+    (should= "staging" (.env @server))
     (.parseArgs @server (into-array String ["--environment" "test"]))
-    (should= "test" (System/getProperty "joodo-env")))
+    (should= "test" (.env @server)))
   )
 
 (run-specs)

@@ -1,0 +1,6 @@
+(require `joodo.views)
+[:html
+ [:head
+  [:title "Test Layout2"]]
+ [:body
+  (eval (:template-body joodo.views/*view-context*))]]
