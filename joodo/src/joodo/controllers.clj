@@ -7,9 +7,12 @@
 
 (defn- namespaces-for-parts [root parts]
   (if (seq parts)
-    (let [new-root (str root "." (first parts))
-          controller-ns (str new-root "-controller")]
-      (cons controller-ns (lazy-seq (namespaces-for-parts new-root (rest parts)))))
+    (let [new-root (str root "." (first parts))]
+      (cons
+        (str new-root "-controller")
+        (cons
+          (str new-root "." (first parts) "-controller")
+          (lazy-seq (namespaces-for-parts new-root (rest parts))))))
     []))
 
 (defn namespaces-for-path [root path]
@@ -17,7 +20,8 @@
     (namespaces-for-parts root parts)))
 
 (defn resolve-controller
-  "Loads any specific controllers that don't get loaded by the controller-router function"
+  "An attempt will be made to load the specified namespace and extract the controller var
+  defined within.  nil is returned upon failure."
   [ns-name]
   (try
     (let [controller-name (last (str/split (name ns-name) #"\."))
@@ -63,7 +67,18 @@
       (ref-set cache {:handlers []}))))
 
 (defn controller-router
-  "Tells the application what namespaces to look for when loading controllers."
+  "Creates a dynamic handler to load controllers based on the url. This feature allows Joodo apps to
+  startup quickly while the remainder of the system loads on an as-needed basis.
+  Given the handler declaration
+    (controller-rounter 'acme)
+  and the URL
+    http://host/widget/action
+  the handler will attempt to load (require) the namespace 'acme.widget-controller or 'acme.widget.widget-controller
+  if the other doesn't exist. If either namespace is successfully loaded the #'widget-controller var, which must
+  be a ring handler defined within namespace, will handle the request.
+  Controller may be nested.  For example, the URL http://host/widget/doodad/action will cause the handler to look
+  for namespaces 'acme.widget.doodad-controller or 'acme.widget.doodad.doodad-controller.
+  Requests with no matching controller pass through these handlers with nil response."
   [root]
   (let [cache (controller-cache root)]
     (fn [request]
