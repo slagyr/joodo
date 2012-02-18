@@ -14,9 +14,9 @@
       (should (> 100 (- (System/currentTimeMillis) (.getTime now))))))
 
   (it "easily creates date of specified time"
-    (should= "Sat Jan 01 00:00:00 CST 2011" (str (datetime 2011 1 1)))
-    (should= "Sat Jan 01 02:34:00 CST 2011" (str (datetime 2011 1 1 2 34)))
-    (should= "Sat Jan 01 02:34:56 CST 2011" (str (datetime 2011 1 1 2 34 56))))
+    (should= "20110101000000" (format-datetime :dense (datetime 2011 1 1)))
+    (should= "20110101023400" (format-datetime :dense (datetime 2011 1 1 2 34)))
+    (should= "20110101023456" (format-datetime :dense (datetime 2011 1 1 2 34 56))))
 
   (it "compares dates"
     (should= true (before? (datetime 2011 1 1) (datetime 2011 1 2)))
@@ -59,16 +59,16 @@
     (should= false (after? (days-from-now 1) (hours-from-now 25))))
 
   (it "create dates relative to other dates by month increment"
-    (should= "Tue Feb 01 00:00:00 CST 2011" (str (after (datetime 2011 1 1) (months 1))))
-    (should= "Wed Dec 01 00:00:00 CST 2010" (str (before (datetime 2011 1 1) (months 1))))
+    (should= "20110201000000" (format-datetime :dense  (after (datetime 2011 1 1) (months 1))))
+    (should= "20101201000000" (format-datetime :dense  (before (datetime 2011 1 1) (months 1))))
     (should= true (after? (months-from-now 1) (days-from-now 27)))
     (should= false (after? (months-from-now 1) (days-from-now 32)))
     (should= true (before? (months-ago 1) (days-ago 27)))
     (should= false (before? (months-ago 1) (days-ago 32))))
 
   (it "create dates relative to other dates by year increment"
-    (should= "Sun Jan 01 00:00:00 CST 2012" (str (after (datetime 2011 1 1) (years 1))))
-    (should= "Fri Jan 01 00:00:00 CST 2010" (str (before (datetime 2011 1 1) (years 1))))
+    (should= "20120101000000" (format-datetime :dense  (after (datetime 2011 1 1) (years 1))))
+    (should= "20100101000000" (format-datetime :dense  (before (datetime 2011 1 1) (years 1))))
     (should= true (after? (years-from-now 1) (months-from-now 11)))
     (should= false (after? (years-from-now 1) (months-from-now 13)))
     (should= true (before? (years-ago 1) (months-ago 11)))
@@ -78,7 +78,8 @@
     (let [date (parse-datetime :http "Sun, 06 Nov 1994 08:49:37 GMT")]
       (should= true (after? date (datetime 1994 11 5)))
       (should= true (before? date (datetime 1994 11 7)))
-      (should= "Sun, 06 Nov 1994 02:49:37 -0600" (format-datetime :http date))))
+;      (should= "Sun, 06 Nov 1994 02:49:37 -0600" (format-datetime :http date)) ; only works in certain CST zone
+      ))
 
   (it "parses and formats dates in custom format"
     (let [date (parse-datetime "MMM d, yyyy HH:mm" "Nov 6, 1994 08:49")]
