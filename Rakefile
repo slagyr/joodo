@@ -20,7 +20,8 @@ namespace :joodo do
   desc "full joodo build"
   task :build do
     in_dir "joodo" do
-      run_command "lein deps, javac, spec"
+      run_command "lein deps, javac"
+      run_command "lein spec"
     end
   end
 end
@@ -42,7 +43,8 @@ namespace :lein_joodo do
   desc "full lein-joodo build"
   task :build => %w{init} do
     in_dir "lein-joodo" do
-      run_command "lein deps, javac, spec"
+      run_command "lein deps, javac"
+      run_command "lein spec"
     end
   end
 end
