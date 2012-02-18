@@ -67,7 +67,6 @@
 
 (defn extract-joodo-handler []
   (let [core-namespace (env :joodo.core.namespace)
-       _ (println "core-namespace: " core-namespace)
         core-ns-sym (symbol core-namespace)
         _ (require core-ns-sym)
         core-ns (the-ns core-ns-sym)]

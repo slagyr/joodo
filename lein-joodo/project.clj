@@ -13,4 +13,5 @@
   :shell-wrapper {:main joodo.kuzushi.main
                   :bin "bin/joodo"}
   :resources-path "resources/"
+  :extra-classpath-dirs ["leiningen-1.7.0-standalone.jar"]
   )

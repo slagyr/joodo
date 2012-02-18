@@ -97,12 +97,6 @@
           Exception
           "Template Not Found: joodo/test_view/missing-layout.hiccup[.clj]"
           (render-template "test_template"))))
-
-    (it "privides nice errors when partial is missing"
-      (should-throw
-        Exception
-        "java.lang.Exception: Template Not Found: joodo/test_view/_missing-partial.hiccup[.clj] (views_spec.clj:15)"
-        (render-hiccup `(render-partial "missing-partial"))))
     )
   )
 
