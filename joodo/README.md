@@ -38,4 +38,4 @@ If all goes well you should see a helpful message printed in your console.
 
 Copyright (C) 2011 Micah Martin All Rights Reserved.
 
-Distributed under the The MIT License.
+Distributed under the The MIT License. 
