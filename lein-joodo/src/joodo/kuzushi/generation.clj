@@ -1,6 +1,7 @@
 (ns joodo.kuzushi.generation
   (:use
-    [joodo.kuzushi.common :only (*lib-name*)])
+    [joodo.kuzushi.common :only (*lib-name*)]
+    [joodo.core :only (->options)])
   (:import
     [filecabinet FileSystem Templater]))
 
@@ -14,7 +15,7 @@
     templater))
 
 (defn add-tokens [templater & kvargs]
-  (let [tokens (apply hash-map kvargs)]
+  (let [tokens (->options kvargs)]
     (doseq [[token value] tokens]
       (.addToken templater token value))))
 

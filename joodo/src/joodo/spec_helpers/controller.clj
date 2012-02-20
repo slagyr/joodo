@@ -2,6 +2,7 @@
   joodo.spec-helpers.controller
   (:use
     [speclj.core]
+    [joodo.core :only (->options)]
     [joodo.views :only (*view-context* render-template render-html)]
     [joodo.datetime :only (minutes-from-now)]
     [joodo.middleware.request :only (*request*)]))
@@ -57,7 +58,7 @@
   returns the name of the template provided."
   [template & args]
   (reset! rendered-template template)
-  (reset! rendered-context (merge *view-context* (apply hash-map args)))
+  (reset! rendered-context (merge *view-context* (->options args)))
   (str template))
 
 (defn mock-render-html
@@ -66,7 +67,7 @@
   html that was mock-rendered."
   [html & args]
   (reset! rendered-html html)
-  (reset! rendered-context (merge *view-context* (apply hash-map args)))
+  (reset! rendered-context (merge *view-context* (->options args)))
   html)
 
 (defn with-mock-rendering

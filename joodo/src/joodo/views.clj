@@ -1,7 +1,8 @@
 (ns ^{:doc "This namespace contains functions that are used to display the view files."}
   joodo.views
   (:use
-    [hiccup.core]))
+    [hiccup.core]
+    [joodo.core :only (->options)]))
 
 (def ^{:doc "Var that holds a map with all the information required to render a page."}
   *view-context*
@@ -11,7 +12,7 @@
    })
 
 (defn- updated-context [kwargs]
-  (merge *view-context* (apply hash-map kwargs)))
+  (merge *view-context* (->options kwargs)))
 
 (defn- template-path [name ext]
   (format "%s/%s.%s" (:template-root *view-context*) name ext))

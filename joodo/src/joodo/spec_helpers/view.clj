@@ -74,7 +74,7 @@
   in key value pairs.
   Ex. (with-view-context :template-root \"cleancoders/view\" :ns `project.views)"
   [& kwargs]
-  (let [view-context (apply hash-map kwargs)]
+  (let [view-context (->options kwargs)]
     (around [it]
       (binding [*view-context* (merge *view-context* view-context)]
         (it)))))
