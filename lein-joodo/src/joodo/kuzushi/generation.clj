@@ -1,7 +1,6 @@
 (ns joodo.kuzushi.generation
   (:use
-    [joodo.kuzushi.common :only (*lib-name*)]
-    [joodo.core :only (->options)])
+    [joodo.kuzushi.common :only (*lib-name* ->options)])
   (:import
     [filecabinet FileSystem Templater]))
 
