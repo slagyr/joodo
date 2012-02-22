@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CLASSPATH="%s"
+CLASSPATH="%s:$HOME/.m2/repository/joodo/lein-joodo/0.7.1/lein-joodo-0.7.1.jar"
 NULL_DEVICE=/dev/null
 JVM_OPTS=${JVM_OPTS:-$JAVA_OPTS}
 MAIN="%s"
