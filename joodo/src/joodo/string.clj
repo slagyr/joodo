@@ -1,5 +1,7 @@
 (ns ^{:doc "This namespace contains functions that are useful when dealing with strings."}
-  joodo.string)
+  joodo.string
+  (:require
+    [clojure.string :as str]))
 
 (defn gsub
   "Matches patterns and replaces those matches with a specified value.
@@ -14,3 +16,9 @@
             (sub-fn (re-groups matcher)))
           (.end matcher))
       (apply str (conj result (.substring value last-end))))))
+
+(defn spear-case [value]
+  (str/lower-case
+    (gsub
+      (str/replace (name value) "_" "-")
+      #"([a-z])([A-Z])" (fn [[_ lower upper]] (str lower "-" upper)))))
