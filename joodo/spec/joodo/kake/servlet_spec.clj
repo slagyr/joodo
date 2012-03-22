@@ -78,9 +78,6 @@
     (reset! *env* {:joodo.core.namespace "joodo.kake.test-override-core"})
     (initialize-joodo-servlet (FakeServlet.))
     (should= nil (env :root-conf))
-    (should= nil (env :env-conf)))
-
-
-  )
+    (should= nil (env :env-conf))))
 
 (run-specs)

@@ -1,15 +1,13 @@
 (ns ^{:doc "This namespace contains functions that are used to display the view files."}
   joodo.views
-  (:use
-    [hiccup.core]
-    [joodo.core :only (->options)]))
+  (:use [hiccup.core]
+        [joodo.core :only (->options)]))
 
 (def ^{:doc "Var that holds a map with all the information required to render a page."}
   *view-context*
   {:template-root "view"
    :layout "layout"
-   :ns `joodo.kake.default-rendering
-   })
+   :ns `joodo.kake.default-rendering})
 
 (defn- updated-context [kwargs]
   (merge *view-context* (->options kwargs)))

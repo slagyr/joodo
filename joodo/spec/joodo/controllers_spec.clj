@@ -64,13 +64,10 @@
     (it "resolve-controller can handle unhandled routes"
       (reset! @ns-to-find nil)
       (let [router (controller-router 'root)]
-        (should= nil (router {:uri "/one"}))))
-  )
+        (should= nil (router {:uri "/one"})))))
 
 (it "handles nonexisting namespaces"
   (binding [require (fn [name] (throw (java.io.FileNotFoundException. "Doesn't exist.")))]
-    (should= nil (resolve-controller 'the.missing-controller))))
-
-)
+    (should= nil (resolve-controller 'the.missing-controller)))))
 
 (run-specs)

@@ -17,9 +17,7 @@
     (should= {:uri "/foo"} @@handled-request)
 
     (@wrapper {:uri "/bar" :params {:a 1}})
-    (should= {:uri "/bar" :params {:a 1}} @@handled-request))
-
-  )
+    (should= {:uri "/bar" :params {:a 1}} @@handled-request)))
 
 (run-specs)
 
