@@ -20,8 +20,6 @@
     (should= "one-two-three" (spear-case "OneTwo-Three"))
     (should= "four" (spear-case "FOUR"))
     (should= "fou-r" (spear-case "FOuR"))
-    (should= "fi-ve" (spear-case "FI_VE")))
-
-  )
+    (should= "fi-ve" (spear-case "FI_VE"))))
 
 (run-specs)

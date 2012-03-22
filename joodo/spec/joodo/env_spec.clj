@@ -18,8 +18,7 @@
 
   (it "reads in all the system properties"
     (doseq [[key value] (System/getProperties)]
-      (should= value (env key))))
-  )
+      (should= value (env key)))))
 
 (run-specs)
 

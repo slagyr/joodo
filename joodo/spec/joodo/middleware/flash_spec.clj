@@ -27,8 +27,6 @@
 
   (it "doesn't write to deleted session"
     (reset! @outbound {:session nil :flash {:c "c"}})
-    (should= {:session nil} (@wrapper {})))
-
-  )
+    (should= {:session nil} (@wrapper {}))))
 
 (run-specs)

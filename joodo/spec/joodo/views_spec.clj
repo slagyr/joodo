@@ -96,9 +96,7 @@
         (should-throw
           Exception
           "Template Not Found: joodo/test_view/missing-layout.hiccup[.clj]"
-          (render-template "test_template"))))
-    )
-  )
+          (render-template "test_template"))))))
 
 (run-specs)
 
