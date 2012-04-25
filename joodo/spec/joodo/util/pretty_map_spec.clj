@@ -41,8 +41,6 @@
     (should= nested-output (pretty-map {:a 1 :a_ {:x 24 :y 25 :z 26} :b 2})))
 
   (it "makes the map sorted"
-    (should= sorted-output (pretty-map (apply hash-map (.split "once upon a midnight dreary while i pondered weak and weary there" " ")))))
-
-  )
+    (should= sorted-output (pretty-map (apply hash-map (.split "once upon a midnight dreary while i pondered weak and weary there" " "))))))
 
 (run-specs)

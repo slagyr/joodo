@@ -43,7 +43,6 @@
     (.parseArgs @server (into-array String ["-e" "staging"]))
     (should= "staging" (.env @server))
     (.parseArgs @server (into-array String ["--environment" "test"]))
-    (should= "test" (.env @server)))
-  )
+    (should= "test" (.env @server))))
 
 (run-specs)

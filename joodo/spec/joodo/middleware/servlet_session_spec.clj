@@ -1,8 +1,7 @@
 (ns joodo.middleware.servlet-session-spec
   (:use
     [speclj.core]
-    [joodo.middleware.servlet-session])
-  )
+    [joodo.middleware.servlet-session]))
 
 (deftype MockSession [store]
   SessionContainer
@@ -59,8 +58,6 @@
     (set-entry @session :bar "Bar")
     (reset! @outbound {:session nil})
     (@wrapper {:servlet-request @request})
-    (should= 0 (count @(.store @session))))
-
-  )
+    (should= 0 (count @(.store @session)))))
 
 (run-specs)
