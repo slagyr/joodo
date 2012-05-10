@@ -16,12 +16,37 @@ ensure
   Dir.chdir pwd
 end
 
+namespace :chee do
+  desc "full chee build"
+  task :build do
+    in_dir "chee" do
+      run_command "lein deps, install"
+      run_command "lein spec"
+    end
+  end
+
+  desc "push"
+  task :push do
+    in_dir "chee" do
+      run_command "lein jar, push"
+    end
+  end
+
+end
+
 namespace :joodo do
   desc "full joodo build"
   task :build do
     in_dir "joodo" do
       run_command "lein deps, javac"
       run_command "lein spec"
+    end
+  end
+
+  desc "push"
+  task :push do
+    in_dir "joodo" do
+      run_command "lein jar, push"
     end
   end
 end
@@ -47,9 +72,17 @@ namespace :lein_joodo do
       run_command "lein spec"
     end
   end
+
+  desc "push"
+  task :push do
+    in_dir "lein-joodo" do
+      run_command "lein jar, push"
+    end
+  end
 end
 
 desc "full build"
-task :build => %w{joodo:build lein_joodo:build}
+task :build => %w{chee:build joodo:build lein_joodo:build}
+task :push => %w{chee:push joodo:push lein_joodo:push}
 
 task :default => :build
