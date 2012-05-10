@@ -1,5 +1,5 @@
 (ns ^{:doc "This namespace contains functions that are useful when dealing with strings."}
-  joodo.string
+  chee.string
   (:require
     [clojure.string :as str]))
 

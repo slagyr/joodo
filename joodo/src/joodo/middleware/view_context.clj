@@ -2,7 +2,7 @@
   joodo.middleware.view-context
   (:use
     [joodo.views :only (*view-context*)]
-    [joodo.core :only (->options)]))
+    [chee.util :only (->options)]))
 
 (defn wrap-view-context
   "Middleware that configures the *view-context* for rendering.  The first argument is the wrapped

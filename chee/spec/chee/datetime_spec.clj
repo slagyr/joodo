@@ -1,7 +1,7 @@
-(ns joodo.datetime-spec
+(ns chee.datetime-spec
   (:use
     [speclj.core :exclude (before after)]
-    [joodo.datetime])
+    [chee.datetime])
   (:import
     [java.util Date]
     [java.text SimpleDateFormat]))

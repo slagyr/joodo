@@ -66,7 +66,7 @@
       wrap-servlet-session)))
 
 (defn extract-joodo-handler []
-  (let [core-namespace (env :joodo.core.namespace)
+  (let [core-namespace (env :chee.util.namespace)
         core-ns-sym (symbol core-namespace)
         _ (require core-ns-sym)
         core-ns (the-ns core-ns-sym)]

@@ -2,9 +2,9 @@
   joodo.spec-helpers.controller
   (:use
     [speclj.core]
-    [joodo.core :only (->options)]
+    [chee.util :only (->options)]
     [joodo.views :only (*view-context* render-template render-html)]
-    [joodo.datetime :only (minutes-from-now)]
+    [chee.datetime :only (minutes-from-now)]
     [joodo.middleware.request :only (*request*)]))
 
 (declare ^{:doc "Holds all of the loaded routes. Can be altered for testing

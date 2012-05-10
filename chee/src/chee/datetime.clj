@@ -1,5 +1,5 @@
 (ns ^{:doc "This namespace holds functions that make dealing with dates and times easy."}
-  joodo.datetime
+  chee.datetime
   (:import
     [java.util Date Calendar GregorianCalendar]
     [java.text SimpleDateFormat]))

@@ -1,9 +1,9 @@
-(ns joodo.string-spec
+(ns chee.string-spec
   (:use
     [speclj.core]
-    [joodo.string]))
+    [chee.string]))
 
-(describe "Joodo String"
+(describe "Chee String"
 
   (it "has gsub!"
     (should= "1.2.3" (gsub "1-2-3" #"\-" (fn [_] ".")))

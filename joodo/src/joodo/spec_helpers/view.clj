@@ -4,7 +4,7 @@
     [speclj.core :only (around)]
     [clojure.xml :only (parse)]
     [joodo.views :only (*view-context* render-template render-hiccup render-html)]
-    [joodo.core :only (->options)])
+    [chee.util :only (->options)])
   (:import
     [speclj SpecFailure]))
 

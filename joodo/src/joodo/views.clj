@@ -1,7 +1,7 @@
 (ns ^{:doc "This namespace contains functions that are used to display the view files."}
   joodo.views
   (:use [hiccup.core]
-        [joodo.core :only (->options)]))
+        [chee.util :only (->options)]))
 
 (def ^{:doc "Var that holds a map with all the information required to render a page."}
   *view-context*
