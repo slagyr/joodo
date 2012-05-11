@@ -36,14 +36,14 @@
 
 (defn camel-case
   "Converts the input string, which may be in any form, to a camel-case string
-  (title-case \"hello-world\") => \"helloWorld\""
+  (camel-case \"hello-world\") => \"helloWorld\""
   [value]
   (gsub value non-camel-separator-pattern
     #(str/upper-case (apply str (rest %)))))
 
 (defn capital-camel-case
   "Converts the input string, which may be in any form, to a capitalized camel-case string
-  (title-case \"hello-world\") => \"HelloWorld\""
+  (capital-camel-case \"hello-world\") => \"HelloWorld\""
   [value]
   (let [camel (camel-case value)]
    (str (str/upper-case (.substring camel 0 1))
@@ -51,7 +51,7 @@
 
 (defn snake-case
   "Converts the input string, which may be in any form, to a snake-case string
-  (title-case \"hello-world\") => \"hello_world\""
+  (snake-case \"hello-world\") => \"hello_world\""
   [value]
   (str/replace
     (str/lower-case (separate-camel-humps value))
