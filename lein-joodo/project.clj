@@ -1,4 +1,8 @@
-(def config (load-file "../config.clj"))
+(def config
+  (try
+    (load-file "../config.clj")
+    (catch FileNotFoundException e
+      {:version "0.0.0"})))
 
 (defproject joodo/lein-joodo (:version config)
   :description "Leiningen Plugin for Joodo, a Clojure framework for web apps."

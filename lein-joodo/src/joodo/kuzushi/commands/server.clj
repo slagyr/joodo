@@ -33,5 +33,6 @@
     (let [classpath (get-classpath-string *project*)
           jvm-args ["-cp" classpath]
           args ["-p" (:port options) "-a" (:address options) "-e" (:environment options) "-d" (:directory options)]]
+;      (clean *project*)
       (java jvm-args "joodo.kake.JoodoServer" (map str args)))))
 
