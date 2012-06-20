@@ -2,7 +2,9 @@
   (try
     (load-file "../config.clj")
     (catch java.io.FileNotFoundException e
-      {:version "0.0.0"})))
+      {:version "0.0.0"
+       :clojure-version "1.2.0"
+       :speclj-version "2.1.2"})))
 
 (defproject joodo/lein-joodo (:version config)
   :description "Leiningen Plugin for Joodo, a Clojure framework for web apps."
