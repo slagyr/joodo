@@ -1,7 +1,7 @@
 (def config
   (try
     (load-file "../config.clj")
-    (catch FileNotFoundException e
+    (catch java.io.FileNotFoundException e
       {:version "0.0.0"})))
 
 (defproject joodo/lein-joodo (:version config)
