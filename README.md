@@ -5,7 +5,7 @@
 1. Install [Leiningen](https://github.com/technomancy/leiningen) 1.5 or later.
 2. Install the `lein-joodo` plugin
 
-        lein plugin install joodo/lein-joodo 0.6.0-SNAPSHOT
+        lein plugin install joodo/lein-joodo 0.9.0
 
 3. Make sure `~/.lein/bin` is in your path.
 
@@ -36,6 +36,6 @@ If all goes well you should see a helpful message printed in your console.
 
 ## License
 
-Copyright (C) 2011 Micah Martin All Rights Reserved.
+Copyright (C) 2011-2012 Micah Martin All Rights Reserved.
 
 Distributed under the The MIT License. 
