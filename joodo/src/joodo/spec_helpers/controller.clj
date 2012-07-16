@@ -1,11 +1,10 @@
 (ns ^{:doc "This namespace is comprised of functions that work with the Speclj testing framework to make testing controller logic easy."}
   joodo.spec-helpers.controller
-  (:use
-    [speclj.core]
-    [chee.util :only (->options)]
-    [joodo.views :only (*view-context* render-template render-html)]
-    [chee.datetime :only (minutes-from-now)]
-    [joodo.middleware.request :only (*request*)]))
+  (:use [speclj.core]
+        [chee.util :only (->options)]
+        [joodo.views :only (*view-context* render-template render-html)]
+        [chee.datetime :only (minutes-from-now)]
+        [joodo.middleware.request :only (*request*)]))
 
 (declare ^{:dynamic true
            :doc "Holds all of the loaded routes. Can be altered for testing
@@ -78,8 +77,8 @@
   [(before (reset! rendered-template nil))
 
    (around [it]
-     (binding [render-template mock-render-template
-               render-html mock-render-html]
+     (with-redefs [render-template mock-render-template
+                   render-html mock-render-html]
        (it)))])
 
 (defmacro should-redirect-to
@@ -89,5 +88,5 @@
   a string representing the expected location."
   [response location]
   `(do
-    (should= 302 (:status ~response))
-    (should= ~location ((:headers ~response) "Location"))))
+     (should= 302 (:status ~response))
+     (should= ~location ((:headers ~response) "Location"))))
