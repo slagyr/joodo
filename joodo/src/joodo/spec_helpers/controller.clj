@@ -7,7 +7,8 @@
     [chee.datetime :only (minutes-from-now)]
     [joodo.middleware.request :only (*request*)]))
 
-(declare ^{:doc "Holds all of the loaded routes. Can be altered for testing
+(declare ^{:dynamic true
+           :doc "Holds all of the loaded routes. Can be altered for testing
   purposes by using the with-routes function"}
   *routes*)
 
