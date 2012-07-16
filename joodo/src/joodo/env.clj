@@ -1,7 +1,8 @@
 (ns ^{:doc "This namespace holds functions that read the current environment that the application is in (according to the system properties)."}
   joodo.env)
 
-(def ^{:doc "Holds information about the current environment. That data can be
+(def ^{:dynamic true
+       :doc "Holds information about the current environment. That data can be
   retrieved with the following syntax: (env :joodo-env)"}
   *env* (atom {:joodo-env (or (System/getProperty "joodo.env") "development")}))
 

@@ -26,7 +26,7 @@
     (with ns-to-find (atom :fake-ns))
     (with controller-to-resolve (atom (fn [request] (str "RESPONSE: " (:uri request)))))
     (around [spec]
-      (binding [require (fn [name] (swap! @required-nses conj name))
+      (with-redefs [require (fn [name] (swap! @required-nses conj name))
                 find-ns (fn [name] @@ns-to-find)
                 ns-resolve (fn [ns var] (reset! @resolved-var var) @@controller-to-resolve)]
         (spec)))
@@ -67,7 +67,7 @@
         (should= nil (router {:uri "/one"})))))
 
 (it "handles nonexisting namespaces"
-  (binding [require (fn [name] (throw (java.io.FileNotFoundException. "Doesn't exist.")))]
+  (with-redefs [require (fn [name] (throw (java.io.FileNotFoundException. "Doesn't exist.")))]
     (should= nil (resolve-controller 'the.missing-controller)))))
 
 (run-specs)

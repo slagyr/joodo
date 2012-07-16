@@ -1,7 +1,8 @@
 (ns ^{:doc "This namespace contains logic that stores information about the current HTTP request."}
   joodo.middleware.request)
 
-(def ^{:doc "Holds information about the
+(def ^{:dynamic true
+       :doc "Holds information about the
   current request in map form."}
   *request* {})
 

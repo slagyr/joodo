@@ -1,6 +1,6 @@
 (ns joodo.util.pretty-map)
 
-(declare *buffer*)
+(declare ^:dynamic *buffer*)
 
 (def endl (System/getProperty "line.separator"))
 (def spaces (repeat " "))

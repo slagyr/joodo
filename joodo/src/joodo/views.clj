@@ -3,7 +3,8 @@
   (:use [hiccup.core]
         [chee.util :only (->options)]))
 
-(def ^{:doc "Var that holds a map with all the information required to render a page."}
+(def ^{:dynamic true
+       :doc "Var that holds a map with all the information required to render a page."}
   *view-context*
   {:template-root "view"
    :layout "layout"
