@@ -1,3 +1,5 @@
+lein_exe = "lein2"
+
 def run_command(command)
   system command
   exit_code = $?.exitstatus
@@ -20,15 +22,17 @@ namespace :chee do
   desc "full chee build"
   task :build do
     in_dir "chee" do
-      run_command "lein deps, install"
-      run_command "lein spec"
+      run_command "#{lein_exe} deps"
+      run_command "#{lein_exe} install"
+      run_command "#{lein_exe} spec"
     end
   end
 
   desc "push"
   task :push do
     in_dir "chee" do
-      run_command "lein jar, push"
+      run_command "#{lein_exe} jar"
+      run_command "#{lein_exe} push"
     end
   end
 
@@ -38,15 +42,17 @@ namespace :joodo do
   desc "full joodo build"
   task :build do
     in_dir "joodo" do
-      run_command "lein deps, javac"
-      run_command "lein spec"
+      run_command "#{lein_exe} deps"
+      run_command "#{lein_exe} javac"
+      run_command "#{lein_exe} spec"
     end
   end
 
   desc "push"
   task :push do
     in_dir "joodo" do
-      run_command "lein jar, push"
+      run_command "#{lein_exe} jar"
+      run_command "#{lein_exe} push"
     end
   end
 end
@@ -68,15 +74,17 @@ namespace :lein_joodo do
   desc "full lein-joodo build"
   task :build => %w{init} do
     in_dir "lein-joodo" do
-      run_command "lein deps, javac"
-      run_command "lein spec"
+      run_command "#{lein_exe} deps"
+      run_command "#{lein_exe} javac"
+      run_command "#{lein_exe} spec"
     end
   end
 
   desc "push"
   task :push do
     in_dir "lein-joodo" do
-      run_command "lein jar, push"
+      run_command "#{lein_exe} jar"
+      run_command "#{lein_exe} push"
     end
   end
 end
