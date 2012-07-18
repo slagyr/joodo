@@ -1,6 +1,4 @@
-(ns joodo.kuzushi.common
-  (:use
-    [leiningen.core :only (read-project)]))
+(ns joodo.kuzushi.common)
 
 (def endl (System/getProperty "line.separator"))
 
@@ -21,6 +19,14 @@
 (declare #^{:dynamic true} *project*)
 (declare #^{:dynamic true} *lib-name*)
 (declare #^{:dynamic true} *summary*)
+
+(defn read-project []
+  (try
+    (require 'leiningen.core.project)
+    ((ns-resolve 'leiningen.core.project 'read))
+    (catch java.io.FileNotFoundException e
+      (require 'leiningen.core)
+      ((ns-resolve 'leiningen.core 'read-project)))))
 
 (defn load-lein-project []
   (if-let [project (read-project)]

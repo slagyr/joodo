@@ -14,7 +14,7 @@
   (with-command-help)
 
   (it "parses no arguments"
-    (binding [all-commands (fn [& args] [])]
+    (with-redefs [all-commands (fn [& args] [])]
       (should= -1 (parse-args))))
 
   (it "parses command arg dirs"

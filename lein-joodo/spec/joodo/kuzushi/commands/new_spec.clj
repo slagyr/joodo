@@ -1,13 +1,10 @@
 (ns joodo.kuzushi.commands.new-spec
-  (:use
-    [speclj.core]
-    [joodo.kuzushi.commands.new :only (execute parse-args)]
-    [joodo.kuzushi.generation :only (create-templater)])
-  (:require
-    [joodo.kuzushi.version :as version])
-  (:import
-    [java.io File]
-    [filecabinet FakeFileSystem Templater Templater$TemplaterLogger]))
+  (:use [speclj.core]
+        [joodo.kuzushi.commands.new :only (execute parse-args)]
+        [joodo.kuzushi.generation :only (create-templater)])
+  (:require [joodo.kuzushi.version :as version])
+  (:import [java.io File]
+           [filecabinet FakeFileSystem Templater Templater$TemplaterLogger]))
 
 (describe "New Command"
 
@@ -28,11 +25,11 @@
       (proxy [Templater$TemplaterLogger] []
         (say [message])))
     (around [it]
-      (binding [create-templater
-                (fn [options]
-                  (let [templater (Templater. "." "/templates")]
-                    (.setLogger templater @logger)
-                    templater))]
+      (with-redefs [create-templater
+                    (fn [options]
+                      (let [templater (Templater. "." "/templates")]
+                        (.setLogger templater @logger)
+                        templater))]
         (it)))
 
     (before

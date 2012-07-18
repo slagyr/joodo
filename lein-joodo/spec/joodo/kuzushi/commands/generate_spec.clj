@@ -1,12 +1,10 @@
 (ns joodo.kuzushi.commands.generate-spec
-  (:use
-    [speclj.core]
-    [joodo.kuzushi.common :only (*project*)]
-    [joodo.kuzushi.commands.generate :only (execute parse-args)]
-    [joodo.kuzushi.generation :only (create-templater)])
-  (:import
-    [java.io File]
-    [filecabinet FakeFileSystem Templater Templater$TemplaterLogger]))
+  (:use [speclj.core]
+        [joodo.kuzushi.common :only (*project*)]
+        [joodo.kuzushi.commands.generate :only (execute parse-args)]
+        [joodo.kuzushi.generation :only (create-templater)])
+  (:import [java.io File]
+           [filecabinet FakeFileSystem Templater Templater$TemplaterLogger]))
 
 (describe "Generate Command"
 
@@ -27,11 +25,11 @@
       (proxy [Templater$TemplaterLogger] []
         (say [message])))
     (around [it]
-      (binding [create-templater
-                (fn [options]
-                  (let [templater (Templater. "." "/templates")]
-                    (.setLogger templater @logger)
-                    templater))]
+      (with-redefs [create-templater
+                    (fn [options]
+                      (let [templater (Templater. "." "/templates")]
+                        (.setLogger templater @logger)
+                        templater))]
         (it)))
 
     (before
@@ -47,12 +45,12 @@
       (should= "controller_spec: test-project.controller.foo-controller:foo-controller:foo" (.readTextFile @fs "/home/spec/test_project/controller/foo_controller_spec.clj")))
 
     (it "generates the controller files without -controller"
-      (execute {:ns"test-project.controller.foo-controller" :generator "controller"})
+      (execute {:ns "test-project.controller.foo-controller" :generator "controller"})
       (should= "controller: test-project.controller.foo-controller:foo-controller:foo" (.readTextFile @fs "/home/src/test_project/controller/foo_controller.clj"))
       (should= "controller_spec: test-project.controller.foo-controller:foo-controller:foo" (.readTextFile @fs "/home/spec/test_project/controller/foo_controller_spec.clj")))
 
     (it "generates nested controller files"
-      (execute {:ns"test-project.foo.bar" :generator "controller"})
+      (execute {:ns "test-project.foo.bar" :generator "controller"})
       (should= "controller: test-project.foo.bar-controller:bar-controller:bar" (.readTextFile @fs "/home/src/test_project/foo/bar_controller.clj"))
       (should= "controller_spec: test-project.foo.bar-controller:bar-controller:bar" (.readTextFile @fs "/home/spec/test_project/foo/bar_controller_spec.clj")))
     )
