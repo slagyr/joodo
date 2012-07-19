@@ -2,6 +2,8 @@
 
 ## Installation
 
+### Leiningen 1
+
 1. Install [Leiningen](https://github.com/technomancy/leiningen) 1.5 or later.
 2. Install the `lein-joodo` plugin
 
@@ -15,6 +17,23 @@
 
         joodo help
 
+
+### Leiningen 2
+
+1. Install [Leiningen](https://github.com/technomancy/leiningen) 2.0 or later.
+2. Install the `lein-joodo` plugin by updating your ~/.lein/profiles.clj file.
+
+        {
+         :user {:plugins [[joodo/lein-joodo "0.10.0"]]}
+         }
+
+3. Try it out!
+
+        lein joodo help
+
+
+
+
 If all goes well you should see a helpful message printed in your console.
 
 ## Usage
@@ -23,7 +42,7 @@ If all goes well you should see a helpful message printed in your console.
 
 1. Joodo will create a boiler plate project structure for you.
 
-        joodo new my_new_project
+        [lein] joodo new my_new_project
 
 2. Download/Install all the dependencies.
 
@@ -32,10 +51,10 @@ If all goes well you should see a helpful message printed in your console.
 
 3. Start the development server
 
-        joodo server
+        lein joodo server
 
 ## License
 
-Copyright (C) 2011-2012 Micah Martin All Rights Reserved.
+Copyright (c) 2011-2012 Micah Martin All Rights Reserved.
 
 Distributed under the The MIT License. 

@@ -13,7 +13,7 @@
     :license {:name "The MIT License"
               :url "file://LICENSE"
               :distribution :repo
-              :comments "Copyright 2011-2012 Micah Martin All Rights Reserved."}
+              :comments "Copyright (c) 2011-2012 Micah Martin All Rights Reserved."}
     :dependencies [[org.clojure/clojure ~(:clojure-version config)]
                    [filecabinet "1.0.4"]
                    [mmargs "1.2.0"]

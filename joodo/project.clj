@@ -5,7 +5,7 @@
     :license {:name "The MIT License"
               :url "file://LICENSE"
               :distribution :repo
-              :comments "Copyright 2011-2012 Micah Martin All Rights Reserved."}
+              :comments "Copyright (c) 2011-2012 Micah Martin All Rights Reserved."}
     :dependencies [[org.clojure/clojure ~(:clojure-version config)]
                    [ring/ring-core "1.0.2"]
                    [ring/ring-jetty-adapter "1.0.2"]
