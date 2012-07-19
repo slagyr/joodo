@@ -16,8 +16,6 @@
     (run-with-bindings args)))
 
 (defn run-with-args [& args]
-  (println "Running with args")
-  (println "args: " args)
   (if (= "new" (first args))
     (run-with-bindings args)
     (binding [*project* (load-lein-project)]
