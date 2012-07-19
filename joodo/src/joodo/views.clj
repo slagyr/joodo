@@ -27,10 +27,10 @@
   (if-let [input (template-stream name)]
     (with-open [input input]
       (let [reader (java.io.PushbackReader. (java.io.InputStreamReader. input))]
-        (loop [result ['list] object (read reader false :EOF)]
+        (loop [result ['list] object (read reader false :EOF )]
           (if (= :EOF object)
             (seq result)
-            (recur (conj result object) (read reader false :EOF))))))
+            (recur (conj result object) (read reader false :EOF ))))))
     (throw (Exception. (str "Template Not Found: " (template-path name "hiccup") "[.clj]")))))
 
 (defn- eval-content [content]

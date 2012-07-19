@@ -1,6 +1,5 @@
 (ns leiningen.joodo
-  (:use
-    [joodo.kuzushi.main :only (run-with-project)]))
+  (:require [joodo.kuzushi.main]))
 
-(defn joodo [project & args]
-  (apply run-with-project project args))
+(defn ^:no-project-needed joodo [project & args]
+  (apply joodo.kuzushi.main/run-with-args args))

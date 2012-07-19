@@ -1,7 +1,7 @@
 (use 'joodo.env)
 
 (def environment {
-  :chee.util.namespace "!-APP_NAME-!.core"
+  :joodo.core.namespace "!-APP_NAME-!.core"
   ; environment settings go here
   })
 

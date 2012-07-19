@@ -25,7 +25,7 @@
 (defn get-classpath [project]
   (try
     (require 'leiningen.core.classpath)
-    (clojure.string/join java.io.File/pathSeparatorChar ((ns-resolve 'leiningen.core.classpath 'get-classpath)))
+    (clojure.string/join java.io.File/pathSeparatorChar ((ns-resolve 'leiningen.core.classpath 'get-classpath) project))
     (catch java.io.FileNotFoundException e
       (require 'leiningen.classpath)
       ((ns-resolve 'leiningen.classpath 'get-classpath-string) project))))
