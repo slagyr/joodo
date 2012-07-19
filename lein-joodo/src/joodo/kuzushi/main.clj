@@ -16,7 +16,7 @@
     (run-with-bindings args)))
 
 (defn run-with-args [& args]
-  (if (= "new" (first args))
+  (if (#{"new" "help" "version"} (first args))
     (run-with-bindings args)
     (binding [*project* (load-lein-project)]
       (run-with-bindings args))))
