@@ -19,7 +19,7 @@
 (describe "Servlet methods"
 
   (with fs (FakeFileSystem/installed))
-  (before (swap! *env* assoc :chee.util.namespace "joodo.kake.test-core"))
+  (before (swap! *env* assoc :joodo.core.namespace "joodo.kake.test-core"))
   (around [it]
     (with-redefs [wrap-verbose (fake-wrapper :verbose )
                   wrap-refresh (fake-wrapper :refresh )
@@ -35,7 +35,7 @@
         (should= true (:fake-joodo-handler response)))))
 
   (it "extracts joodo-handler if it is defined"
-    (swap! *env* assoc :chee.util.namespace "joodo.kake.test-override-core")
+    (swap! *env* assoc :joodo.core.namespace "joodo.kake.test-override-core")
     (let [handler (extract-joodo-handler)
           response (handler {})]
       (should-not (:app-handler response))
@@ -73,7 +73,7 @@
     (.createTextFile @fs "config/test.clj" "(use 'joodo.env)(swap! *env* assoc :env-conf *ns*)")
     (System/setProperty "joodo.env" "test")
     (System/setProperty "joodo.ignore.config" "true")
-    (reset! *env* {:chee.util.namespace "joodo.kake.test-override-core"})
+    (reset! *env* {:joodo.core.namespace "joodo.kake.test-override-core"})
     (initialize-joodo-servlet (FakeServlet.))
     (should= nil (env :root-conf ))
     (should= nil (env :env-conf ))))
