@@ -19,7 +19,7 @@ ensure
 end
 
 
-DIRS = %w{chee joodo lein_joodo}
+DIRS = %w{chee joodo lein-joodo}
 
 DIRS.each do |dir|
 
@@ -51,13 +51,13 @@ DIRS.each do |dir|
 
 end
 
-desc "Build all projects"
-task :build => %w{chee:build joodo:build lein_joodo:build}
+desc "build all projects"
+task :build => DIRS.map {|dir| "#{dir}:build"}
 
-desc "Push all projects to clojars"
-task :push => %w{chee:push joodo:push lein_joodo:push}
+desc "push all projects"
+task :push => DIRS.map {|dir| "#{dir}:push"}
 
-desc "Install all built jars locally"
-task :install => %w{chee:install joodo:install lein_joodo:install}
+desc "install all projects"
+task :install => DIRS.map {|dir| "#{dir}:install"}
 
 task :default => :build
