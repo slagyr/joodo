@@ -30,6 +30,7 @@ DIRS.each do |dir|
         run_command "#{lein_exe} deps"
         run_command "#{lein_exe} javac"
         run_command "#{lein_exe} spec"
+        run_command "#{lein_exe} install"
       end
     end
 
