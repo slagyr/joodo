@@ -1,4 +1,4 @@
-lein_exe = "lein2"
+lein_exe = "lein"
 
 def run_command(command)
   system command
