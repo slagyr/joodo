@@ -1,8 +1,8 @@
-(ns !-APP_NAME-!.core-spec
+(ns !-APP_NAME-!.root_spec
   (:use
     [speclj.core]
     [joodo.spec-helpers.controller]
-    [!-APP_NAME-!.core]))
+    [!-APP_NAME-!.root]))
 
 (describe "!-APP_NAME-!"
 

@@ -16,7 +16,10 @@
 (defn- template-path [name ext]
   (format "%s/%s.%s" (:template-root *view-context*) name ext))
 
-(defn- template-stream [name]
+(defn template-stream
+  "Searches the classpath for a matching template, using the path
+  inside the :template-root with a file extension of .hiccup or .hiccup.clj"
+  [name]
   (some
     identity
     (map

@@ -1,8 +1,4 @@
-(use 'joodo.env)
-
-(def environment {
-  :joodo.core.namespace "!-APP_NAME-!.core"
+(alter-env! assoc
+  :joodo.root.namespace "!-APP_NAME-!.root"
   ; environment settings go here
-  })
-
-(swap! *env* merge environment)
+  )

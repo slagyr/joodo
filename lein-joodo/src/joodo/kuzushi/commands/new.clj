@@ -33,8 +33,8 @@
         root-ns (:root-ns options)]
     (add-tokens templater "APP_NAME" root-ns)
     (add-tokens templater "DIR_NAME" dir-name)
-    (.file templater (format "%s/spec/%s/core_spec.clj" dir-name dir-name) "spec/app/core_spec.clj")
-    (.file templater (format "%s/src/%s/core.clj" dir-name dir-name) "src/app/core.clj")
+    (.file templater (format "%s/spec/%s/root_spec.clj" dir-name dir-name) "spec/app/root_spec.clj")
+    (.file templater (format "%s/src/%s/root.clj" dir-name dir-name) "src/app/root.clj")
     (.directory templater (format "%s/src/%s/controller" dir-name dir-name))
     (.file templater (format "%s/src/%s/view/view_helpers.clj" dir-name dir-name) "src/app/view/view_helpers.clj")
     (.file templater (format "%s/src/%s/view/layout.hiccup.clj" dir-name dir-name) "src/app/view/layout.hiccup.clj")

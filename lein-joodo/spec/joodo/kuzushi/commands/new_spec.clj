@@ -38,15 +38,15 @@
       (.createTextFile @fs "/templates/public/images/joodo.png" "joodo")
       (.createTextFile @fs "/templates/public/javascript/default.js" "javascript")
       (.createTextFile @fs "/templates/public/stylesheets/default.css" "css")
-      (.createTextFile @fs "/templates/spec/app/core_spec.clj" "core-spec: !-APP_NAME-!")
-      (.createTextFile @fs "/templates/src/app/core.clj" "core: !-APP_NAME-!, dir: !-DIR_NAME-!")
+      (.createTextFile @fs "/templates/spec/app/root_spec.clj" "root-spec: !-APP_NAME-!")
+      (.createTextFile @fs "/templates/src/app/root.clj" "root: !-APP_NAME-!, dir: !-DIR_NAME-!")
       (.createTextFile @fs "/templates/src/app/view/view_helpers.clj" "view-helpers")
       (.createTextFile @fs "/templates/src/app/view/layout.hiccup.clj" "layout")
       (.createTextFile @fs "/templates/src/app/view/index.hiccup.clj" "index")
       (.createTextFile @fs "/templates/src/app/view/not_found.hiccup.clj" "not_found")
       (.createTextFile @fs "/templates/project.clj" "project: !-APP_NAME-!, joodo: !-JOODO_VERSION-!")
       (.createTextFile @fs "/templates/Procfile" "procfile")
-      (.createTextFile @fs "/templates/config/environment.clj" "default env, core: !-APP_NAME-!")
+      (.createTextFile @fs "/templates/config/environment.clj" "default env, root: !-APP_NAME-!")
       (.createTextFile @fs "/templates/config/env.clj" "!-ENV-! env")
       )
     (context "for 'app'"
@@ -63,10 +63,10 @@
         (should= "css" (.readTextFile @fs "/home/app/public/stylesheets/app.css")))
 
       (it "generates default spec"
-        (should= "core-spec: app" (.readTextFile @fs "/home/app/spec/app/core_spec.clj")))
+        (should= "root-spec: app" (.readTextFile @fs "/home/app/spec/app/root_spec.clj")))
 
       (it "generates default src"
-        (should= "core: app, dir: app" (.readTextFile @fs "/home/app/src/app/core.clj"))
+        (should= "root: app, dir: app" (.readTextFile @fs "/home/app/src/app/root.clj"))
         (should= "view-helpers" (.readTextFile @fs "/home/app/src/app/view/view_helpers.clj"))
         (should= "layout" (.readTextFile @fs "/home/app/src/app/view/layout.hiccup.clj"))
         (should= "index" (.readTextFile @fs "/home/app/src/app/view/index.hiccup.clj"))
@@ -74,7 +74,7 @@
         (should= true (.exists @fs "/home/app/src/app/controller")))
 
       (it "generates config"
-        (should= "default env, core: app" (.readTextFile @fs "/home/app/config/environment.clj"))
+        (should= "default env, root: app" (.readTextFile @fs "/home/app/config/environment.clj"))
         (should= "development env" (.readTextFile @fs "/home/app/config/development.clj"))
         (should= "production env" (.readTextFile @fs "/home/app/config/production.clj")))
       )
@@ -83,17 +83,17 @@
       (execute {:name "foo-bar"})
       (should= (format "project: foo-bar, joodo: %s" version/string) (.readTextFile @fs "/home/foo_bar/project.clj"))
       (should= "joodo" (.readTextFile @fs "/home/foo_bar/public/images/joodo.png"))
-      (should= "core-spec: foo-bar" (.readTextFile @fs "/home/foo_bar/spec/foo_bar/core_spec.clj"))
-      (should= "core: foo-bar, dir: foo_bar" (.readTextFile @fs "/home/foo_bar/src/foo_bar/core.clj"))
-      (should= "default env, core: foo-bar" (.readTextFile @fs "/home/foo_bar/config/environment.clj")))
+      (should= "root-spec: foo-bar" (.readTextFile @fs "/home/foo_bar/spec/foo_bar/root_spec.clj"))
+      (should= "root: foo-bar, dir: foo_bar" (.readTextFile @fs "/home/foo_bar/src/foo_bar/root.clj"))
+      (should= "default env, root: foo-bar" (.readTextFile @fs "/home/foo_bar/config/environment.clj")))
 
     (it "handles '_' in the app name"
       (execute {:name "foo_bar"})
       (should= (format "project: foo-bar, joodo: %s" version/string) (.readTextFile @fs "/home/foo_bar/project.clj"))
       (should= "joodo" (.readTextFile @fs "/home/foo_bar/public/images/joodo.png"))
-      (should= "core-spec: foo-bar" (.readTextFile @fs "/home/foo_bar/spec/foo_bar/core_spec.clj"))
-      (should= "core: foo-bar, dir: foo_bar" (.readTextFile @fs "/home/foo_bar/src/foo_bar/core.clj"))
-      (should= "default env, core: foo-bar" (.readTextFile @fs "/home/foo_bar/config/environment.clj")))
+      (should= "root-spec: foo-bar" (.readTextFile @fs "/home/foo_bar/spec/foo_bar/root_spec.clj"))
+      (should= "root: foo-bar, dir: foo_bar" (.readTextFile @fs "/home/foo_bar/src/foo_bar/root.clj"))
+      (should= "default env, root: foo-bar" (.readTextFile @fs "/home/foo_bar/config/environment.clj")))
     )
   )
 

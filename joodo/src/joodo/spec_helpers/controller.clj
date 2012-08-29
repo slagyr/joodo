@@ -1,10 +1,10 @@
 (ns ^{:doc "This namespace is comprised of functions that work with the Speclj testing framework to make testing controller logic easy."}
   joodo.spec-helpers.controller
-  (:use [speclj.core]
-        [chee.util :only (->options)]
-        [joodo.views :only (*view-context* render-template render-html)]
-        [chee.datetime :only (minutes-from-now)]
-        [joodo.middleware.request :only (*request*)]))
+  (:require [speclj.core :refer :all ]
+            [chee.datetime :refer [minutes-from-now]]
+            [chee.util :refer [->options]]
+            [joodo.middleware.request :refer [*request*]]
+            [joodo.views :refer [*view-context* render-template render-html template-stream]]))
 
 (declare ^{:dynamic true
            :doc "Holds all of the loaded routes. Can be altered for testing
@@ -61,6 +61,15 @@
   (reset! rendered-context (merge *view-context* (->options args)))
   (str template))
 
+(defn strict-mock-render-template
+  "Wrapper for mock-render-template that firsts checks to see if the template exists."
+  [template & args]
+  (if-let [stream (template-stream template)]
+    (do
+      (apply mock-render-template template args)
+      (.close stream))
+    (throw (speclj.SpecFailure. (str "Template not found: " template)))))
+
 (defn mock-render-html
   "Sets rendered-html to the html provided in the first argument and sets
   rendered-context to the additional arguments provided. Then returns the
@@ -72,14 +81,16 @@
 
 (defn with-mock-rendering
   "Binds render-template to mock-render-template and render-hmtl to
-  mock-render-html."
-  []
-  [(before (reset! rendered-template nil))
-
-   (around [it]
-     (with-redefs [render-template mock-render-template
-                   render-html mock-render-html]
-       (it)))])
+  mock-render-html.
+  Options:
+    :strict true|false - will check that templates exist and fail if not"
+  [& args]
+  (let [options (->options args)]
+    [(before (reset! rendered-template nil))
+     (around [it]
+       (with-redefs [render-template (if (:strict options) strict-mock-render-template mock-render-template)
+                     render-html mock-render-html]
+         (it)))]))
 
 (defmacro should-redirect-to
   "Tests that a request redirects to a given location. Expects the first

@@ -3,7 +3,7 @@
   :dependencies [[org.clojure/clojure "1.4.0"]
                  [joodo "!-JOODO_VERSION-!"]]
 
-  :joodo-core-namespace !-APP_NAME-!.core
+  :joodo-root-namespace !-APP_NAME-!.root
 
   ; leiningen 2
   :profiles {:dev {:dependencies [[speclj "2.2.0"]]}}

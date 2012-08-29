@@ -3,7 +3,7 @@
     [clojure.string :as str]))
 
 (def major 0)
-(def minor 10)
+(def minor 11)
 (def tiny 0)
 (def snapshot false)
 (def string
@@ -12,4 +12,4 @@
     (if snapshot "-SNAPSHOT" "")))
 (def summary (str "joodo/lein-joodo " string))
 
-(def joodo-version "0.10.0")
+(def joodo-version "0.11.0")

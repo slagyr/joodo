@@ -1,4 +1,4 @@
-(ns !-APP_NAME-!.core
+(ns !-APP_NAME-!.root
   (:use
     [compojure.core :only (defroutes GET)]
     [compojure.route :only (not-found)]
