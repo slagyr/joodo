@@ -1,5 +1,4 @@
-(let [config (load-file "../config.clj")
-      dev-deps [['speclj (:speclj-version config)]]]
+(let [config (load-file "../config.clj")]
   (defproject joodo (:version config)
     :description "Joodo, a Clojure framework for web apps."
     :license {:name "The MIT License"
@@ -14,11 +13,9 @@
                    [mmargs "1.2.0"]
                    [filecabinet "1.0.4"]
                    [chee ~(:version config)]]
-    :dev-dependencies ~dev-deps
-    :profiles {:dev {:dependencies ~dev-deps}}
-    :plugins ~dev-deps
-    :test-path "spec/"
+
+    :profiles {:dev {:dependencies [[speclj ~(:speclj-version config)]]}}
+    :plugins [[speclj ~(:speclj-version config)]]
     :test-paths ["spec/"]
-    :java-source-path "src/"
     :java-source-paths ["src/"]
     ))

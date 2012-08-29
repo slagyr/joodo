@@ -8,3 +8,5 @@ classes/
 .idea
 *.DS_Store
 
+.lein-plugins
+target/
