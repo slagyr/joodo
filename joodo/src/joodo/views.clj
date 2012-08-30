@@ -23,7 +23,8 @@
   (some
     identity
     (map
-      #(.getResourceAsStream (clojure.lang.RT/baseLoader) (template-path name %))
+      #(let [template (template-path name %)]
+         (.getResourceAsStream (clojure.lang.RT/baseLoader) template))
       ["hiccup" "hiccup.clj"])))
 
 (defn- read-template [name]

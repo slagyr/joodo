@@ -65,10 +65,10 @@
   "Wrapper for mock-render-template that firsts checks to see if the template exists."
   [template & args]
   (if-let [stream (template-stream template)]
-    (do
-      (apply mock-render-template template args)
-      (.close stream))
-    (throw (speclj.SpecFailure. (str "Template not found: " template)))))
+    (let [result (apply mock-render-template template args)]
+      (.close stream)
+      result)
+    (throw (Exception. (format "(mock rendering) Template missing: %s (template-root: %s)" template (:template-root *view-context*))))))
 
 (defn mock-render-html
   "Sets rendered-html to the html provided in the first argument and sets
@@ -83,21 +83,23 @@
   "Binds render-template to mock-render-template and render-hmtl to
   mock-render-html.
   Options:
-    :strict true|false - will check that templates exist and fail if not"
+    :strict true|false - will check that templates exist and fail if not
+    All other options are passed through to the *view-context*"
   [& args]
   (let [options (->options args)]
     [(before (reset! rendered-template nil))
      (around [it]
        (with-redefs [render-template (if (:strict options) strict-mock-render-template mock-render-template)
                      render-html mock-render-html]
-         (it)))]))
+         (binding [*view-context* (merge *view-context* (dissoc options :strict))]
+           (it))))]))
 
-(defmacro should-redirect-to
-  "Tests that a request redirects to a given location. Expects the first
-  argument to be a map representing the request (Such maps can be produced
-  by the do-get and do-post functions). Expects the second argument to be
-  a string representing the expected location."
-  [response location]
-  `(do
-     (should= 302 (:status ~response))
-     (should= ~location ((:headers ~response) "Location"))))
+  (defmacro should-redirect-to
+    "Tests that a request redirects to a given location. Expects the first
+argument to be a map representing the request (Such maps can be produced
+by the do-get and do-post functions). Expects the second argument to be
+a string representing the expected location."
+    [response location]
+    `(do
+       (should= 302 (:status ~response))
+       (should= ~location ((:headers ~response) "Location"))))
