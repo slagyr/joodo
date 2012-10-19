@@ -10,6 +10,7 @@
     [joodo.middleware.keyword-cookies :only (wrap-keyword-cookies)]
     [joodo.middleware.multipart-params :only (wrap-multipart-params)]
     [joodo.middleware.servlet-session :only (wrap-servlet-session)]
+    [joodo.middleware.favicon :only (wrap-favicon-bouncer)]
     [joodo.middleware.flash :only (wrap-flash)]
     [joodo.middleware.request :only (wrap-bind-request)])
   (:import
@@ -62,7 +63,8 @@
       wrap-flash
       wrap-keyword-cookies
       wrap-cookies
-      wrap-servlet-session)))
+      wrap-servlet-session
+      wrap-favicon-bouncer)))
 
 (defn extract-joodo-handler []
   (let [core-namespace (env :joodo.root.namespace)
