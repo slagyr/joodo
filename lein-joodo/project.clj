@@ -13,8 +13,7 @@
             :comments "Copyright (c) 2011-2012 Micah Martin All Rights Reserved."}
   :dependencies [[org.clojure/clojure ~(:clojure-version config)]
                  [filecabinet "1.0.4"]
-                 [mmargs "1.2.0"]
-                 [leiningen "2.0.0-preview7"]]
+                 [mmargs "1.2.0"]]
   :profiles {:dev {:dependencies [[speclj ~(:speclj-version config)]
                                   [filecabinet "1.0.4"]]}}
   :plugins [[speclj ~(:speclj-version config)]]
