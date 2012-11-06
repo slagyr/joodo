@@ -7,7 +7,7 @@
 1. Install [Leiningen](https://github.com/technomancy/leiningen) 1.5 or later.
 2. Install the `lein-joodo` plugin
 
-        lein plugin install joodo/lein-joodo 0.9.0
+        lein plugin install joodo/lein-joodo 0.12.0
 
 3. Make sure `~/.lein/bin` is in your path.
 
@@ -24,7 +24,7 @@
 2. Install the `lein-joodo` plugin by updating your ~/.lein/profiles.clj file.
 
         {
-         :user {:plugins [[joodo/lein-joodo "0.10.0"]]}
+         :user {:plugins [[joodo/lein-joodo "0.12.0"]]}
          }
 
 3. Try it out!
@@ -57,4 +57,4 @@ If all goes well you should see a helpful message printed in your console.
 
 Copyright (c) 2011-2012 Micah Martin All Rights Reserved.
 
-Distributed under the The MIT License. 
+Distributed under the The MIT License.
