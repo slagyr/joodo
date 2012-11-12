@@ -4,7 +4,7 @@
     (catch java.io.FileNotFoundException e
       {:version "0.9.0"
        :clojure-version "1.4.0"
-       :speclj-version "2.2.0"})))
+       :speclj-version "2.3.1"})))
 (defproject joodo/lein-joodo (:version config)
   :description "Leiningen Plugin for Joodo, a Clojure framework for web apps."
   :license {:name "The MIT License"
