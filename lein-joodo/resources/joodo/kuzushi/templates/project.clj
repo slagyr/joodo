@@ -6,13 +6,13 @@
   :joodo-root-namespace !-APP_NAME-!.root
 
   ; leiningen 2
-  :profiles {:dev {:dependencies [[speclj "2.2.0"]]}}
+  :profiles {:dev {:dependencies [[speclj "2.3.1"]]}}
   :test-paths ["spec/"]
   :java-source-paths ["src/"]
-  :plugins [[speclj "2.2.0"]]
+  :plugins [[speclj "2.3.1"]]
 
   ; leiningen 1
-  :dev-dependencies [[speclj "2.2.0"]]
+  :dev-dependencies [[speclj "2.3.1"]]
   :test-path "spec/"
   :java-source-path "src/"
 
