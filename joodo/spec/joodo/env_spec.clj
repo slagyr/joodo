@@ -42,7 +42,7 @@
       (.createTextFile @fs "config/test.clj" "(alter-env! assoc :env-conf *ns*)")
       (System/setProperty "joodo.env" "test")
       (System/setProperty "joodo.ignore.config" "true")
-      (set-env! {:joodo.root.namespace "joodo.kake.test-override-core"})
+      (set-env! {:joodo.root.namespace "joodo.test-override-core"})
       (load-configurations)
       (should= nil (env :root-conf ))
       (should= nil (env :env-conf )))

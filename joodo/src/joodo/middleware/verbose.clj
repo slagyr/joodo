@@ -1,22 +1,24 @@
-(ns ^{:doc "This namespace contains functions that output the current state of the server."}
+(ns ^{:doc "Contains middleware to print requests and responses."}
   joodo.middleware.verbose
-  (:use
-    [joodo.util.pretty-map :only (pretty-map)]))
+  (:use [joodo.util.pretty-map :only (pretty-map)]))
 
-(def request-count (atom 0)) ;; TODO - use request count to keep track of the number of requests made
+(def request-count (atom 0))
+(def endl (System/getProperty "line.separator"))
 
 (defn wrap-verbose
-  "Outputs the state of the server to standard output as requests are getting made."
+  "Prints request and response maps to STDOUT in a human readable format."
   [handler]
   (fn [request]
     (let [request-id (swap! request-count inc)]
-      (println "REQUEST " request-id " ========================================================================================")
-      (print (pretty-map (dissoc request :servlet-request)))
-      (println)
-      (println)
+      (println
+        (str "REQUEST " request-id " ========================================================================================"
+          endl
+          (pretty-map (dissoc request :servlet-request ))
+          endl))
       (let [response (handler request)]
-        (println "RESPONSE " request-id " ========================================================================================")
-        (print (pretty-map (assoc response :body (str (count (str (:body response))) " chars of body"))))
-        (println)
-        (println)
+        (println
+          (str "RESPONSE " request-id " ========================================================================================"
+            endl
+            (pretty-map (assoc response :body (str (count (str (:body response))) " chars of body")))
+            endl))
         response))))

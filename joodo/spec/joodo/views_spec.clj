@@ -17,7 +17,7 @@
   (it "default context"
     (should= "layout" (:layout *view-context*))
     (should= "view" (:template-root *view-context*))
-    (should= `joodo.kake.default-rendering (:ns *view-context*)))
+    (should= `joodo.default-rendering (:ns *view-context*)))
 
   (it "render without a layout"
     (should= "No Layout" (render-html "No Layout" :layout false))

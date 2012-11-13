@@ -8,7 +8,7 @@
   *view-context*
   {:template-root "view"
    :layout "layout"
-   :ns `joodo.kake.default-rendering})
+   :ns `joodo.default-rendering})
 
 (defn- updated-context [kwargs]
   (merge *view-context* (->options kwargs)))
