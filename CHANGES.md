@@ -1,3 +1,7 @@
+# 0.12.0
+
+* added a default middleware to avoid favicon requests to the app server
+
 # 0.11.0
 
 * spec-helpers.view/with-mock-render accepts a :strict option to fail when templates don't exist

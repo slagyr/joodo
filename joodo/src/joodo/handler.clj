@@ -9,6 +9,7 @@
             [ring.middleware.file :refer [wrap-file]]
             [joodo.env :refer [env development-env? load-configurations]]
             [joodo.middleware.keyword-cookies :refer [wrap-keyword-cookies]]
+            [joodo.middleware.favicon :refer (wrap-favicon-bouncer)]
             [joodo.middleware.servlet-session :refer [wrap-servlet-session]]
             [joodo.middleware.request :refer [wrap-bind-request]])
   (:import [javax.servlet.http HttpServlet HttpServletRequest HttpServletResponse]))
@@ -42,7 +43,9 @@
       wrap-multipart-params
       wrap-flash
       wrap-keyword-cookies
-      wrap-session)))
+      wrap-session
+      wrap-favicon-bouncer
+      (wrap-file *public-dir*))))
 
 (defn extract-joodo-handler []
   (let [core-namespace (env :joodo.root.namespace )
@@ -59,7 +62,8 @@
   (install-handler [_ handler]))
 
 (defn load-handler []
-  (let [handler (extract-joodo-handler)
-        handler (if (development-env?) (attempt-wrap handler 'joodo.middleware.refresh 'wrap-refresh) handler)]
-    (wrap-file handler *public-dir*)))
+  (let [handler (extract-joodo-handler)]
+    (if (development-env?)
+      (attempt-wrap handler 'joodo.middleware.refresh 'wrap-refresh)
+      handler)))
 
