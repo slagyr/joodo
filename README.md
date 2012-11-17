@@ -4,19 +4,7 @@
 
 ### Leiningen 1
 
-1. Install [Leiningen](https://github.com/technomancy/leiningen) 1.5 or later.
-2. Install the `lein-joodo` plugin
-
-        lein plugin install joodo/lein-joodo 0.12.0
-
-3. Make sure `~/.lein/bin` is in your path.
-
-        export PATH=$PATH:~/.lein/bin
-
-4. Try it out!
-
-        joodo help
-
+Don't use Leiningen 1.  Use Leiningen 2.
 
 ### Leiningen 2
 
@@ -24,13 +12,12 @@
 2. Install the `lein-joodo` plugin by updating your ~/.lein/profiles.clj file.
 
         {
-         :user {:plugins [[joodo/lein-joodo "0.12.0"]]}
+         :user {:plugins [[joodo/lein-joodo "1.0.0"]]}
          }
 
 3. Try it out!
 
         lein joodo help
-
 
 
 
