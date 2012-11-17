@@ -11,7 +11,7 @@
                  [hiccup "1.0.1"]
                  [mmargs "1.2.0"]
                  [filecabinet "1.0.4"]
-                 [chee "1.0"]
+                 [chee "1.0.0"]
                  [org.clojure/tools.logging "0.2.4"]]
   :profiles {:dev {:dependencies [[speclj "2.3.1"]]}}
   :plugins [[speclj "2.3.1"]]
