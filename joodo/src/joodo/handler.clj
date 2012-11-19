@@ -3,14 +3,12 @@
             [ring.middleware.params :refer [wrap-params]]
             [ring.middleware.keyword-params :refer [wrap-keyword-params]]
             [ring.middleware.multipart-params :refer [wrap-multipart-params]]
-            [ring.middleware.cookies :refer [wrap-cookies]]
             [ring.middleware.session :refer [wrap-session]]
             [ring.middleware.flash :refer [wrap-flash]]
             [ring.middleware.file :refer [wrap-file]]
             [joodo.env :refer [env development-env? load-configurations]]
             [joodo.middleware.keyword-cookies :refer [wrap-keyword-cookies]]
-            [joodo.middleware.favicon :refer (wrap-favicon-bouncer)]
-            [joodo.middleware.servlet-session :refer [wrap-servlet-session]]
+            [joodo.middleware.favicon :refer [wrap-favicon-bouncer]]
             [joodo.middleware.request :refer [wrap-bind-request]])
   (:import [javax.servlet.http HttpServlet HttpServletRequest HttpServletResponse]))
 
