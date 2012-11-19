@@ -32,14 +32,16 @@
         command (into-array (map str (concat [java-exe] jvm-args [main-class] args)))]
     (str/join " " command)))
 
-
 (defn execute
-  "Starts the app in on a local web server"
+  "Starts the app in a local web server"
   [options]
   (with-lein-project
     (let [classpath (get-classpath *project*)
           jvm-args ["-cp" classpath]
           args ["-m" "joodo.main" "port" (:port options) "host" (:address options) "environment" (:environment options)]
           cmd (java-cmd jvm-args "clojure.main" args ".")]
-      (spit (System/getProperty "leiningen.trampoline-file") cmd))))
+      (if-let [trampoline-file (or (System/getProperty "leiningen.trampoline-file")
+                                   (System/getenv "TRAMPOLINE_FILE"))]
+        (spit trampoline-file cmd)
+        (println "No trampoline file specified, so the Joodo server could not start.")))))
 
