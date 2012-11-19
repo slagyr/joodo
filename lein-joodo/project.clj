@@ -1,4 +1,4 @@
-(defproject joodo/lein-joodo "1.0.0"
+(defproject joodo/lein-joodo "1.0.1-SNAPSHOT"
   :description "Leiningen Plugin for Joodo, a Clojure framework for web apps."
   :license {:name "The MIT License"
             :url "file://LICENSE"
