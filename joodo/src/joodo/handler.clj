@@ -6,6 +6,8 @@
             [ring.middleware.session :refer [wrap-session]]
             [ring.middleware.flash :refer [wrap-flash]]
             [ring.middleware.file :refer [wrap-file]]
+            [ring.middleware.file-info :refer [wrap-file-info]]
+            [ring.middleware.head :refer [wrap-head]]
             [joodo.env :refer [env development-env? load-configurations]]
             [joodo.middleware.keyword-cookies :refer [wrap-keyword-cookies]]
             [joodo.middleware.favicon :refer [wrap-favicon-bouncer]]
@@ -43,7 +45,9 @@
       wrap-keyword-cookies
       wrap-session
       wrap-favicon-bouncer
-      (wrap-file *public-dir*))))
+      (wrap-file *public-dir*)
+      wrap-file-info
+      wrap-head)))
 
 (defn extract-joodo-handler []
   (let [core-namespace (env :joodo.root.namespace )
