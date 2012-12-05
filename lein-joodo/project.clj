@@ -7,9 +7,9 @@
   :dependencies [[org.clojure/clojure "1.4.0"]
                  [filecabinet "1.0.4"]
                  [mmargs "1.2.0"]]
-  :profiles {:dev {:dependencies [[speclj "2.3.1"]
+  :profiles {:dev {:dependencies [[speclj "2.3.4"]
                                   [filecabinet "1.0.4"]]}}
-  :plugins [[speclj "2.3.1"]]
+  :plugins [[speclj "2.3.4"]]
   :test-paths ["spec/"]
   :shell-wrapper {:main joodo.kuzushi.main
                   :bin "bin/joodo"}

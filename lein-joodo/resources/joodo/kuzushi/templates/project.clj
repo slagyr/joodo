@@ -1,18 +1,18 @@
 (defproject !-APP_NAME-! "0.0.1"
-  :description "A website deployable to AppEngine"
+  :description "A simple stand-alone webapp"
   :dependencies [[org.clojure/clojure "1.4.0"]
                  [joodo "!-JOODO_VERSION-!"]]
 
   :joodo-root-namespace !-APP_NAME-!.root
 
   ; leiningen 2
-  :profiles {:dev {:dependencies [[speclj "2.3.1"]]}}
+  :profiles {:dev {:dependencies [[speclj "2.3.4"]]}}
   :test-paths ["spec/"]
   :java-source-paths ["src/"]
-  :plugins [[speclj "2.3.1"]]
+  :plugins [[speclj "2.3.4"]]
 
   ; leiningen 1
-  :dev-dependencies [[speclj "2.3.1"]]
+  :dev-dependencies [[speclj "2.3.4"]]
   :test-path "spec/"
   :java-source-path "src/"
 

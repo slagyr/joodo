@@ -1,3 +1,15 @@
+# 1.1.0
+
+* updates to speclj 2.3.4
+* adds file-info and head middlewares by default
+
+# 1.0.0
+
+* removes Servlets and all Java code
+* updates all dependencies
+* updates generated code
+* uses ring middleware instead of builtin middleware
+
 # 0.12.0
 
 * added a default middleware to avoid favicon requests to the app server

@@ -5,11 +5,6 @@
   (:import
     [java.io StringReader]))
 
-(defmacro should-contain [doc snip]
-  `(let [index# (.indexOf ~doc ~snip)]
-     (if (= -1 index#)
-       (throw (speclj.SpecFailure. (str "the document doesn't contain the snip: " ~snip))))))
-
 (def foo "FOO")
 
 (describe "Views"
@@ -32,8 +27,8 @@
 
   (it "can set a new template root"
     (let [html (render-template "test_template" :template-root "joodo/test_view")]
-      (should-contain html "<title>Test Layout</title>")
-      (should-contain html "<body><b>Test Template</b></body>")))
+      (should-contain "<title>Test Layout</title>" html)
+      (should-contain "<body><b>Test Template</b></body>" html)))
 
   (context "with test templates"
 
@@ -43,47 +38,47 @@
 
     (it "renders main layout"
       (let [html (render-html "")]
-        (should-contain html "<title>Test Layout</title>")))
+        (should-contain "<title>Test Layout</title>" html)))
 
     (it "renders main layout with content as body"
       (let [html (render-html "My Content")]
-        (should-contain html "<body>My Content</body>")))
+        (should-contain "<body>My Content</body>" html)))
 
     (it "renders layout without .clj extension"
       (binding [*view-context* (assoc *view-context* :layout "layout2")]
         (let [html (render-html "My Content")]
-          (should-contain html "<title>Test Layout2</title>")
-          (should-contain html "<body>My Content</body>"))))
+          (should-contain "<title>Test Layout2</title>" html)
+          (should-contain "<body>My Content</body>" html))))
 
     (it "renders hiccup content"
       (let [html (render-hiccup `[:div "Hiccup!"])]
-        (should-contain html "<title>Test Layout</title>")
-        (should-contain html "<body><div>Hiccup!</div></body>")))
+        (should-contain "<title>Test Layout</title>" html)
+        (should-contain "<body><div>Hiccup!</div></body>" html)))
 
     (it "renders a template"
       (let [html (render-template "test_template")]
-        (should-contain html "<title>Test Layout</title>")
-        (should-contain html "<body><b>Test Template</b></body>")))
+        (should-contain "<title>Test Layout</title>" html)
+        (should-contain "<body><b>Test Template</b></body>" html)))
 
     (it "renders a template with no .clj extension"
       (let [html (render-template "test_template2")]
-        (should-contain html "<title>Test Layout</title>")
-        (should-contain html "<body><i>Test Template2</i></body>")))
+        (should-contain "<title>Test Layout</title>" html)
+        (should-contain "<body><i>Test Template2</i></body>" html)))
 
     (it "renders nested template"
       (let [html (render-template "nested/nested_template")]
-        (should-contain html "<title>Test Layout</title>")
-        (should-contain html "<body><a>Nested Template</a></body>")))
+        (should-contain "<title>Test Layout</title>" html)
+        (should-contain "<body><a>Nested Template</a></body>" html)))
 
     (it "renders partials"
       (let [html (render-hiccup `(render-partial "test_partial"))]
-        (should-contain html "<title>Test Layout</title>")
-        (should-contain html "<body><span>Test Partial</span></body>")))
+        (should-contain "<title>Test Layout</title>" html)
+        (should-contain "<body><span>Test Partial</span></body>" html)))
 
     (it "renders nested partial"
       (let [html (render-hiccup `(render-partial "nested/nested_partial"))]
-        (should-contain html "<title>Test Layout</title>")
-        (should-contain html "<body><p>Nested Partial</p></body>")))
+        (should-contain "<title>Test Layout</title>" html)
+        (should-contain "<body><p>Nested Partial</p></body>" html)))
 
     (it "provides nice error when template is missing"
       (should-throw

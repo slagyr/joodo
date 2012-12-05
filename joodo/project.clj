@@ -1,4 +1,4 @@
-(defproject joodo "1.0.0"
+(defproject joodo "1.1.0"
   :description "Joodo, a Clojure framework for web apps."
   :license {:name "The MIT License"
             :url "file://LICENSE"
@@ -11,10 +11,10 @@
                  [hiccup "1.0.1"]
                  [mmargs "1.2.0"]
                  [filecabinet "1.0.4"]
-                 [chee "1.0.0"]
+                 [chee "1.1.0"]
                  [org.clojure/tools.logging "0.2.4"]]
-  :profiles {:dev {:dependencies [[speclj "2.3.1"]]}}
-  :plugins [[speclj "2.3.1"]]
+  :profiles {:dev {:dependencies [[speclj "2.3.4"]]}}
+  :plugins [[speclj "2.3.4"]]
   :test-paths ["spec/"]
   :java-source-paths ["src/"]
   )
