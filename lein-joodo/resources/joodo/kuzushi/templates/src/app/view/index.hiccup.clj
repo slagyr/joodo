@@ -8,7 +8,7 @@
 
 [:h3 "License"]
 [:p "Copyright (C) 2011-2012 Micah Martin All Rights Reserved."]
-[:p "Distributed under the The MIT License."]
+[:p "Distributed under The MIT License."]
 
 [:h3 "Meta"]
 [:p "This app was generated for !-APP_NAME-!."]
