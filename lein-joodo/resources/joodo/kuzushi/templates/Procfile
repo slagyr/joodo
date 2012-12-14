@@ -1,1 +1,1 @@
-web: lein run -m joodo.main production
+web: lein run -m joodo.main environment production
