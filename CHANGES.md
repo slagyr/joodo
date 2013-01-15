@@ -1,3 +1,8 @@
+# 1.1.1
+
+* clears rendered-context in controller spec-helper
+* updates all dependencies to latest version
+
 # 1.1.0
 
 * updates to speclj 2.3.4

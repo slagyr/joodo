@@ -7,7 +7,7 @@
  [:a {:href "https://github.com/slagyr/joodo"} "https://github.com/slagyr/joodo"] "."]
 
 [:h3 "License"]
-[:p "Copyright (C) 2011-2012 Micah Martin All Rights Reserved."]
+[:p "Copyright (C) 2011-2013 Micah Martin All Rights Reserved."]
 [:p "Distributed under The MIT License."]
 
 [:h3 "Meta"]

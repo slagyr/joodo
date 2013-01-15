@@ -88,6 +88,7 @@
   [& args]
   (let [options (->options args)]
     [(before (reset! rendered-template nil))
+     (before (reset! rendered-context nil))
      (around [it]
        (with-redefs [render-template (if (:strict options) strict-mock-render-template mock-render-template)
                      render-html mock-render-html]
