@@ -1,61 +1,75 @@
 (ns ^{:doc "This namespace contains middleware that digests locale
   information and adds it to the request map."}
   joodo.middleware.locale
-  (:use [clojure.string :as string :only [split join]]))
+  (:use
+    [clojure.string :as string :only [split join]]))
 
-(defn build-query-map [query-string]
-  (apply hash-map (string/split query-string #"=|&")))
 
-(defn split-locale-and-q [locale-and-q-score]
+(defn- scrubbed-uri [uri]
+  (str "/" (string/join "/" (nnext (string/split uri #"\/")))))
+
+(defn- acceptable-locale? [possible-locale accepted-locales]
+  (or (contains? accepted-locales possible-locale) (empty? accepted-locales)))
+
+(defn- has-accepted-locale? [request options]
+  (if-let [locale (:locale request)]
+    (acceptable-locale? locale (:accepted-locales options))
+    false))
+
+(defn- split-locale-and-q [locale-and-q-score]
   (string/split locale-and-q-score #";"))
 
-(defn add-implicit-q-score [locale-q-pair]
+(defn- add-implicit-q-score [locale-q-pair]
   (if (= 1 (count locale-q-pair))
     (conj locale-q-pair "q=1")
     locale-q-pair))
 
-(defn locale-in-accept-header [accepted-locales accept-header]
-  (if (not (empty? accept-header))
-    (let [locale-and-q-scores-list (string/split accept-header #",")
-          locale-and-q-pairs (map add-implicit-q-score (map split-locale-and-q locale-and-q-scores-list))
-          accepted-locale-and-q-pairs (filter #(contains? accepted-locales (first %)) locale-and-q-pairs)
-          sorted-locale-and-q-pairs (sort #(compare (last %2) (last %1)) accepted-locale-and-q-pairs)]
-      (ffirst sorted-locale-and-q-pairs))))
+(defn- accepted-locale-and-q-pairs [accept-header options]
+  (let [locale-and-q-scores-list (string/split accept-header #",")
+        locale-and-q-pairs (map add-implicit-q-score (map split-locale-and-q locale-and-q-scores-list))]
+    (filter #(acceptable-locale? (first %) (:accepted-locales options)) locale-and-q-pairs)))
 
-(defn locale-in-query-string [accepted-locales query-string]
-  (if (not (empty? query-string))
-    (let [query-map (build-query-map query-string)
-          possible-locale (get query-map "locale")]
-      (if (contains? accepted-locales possible-locale)
-        possible-locale))))
 
-(defn locale-in-uri [accepted-locales uri]
-  (let [possible-locale (second (string/split uri #"\/"))]
-    (if (contains? accepted-locales possible-locale)
-      possible-locale)))
+(defn uri
+  "Adds the locale from the uri. It assumes the first section of the uri is the locale."
+  [request options]
+  (let [locale (second (string/split (:uri request) #"\/"))]
+    (assoc request :locale locale :uri (scrubbed-uri (:uri request)))))
 
-(defn scrub-locale-from-uri [request]
-  (update-in
-    request
-    [:uri]
-    #(str "/" (join (interpose "/" (rest (rest (string/split % #"\/"))))))))
+(defn cookie
+  "Adds the locale from the cookies. The default cookie it uses is called 'locale', but you can specify the
+  locale-cookie-name option to alter that."
+  [request options]
+  (let [locale-cookie-name (or (:locale-cookie-name options) "locale")]
+    (assoc request :locale (:value (get (:cookies request) locale-cookie-name)))))
 
-(defn add-locale [request locale]
-  (assoc request :locale locale))
+(defn query-param
+  "Adds the locale from the query params. The default param it uses is called 'locale', but you can specify the
+  locale-param-name option to alter that."
+  [request options]
+  (let [locale-param-name (or (:locale-param-name options) "locale")]
+    (assoc request :locale (get (:query-params request) locale-param-name))))
+
+(defn accept-header
+  "Adds the locale with the highest q rating from the accept-header. It only uses locales listed in the accepted locales set."
+  [request options]
+  (let [accept-header (or (get (:headers request) "accept-language") "")
+        sorted-locale-and-q-pairs (sort #(compare (last %2) (last %1)) (accepted-locale-and-q-pairs accept-header options))
+        locale (ffirst sorted-locale-and-q-pairs)]
+    (assoc request :locale (if (not (= "" locale)) locale))))
+
 
 (defn wrap-locale
-  "Grabs locale and puts it into the request map if the locale is a
-  supported locale in the following order:
-  1. URI - Sets locale based on the first part of the uri and scrubs
-      the uri of any locale information.
-  2. Query Params - Pulls locale from query params.
-  3. HTTP Header - Checks the accept-language field in the http header."
-  [handler accepted-locales]
-  (fn [request]
-    (if-let [locale (locale-in-uri accepted-locales (:uri request))]
-      (handler (scrub-locale-from-uri (add-locale request locale)))
-      (if-let [locale (locale-in-query-string accepted-locales (:query-string request))]
-        (handler (add-locale request locale))
-        (if-let [locale (locale-in-accept-header accepted-locales (get (:headers request) "accept-language"))]
-          (handler (add-locale request locale))
-          (handler (add-locale request "")))))))
+  "Adds locale information into your request map. You must supply a list of locale-augmenter functions
+  in the order you want them. This namespace provides you with 4 locale augmenters (accept-header, query-param,
+  cookie, and uri). You may pass in any custom locale augmenting functions you wish. The expectation is that
+  each locale augmenter will accept a request map and some wrap-locale's options and return a request map with
+  locale data in it. You may also specify a unique set of accepted locales and a default locale."
+  [handler & options]
+  (let [options (apply hash-map options)]
+    (fn [request]
+      (let [augmented-requests (map #(% request options) (:locale-augmenters options))
+            requests-with-accepted-locale-data (filter #(has-accepted-locale? % options) augmented-requests)]
+        (handler (or
+          (first requests-with-accepted-locale-data)
+          (assoc request :locale (:default-locale options))))))))
