@@ -1,6 +1,7 @@
 (ns ^{:doc "This namespace contains functions that are used to display the view files."}
   joodo.views
   (:use [hiccup.core]
+        [joodo.env :only (development-env?)]
         [chee.util :only (->options)]))
 
 (def ^{:dynamic true
@@ -27,15 +28,19 @@
          (.getResourceAsStream (clojure.lang.RT/baseLoader) template))
       ["hiccup" "hiccup.clj"])))
 
-(defn- read-template [name]
-  (if-let [input (template-stream name)]
-    (with-open [input input]
-      (let [reader (java.io.PushbackReader. (java.io.InputStreamReader. input))]
-        (loop [result ['list] object (read reader false :EOF )]
-          (if (= :EOF object)
-            (seq result)
-            (recur (conj result object) (read reader false :EOF ))))))
-    (throw (Exception. (str "Template Not Found: " (template-path name "hiccup") "[.clj]")))))
+(def ^:private read-template
+  ((if (development-env?)
+     identity
+     memoize)
+   (fn [name]
+     (if-let [input (template-stream name)]
+       (with-open [input input]
+         (let [reader (java.io.PushbackReader. (java.io.InputStreamReader. input))]
+           (loop [result ['list] object (read reader false :EOF )]
+             (if (= :EOF object)
+               (seq result)
+               (recur (conj result object) (read reader false :EOF ))))))
+       (throw (Exception. (str "Template Not Found: " (template-path name "hiccup") "[.clj]")))))))
 
 (defn- eval-content [content]
   (let [view-ns-sym (symbol (:ns *view-context*))]
