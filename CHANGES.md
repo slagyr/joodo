@@ -1,3 +1,9 @@
+# 1.1.2
+
+* caches template files when not in development mode
+* locale middleware accepts a prioritized list of locale augmenter functions
+* locale middleware allows locale to be pulled from the cookies
+
 # 1.1.1
 
 * clears rendered-context in controller spec-helper

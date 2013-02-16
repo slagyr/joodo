@@ -4,7 +4,7 @@
 
 (def major 1)
 (def minor 1)
-(def tiny 1)
+(def tiny 2)
 (def snapshot false)
 (def string
   (str
@@ -12,4 +12,4 @@
     (if snapshot "-SNAPSHOT" "")))
 (def summary (str "joodo/lein-joodo " string))
 
-(def joodo-version "1.1.1")
+(def joodo-version "1.1.2")
