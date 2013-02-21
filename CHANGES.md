@@ -1,3 +1,7 @@
+# ?
+
+* adds lein-joodo plugin to generated project.clj
+
 # 1.1.2
 
 * caches template files when not in development mode
