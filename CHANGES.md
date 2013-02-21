@@ -1,6 +1,7 @@
 # ?
 
 * adds lein-joodo plugin to generated project.clj
+* sets min lein version to 2.0
 
 # 1.1.2
 
