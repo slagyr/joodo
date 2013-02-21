@@ -1,6 +1,7 @@
 # ?
 
 * generated project updated to work with lein2 on heroku cedar
+* default bind address changed from 127.0.0.1 to 0.0.0.0
 
 # 1.1.2
 

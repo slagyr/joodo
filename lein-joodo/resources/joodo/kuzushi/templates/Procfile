@@ -1,1 +1,1 @@
-web: lein joodo server -e production -p $PORT
+web: lein joodo server -e production -a 0.0.0.0 -p $PORT

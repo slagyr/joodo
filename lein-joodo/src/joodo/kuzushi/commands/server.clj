@@ -7,11 +7,11 @@
 (def arg-spec (Arguments.))
 (doto arg-spec
   (.addValueOption "p" "port" "PORT" "Change the port (default: 8080)")
-  (.addValueOption "a" "address" "ADDRESS" "Change the address (default: 127.0.0.1)")
+  (.addValueOption "a" "address" "ADDRESS" "Change the address (default: 0.0.0.0)")
   (.addValueOption "e" "environment" "ENVIRONMENT" "Change the environment (default: development)"))
 
 (def default-options {:port 8080
-                      :address "127.0.0.1"
+                      :address "0.0.0.0"
                       :environment "development"})
 
 (defn parse-args [& args]

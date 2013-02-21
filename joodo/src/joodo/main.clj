@@ -5,7 +5,7 @@
             [chee.util :refer [->options]]))
 
 (def default-options {:port 8080
-                      :host "127.0.0.1"
+                      :host "0.0.0.0"
                       :environment "development"})
 
 (defn- keywordize-keys [options]

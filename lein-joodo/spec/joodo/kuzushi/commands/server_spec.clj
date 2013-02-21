@@ -9,7 +9,7 @@
   (with-command-help)
 
   (it "parses no args"
-    (should= {:port 8080 :address "127.0.0.1" :environment "development"} (parse-args)))
+    (should= {:port 8080 :address "0.0.0.0" :environment "development"} (parse-args)))
 
   (it "parses the port arg"
     (should= 1234 (:port (parse-args "-p" "1234")))
