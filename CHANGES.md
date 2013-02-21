@@ -1,7 +1,6 @@
 # ?
 
-* adds lein-joodo plugin to generated project.clj
-* sets min lein version to 2.0
+* generated project updated to work with lein2 on heroku cedar
 
 # 1.1.2
 
