@@ -4,7 +4,7 @@
             :url "file://LICENSE"
             :distribution :repo
             :comments "Copyright (c) 2011-2013 Micah Martin All Rights Reserved."}
-  :dependencies [[org.clojure/clojure "1.5.0"]
+  :dependencies [[org.clojure/clojure "1.5.1"]
                  [ring/ring-core "1.1.7"]
                  [ring/ring-jetty-adapter "1.1.7"]
                  [compojure "1.1.5"]

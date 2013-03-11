@@ -1,6 +1,6 @@
 (defproject !-APP_NAME-! "0.0.1"
   :description "A simple stand-alone webapp"
-  :dependencies [[org.clojure/clojure "1.5.0"]
+  :dependencies [[org.clojure/clojure "1.5.1"]
                  [joodo "!-JOODO_VERSION-!"]]
   :min-lein-version "2.0.0"
 
