@@ -4,7 +4,7 @@
             :url "file://LICENSE"
             :distribution :repo
             :comments "Copyright (c) 2011-2013 Micah Martin All Rights Reserved."}
-  :dependencies [[org.clojure/clojure "1.4.0"]
+  :dependencies [[org.clojure/clojure "1.5.0"]
                  [filecabinet "1.0.4"]
                  [mmargs "1.2.0"]]
   :profiles {:dev {:dependencies [[speclj "2.5.0"]
