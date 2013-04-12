@@ -33,7 +33,6 @@
       handler)))
 
 (defn build-joodo-handler [handler]
-  (println "(development-env?): " (development-env?))
   (let [handler (if (development-env?) (attempt-wrap handler 'joodo.middleware.verbose 'wrap-verbose) handler)]
     (->
       handler
