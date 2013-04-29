@@ -6,10 +6,10 @@
 
   :joodo-root-namespace !-APP_NAME-!.root
 
-  :profiles {:dev {:dependencies [[speclj "2.5.0"]]}}
+  :profiles {:dev {:dependencies [[speclj "2.6.1"]]}}
   :test-paths ["spec/"]
   :java-source-paths ["src/"]
-  :plugins [[speclj "2.5.0"]
+  :plugins [[speclj "2.6.1"]
             [joodo/lein-joodo "!-JOODO_VERSION-!"]]
 
   )

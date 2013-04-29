@@ -1,13 +1,7 @@
-# ???
+# 1.2.0
 
-* Upgraded to Clojure 1.5.1
-
-# ??
-
-* Upgraded from Clojure 1.4.0 to 1.5.0
-
-# ?
-
+* Upgrades to Speclj 2.6.1
+* Upgraded from Clojure 1.4.0 to 1.5.1
 * generated project updated to work with lein2 on heroku cedar
 * default bind address changed from 127.0.0.1 to 0.0.0.0
 

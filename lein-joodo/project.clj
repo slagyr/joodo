@@ -1,4 +1,4 @@
-(defproject joodo/lein-joodo "1.1.2"
+(defproject joodo/lein-joodo "1.2.0"
   :description "Leiningen Plugin for Joodo, a Clojure framework for web apps."
   :license {:name "The MIT License"
             :url "file://LICENSE"
@@ -7,9 +7,9 @@
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [filecabinet "1.0.4"]
                  [mmargs "1.2.0"]]
-  :profiles {:dev {:dependencies [[speclj "2.5.0"]
+  :profiles {:dev {:dependencies [[speclj "2.6.1"]
                                   [filecabinet "1.0.4"]]}}
-  :plugins [[speclj "2.5.0"]]
+  :plugins [[speclj "2.6.1"]]
   :test-paths ["spec/"]
   :shell-wrapper {:main joodo.kuzushi.main
                   :bin "bin/joodo"}

@@ -38,7 +38,7 @@ DIRS.each do |dir|
     task :push do
       in_dir dir do
         run_command "#{lein_exe} jar"
-        run_command "#{lein_exe} push"
+        run_command "#{lein_exe} deploy clojars"
       end
     end
 

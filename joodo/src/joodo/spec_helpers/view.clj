@@ -1,7 +1,7 @@
 (ns ^{:doc "This namespace is comprised of functions that work with the Speclj testing framework to make testing view logic easy."}
   joodo.spec-helpers.view
   (:require
-    [speclj.core :refer [around]]
+    [speclj.core :refer [around -fail]]
     [clojure.xml :refer [parse]]
     [chee.util :refer [->options]]
     [joodo.views :refer [*view-context* render-template render-hiccup render-html]]))
@@ -66,7 +66,7 @@
   argument to be the tag in question."
   [node matcher]
   `(if (not (find-tag ~node ~matcher))
-    (throw (speclj.SpecFailure. (str "Failed to find tag: " ~matcher)))))
+    (-fail (str "Failed to find tag: " ~matcher))))
 
 (defn with-view-context
   "Allows your test to edit the *view-context* variable. Expects arguments
