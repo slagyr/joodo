@@ -3,9 +3,6 @@
 (defprotocol AsBoolean
   (->bool [this]))
 
-(defprotocol AsInteger
-  (->int [this]))
-
 (defprotocol AsString
   (->string [this]))
 
@@ -15,30 +12,209 @@
 (defprotocol AsSymbol
   (->symbol [this]))
 
-(extend-type java.lang.Long
+(defprotocol AsByte
+  (->byte [this]))
+
+(defprotocol AsShort
+  (->short [this]))
+
+(defprotocol AsInteger
+  (->int [this]))
+
+(defprotocol AsLong
+  (->long [this]))
+
+(defprotocol AsBigInteger
+  (->biginteger [this]))
+
+(defprotocol AsFloat
+  (->float [this]))
+
+(defprotocol AsDouble
+  (->double [this]))
+
+(extend-type java.lang.Byte
+  AsByte
+  (->byte [this] this)
+
+  AsShort
+  (->short [this] (.shortValue this))
+
   AsInteger
-  (->int [this] (.intValue this)))
+  (->int [this] (.intValue this))
+
+  AsLong
+  (->long [this] (.longValue this))
+
+  AsBigInteger
+  (->biginteger [this] (BigInteger. (str this)))
+
+  AsFloat
+  (->float [this] (.floatValue this))
+
+  AsDouble
+  (->double [this] (.doubleValue this))
+
+  )
+
+(extend-type java.lang.Short
+  AsByte
+  (->byte [this] (.byteValue this))
+
+  AsShort
+  (->short [this] this)
+
+  AsInteger
+  (->int [this] (.intValue this))
+
+  AsLong
+  (->long [this] (.longValue this))
+
+  AsBigInteger
+  (->biginteger [this] (BigInteger. (str this)))
+
+  AsFloat
+  (->float [this] (.floatValue this))
+
+  AsDouble
+  (->double [this] (.doubleValue this))
+
+  )
 
 (extend-type java.lang.Integer
+  AsBoolean
+  (->bool [this] (= this 1))
+
+  AsByte
+  (->byte [this] (.byteValue this))
+
+  AsShort
+  (->short [this] (.shortValue this))
+
   AsInteger
-  (->int [this] this))
+  (->int [this] this)
+
+  AsLong
+  (->long [this] (.longValue this))
+
+  AsBigInteger
+  (->biginteger [this] (BigInteger. (str this)))
+
+  AsFloat
+  (->float [this] (.floatValue this))
+
+  AsDouble
+  (->double [this] (.doubleValue this))
+
+  )
+
+(extend-type java.lang.Long
+  AsBoolean
+  (->bool [this] (= this 1))
+
+  AsByte
+  (->byte [this] (.byteValue this))
+
+  AsShort
+  (->short [this] (.shortValue this))
+
+  AsInteger
+  (->int [this] (.intValue this))
+
+  AsLong
+  (->long [this] this)
+
+  AsBigInteger
+  (->biginteger [this] (BigInteger. (str this)))
+
+  AsFloat
+  (->float [this] (.floatValue this))
+
+  AsDouble
+  (->double [this] (.doubleValue this))
+
+  )
+
+(extend-type java.math.BigInteger
+  AsBoolean
+  (->bool [this] (= this 1))
+
+  AsByte
+  (->byte [this] (.byteValue this))
+
+  AsShort
+  (->short [this] (.shortValue this))
+
+  AsInteger
+  (->int [this] (.intValue this))
+
+  AsLong
+  (->long [this] (.longValue this))
+
+  AsBigInteger
+  (->biginteger [this] this)
+
+  AsFloat
+  (->float [this] (.floatValue this))
+
+  AsDouble
+  (->double [this] (.doubleValue this))
+
+  )
+
+(extend-type java.lang.Float
+  AsFloat
+  (->float [this] this)
+
+  AsDouble
+  (->double [this] (.doubleValue this))
+
+  )
+
+(extend-type java.lang.Double
+  AsFloat
+  (->float [this] (.floatValue this))
+
+  AsDouble
+  (->double [this] this)
+
+  )
 
 (extend-type java.lang.String
-  AsString
-  (->string [this] this)
+  AsBoolean
+  (->bool [this] (= "true" this))
 
   AsKeyword
   (->keyword [this] (keyword this))
 
-  AsBoolean
-  (->bool [this] (= "true" this))
-
-  AsInteger
-  (->int [this] (Integer/parseInt this))
+  AsString
+  (->string [this] this)
 
   AsSymbol
-  (->symbol [this] (symbol this)))
+  (->symbol [this] (symbol this))
 
+  AsByte
+  (->byte [this] (Byte. this))
+
+  AsShort
+  (->short [this] (Short. this))
+
+  AsInteger
+  (->int [this] (Integer. this))
+
+  AsLong
+  (->long [this] (Long. this))
+
+  AsBigInteger
+  (->biginteger [this] (BigInteger. this))
+
+  AsFloat
+  (->float [this] (Float. this))
+
+  AsDouble
+  (->double [this] (Double. this))
+
+  )
 (extend-type clojure.lang.Keyword
   AsString
   (->string [this] (name this))
@@ -50,7 +226,7 @@
   (->bool [this] (= :true this))
 
   AsSymbol
-  (->symbol [this] (symbol (->string this))))
+  (->symbol [this] (symbol (name this))))
 
 (extend-type clojure.lang.Symbol
   AsString
@@ -76,8 +252,40 @@
   (->keyword [this] (keyword (.toString this)))
 
   AsSymbol
-  (->symbol [this] (symbol (->string this))))
+  (->symbol [this] (symbol (.toString this))))
 
 (extend-type nil
   AsBoolean
-  (->bool [this] false))
+  (->bool [this] nil)
+
+  AsString
+  (->string [this] nil)
+
+  AsKeyword
+  (->keyword [this] nil)
+
+  AsSymbol
+  (->symbol [this] nil)
+
+  AsByte
+  (->byte [this] nil)
+
+  AsShort
+  (->short [this] nil)
+
+  AsInteger
+  (->int [this] nil)
+
+  AsLong
+  (->long [this] nil)
+
+  AsBigInteger
+  (->biginteger [this] nil)
+
+  AsFloat
+  (->float [this] nil)
+
+  AsDouble
+  (->double [this] nil)
+
+  )
