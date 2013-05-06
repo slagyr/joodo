@@ -1,3 +1,7 @@
+# ???
+
+* [chee] Refactors coerce specs; adds support for most primative Java types (@mylesmegyesi): https://github.com/slagyr/joodo/pull/23
+
 # 1.2.0
 
 * Upgrades to Speclj 2.6.1
