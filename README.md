@@ -13,7 +13,7 @@ Don't use Leiningen 1.  Use Leiningen 2.
 
 ```clojure
 {
-  :user {:plugins [[joodo/lein-joodo "1.0.0"]]}
+  :user {:plugins [[joodo/lein-joodo "1.2.0"]]}
 }
 ```
 
@@ -50,6 +50,6 @@ $ lein joodo server
 
 ## License
 
-Copyright (c) 2011-2012 Micah Martin All Rights Reserved.
+Copyright (c) 2011-2013 Micah Martin All Rights Reserved.
 
 Distributed under The MIT License.
