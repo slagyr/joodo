@@ -63,9 +63,8 @@
   (install-handler [_ handler]))
 
 (defn load-handler []
-  (if (development-env?)
-    (attempt-wrap (fn [request] ((extract-joodo-handler) request))
-                  'joodo.middleware.refresh
-                  'wrap-refresh)
-    (extract-joodo-handler)))
+  (let [handler (extract-joodo-handler)]
+    (if (development-env?)
+      (attempt-wrap handler 'joodo.middleware.refresh 'wrap-refresh)
+      handler)))
 
