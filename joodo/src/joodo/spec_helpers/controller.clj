@@ -1,6 +1,6 @@
 (ns ^{:doc "This namespace is comprised of functions that work with the Speclj testing framework to make testing controller logic easy."}
   joodo.spec-helpers.controller
-  (:require [speclj.core :refer :all ]
+  (:require [speclj.core :refer :all]
             [chee.datetime :refer [minutes-from-now]]
             [chee.util :refer [->options]]
             [joodo.middleware.request :refer [*request*]]
@@ -95,12 +95,22 @@
          (binding [*view-context* (merge *view-context* (dissoc options :strict))]
            (it))))]))
 
-  (defmacro should-redirect-to
-    "Tests that a request redirects to a given location. Expects the first
+(defmacro should-redirect-to
+  "Tests that a request redirects to a given location. Expects the first
 argument to be a map representing the request (Such maps can be produced
 by the do-get and do-post functions). Expects the second argument to be
 a string representing the expected location."
-    [response location]
-    `(do
-       (should= 302 (:status ~response))
-       (should= ~location ((:headers ~response) "Location"))))
+  [response location]
+  `(do
+     (should= 302 (:status ~response))
+     (should= ~location ((:headers ~response) "Location"))))
+
+(defmacro should-redirect-after-post-to
+  "Tests that a request redirects after POST to a given location. Expects the first
+argument to be a map representing the request (Such maps can be produced
+by the do-get and do-post functions). Expects the second argument to be
+a string representing the expected location."
+  [response location]
+  `(do
+     (should= 303 (:status ~response))
+     (should= ~location ((:headers ~response) "Location"))))

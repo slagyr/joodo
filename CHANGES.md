@@ -1,4 +1,8 @@
-# ???
+# 1.2.2
+
+* adds should-redirect-after-post to controller spec-helper
+
+# 1.2.1
 
 * [chee] Refactors coerce specs; adds support for most primative Java types (@mylesmegyesi): https://github.com/slagyr/joodo/pull/23
 
