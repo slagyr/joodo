@@ -1,3 +1,9 @@
+# 2.0.0
+
+* Joodo is a library, not a plugin
+* Adds lein-template for joodo apps
+
+
 # 1.2.2
 
 * adds should-redirect-after-post to controller spec-helper
