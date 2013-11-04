@@ -1,7 +1,6 @@
 (ns chee.string-spec
-  (:use
-    [speclj.core]
-    [chee.string]))
+  (:require [speclj.core :refer :all]
+            [chee.string :refer :all]))
 
 (describe "Chee String"
 
@@ -16,7 +15,7 @@
   (it "splits camel humps"
     (should= "Ab Cd" (separate-camel-humps "AbCd"))
     (should= "Abc0 Xyz1" (separate-camel-humps "Abc0Xyz1")))
-  
+
   (it "converts strings into titles"
     (should= "Class Name" (title-case "Class Name"))
     (should= "Class Name" (title-case "class_name"))
@@ -27,7 +26,7 @@
     (should= "With Spaces" (title-case "with spaces"))
     (should= "Some Title" (title-case "Some Title"))
     (should= "Some Title" (title-case "SomeTitle")))
-  
+
   (it "can camalize strings"
     (should= "defaultSceneName" (camel-case "defaultSceneName"))
     (should= "setDefaultSceneName" (camel-case "set defaultSceneName"))
@@ -36,7 +35,7 @@
     (should= "withSpaces" (camel-case "with spaces"))
     (should= "withDash" (camel-case "with-dash"))
     (should= "startingCapital" (camel-case "starting Capital")))
-  
+
   (it "can do capital camel case too"
     (should= "DefaultSceneName" (capital-camel-case "DefaultSceneName"))
     (should= "DefaultSceneName" (capital-camel-case "defaultSceneName"))
@@ -44,7 +43,7 @@
     (should= "OnceUponATime" (capital-camel-case "once_upon_a_time"))
     (should= "WithSpaces" (capital-camel-case "with spaces"))
     (should= "WithDash" (capital-camel-case "with-dash")))
-  
+
   (it "can snake-case strings"
     (should= "class_name" (snake-case "class_name"))
     (should= "class_name" (snake-case "ClassName"))
@@ -62,7 +61,7 @@
     (should= "four" (spear-case "FOUR"))
     (should= "fou-r" (spear-case "FOuR"))
     (should= "fi-ve" (spear-case "FI_VE")))
-  
+
   )
 
 (run-specs)

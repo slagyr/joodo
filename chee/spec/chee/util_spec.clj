@@ -10,6 +10,4 @@
     (should= {} (->options [{}]))
     (should= {:a 1} (->options [{:a 1}]))
     (should= {:a 1 :b 2} (->options [{:a 1} :b 2]))
-    (should= {:a 1 :b 2} (->options [:a 1 :b 2])))
-
-  )
+    (should= {:a 1 :b 2} (->options [:a 1 :b 2]))))

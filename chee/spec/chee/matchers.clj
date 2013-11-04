@@ -1,6 +1,5 @@
 (ns chee.matchers
-  (:require [speclj.core :refer :all]
-            [speclj.util :refer [endl]]))
+  (:require [speclj.core :refer :all]))
 
 (defmacro should=str [expected-form actual-form]
   `(do
