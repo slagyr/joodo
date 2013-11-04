@@ -1,4 +1,4 @@
-(ns {{name}}.main
+(ns foo.main
   (:require [compojure.core :refer :all]
             [compojure.handler :as handler]
             [compojure.route :as route]
@@ -6,7 +6,7 @@
             [joodo.middleware.favicon :refer [wrap-favicon-bouncer]]
             [joodo.middleware.keyword-cookies :refer [wrap-keyword-cookies]]
             [joodo.middleware.request :refer [wrap-bind-request]]
-            [joodo.middleware.util :refer [wrap-development-maybe]]
+            [joodo.middleware.util :refer [attempt-wrap]]
             [joodo.middleware.view-context :refer [wrap-view-context]]
             [joodo.views :refer [render-template render-html]]
             [ring.middleware.file :refer [wrap-file]]
@@ -24,14 +24,19 @@
 
 (defroutes app-routes
   (GET "/" [] (render-template "index"))
-  (route/resources "/") ; this is rather redundant with the (wrap-file "public") below.
-  (route/not-found (render-template "not_found" :template-root "{{nested-dirs}}" :ns `{{name}}.view-helpers)))
+  (route/resources "/")
+  (route/not-found (render-template "not_found" :template-root "foo" :ns `foo.view-helpers)))
 
 (def app-handler
   (->
     app-routes
-    (wrap-view-context :template-root "{{nested-dirs}}" :ns `{{name}}.view-helpers)
+    (wrap-view-context :template-root "foo" :ns `foo.view-helpers)
     wrap-rpc))
+
+(defn- wrap-development-maybe [handler]
+  (if (env/development-env?)
+    (attempt-wrap handler 'joodo.middleware.verbose 'wrap-verbose)
+    handler))
 
 (def app
   (-> app-handler
@@ -45,6 +50,5 @@
     wrap-session
     wrap-favicon-bouncer
     (wrap-file "public")
-    (wrap-checksummed-files)
     wrap-file-info
     wrap-head))
