@@ -58,7 +58,7 @@
 (defn load-configurations-unchecked
   "Loads joodo configuration without checking if it should (load-config?)."
   []
-  (let [environment (System/getProperty "joodo.env")
+  (let [environment (or (System/getProperty "joodo.env") (System/getenv "JOODO_ENV") "development")
         env-ns (create-ns (gensym (str "joodo.config-")))]
     (load-config env-ns "config/environment.clj")
     (load-config env-ns (format "config/%s.clj" environment))))

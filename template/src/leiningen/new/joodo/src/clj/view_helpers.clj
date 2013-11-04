@@ -4,4 +4,4 @@
              [hiccup.form :refer :all]
              [hiccup.page :refer :all]
              [joodo.env :as env]
-             [joodo.views :only [render-partial *view-context*]]))
+             [joodo.views :refer [render-partial *view-context*]]))

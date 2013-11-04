@@ -3,10 +3,10 @@
             [compojure.handler :as handler]
             [compojure.route :as route]
             [joodo.env :as env]
-            [joodo.handler]
             [joodo.middleware.favicon :refer [wrap-favicon-bouncer]]
             [joodo.middleware.keyword-cookies :refer [wrap-keyword-cookies]]
             [joodo.middleware.request :refer [wrap-bind-request]]
+            [joodo.middleware.util :refer [attempt-wrap]]
             [joodo.middleware.view-context :refer [wrap-view-context]]
             [joodo.views :refer [render-template render-html]]
             [ring.middleware.file :refer [wrap-file]]
@@ -20,7 +20,6 @@
             [shoreleave.middleware.rpc :refer [wrap-rpc]]
             ))
 
-(System/setProperty "joodo.env" (or (System/getenv "JOODO_ENV") "development"))
 (env/load-configurations)
 
 (defroutes app-routes
@@ -36,7 +35,7 @@
 
 (defn- wrap-development-maybe [handler]
   (if (env/development-env?)
-    (#'joodo.handler/attempt-wrap handler 'joodo.middleware.verbose 'wrap-verbose)
+    (attempt-wrap handler 'joodo.middleware.verbose 'wrap-verbose)
     handler))
 
 (def app
@@ -50,6 +49,6 @@
     wrap-keyword-cookies
     wrap-session
     wrap-favicon-bouncer
-    (wrap-file joodo.handler/*public-dir*)
+    (wrap-file "public")
     wrap-file-info
     wrap-head))

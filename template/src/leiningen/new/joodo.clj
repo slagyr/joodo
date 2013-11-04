@@ -16,7 +16,6 @@
       ["project.clj" (render "project.clj" data)]
       ["README.md" (render "README.md" data)]
       ["bin/specljs" (render "bin/specljs")]
-      ["config/environment.clj" (render "config/environment.clj" data)]
       ["config/development.clj" (render "config/development.clj" data)]
       ["public/stylesheets/{{name}}.css" (render "public/stylesheets/default.css" data)]
       ["src/clj/{{nested-dirs}}/main.clj" (render "src/clj/main.clj" data)]
