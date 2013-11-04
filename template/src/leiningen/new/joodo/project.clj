@@ -5,7 +5,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
   :dependencies [[hiccups "0.2.0"]
-                 [joodo "1.2.0"]
+                 [joodo "1.2.3"]
                  [org.clojars.trptcolin/domina "1.0.2.1"] ; waiting on release including https://github.com/levand/domina/pull/65
                  [org.clojars.trptcolin/shoreleave-remote "0.3.0.1"] ; waiting on release including]
                  [org.clojure/clojure "1.5.1"]
