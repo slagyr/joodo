@@ -20,8 +20,8 @@
                     :dependencies [[specljs "2.8.0"]
                                    [com.cemerick/piggieback "0.0.4"]]}}
   :plugins [[speclj "2.8.0"]
-            [specljs "2.8.0"]
-            [lein-cljsbuild "0.3.4"]]
+            [lein-cljsbuild "0.3.4"]
+            [lein-ring "0.8.8"]]
 
   :cljsbuild ~(let [run-specs ["bin/specljs"  "public/javascript/{{name}}_dev.js"]]
           {:builds {:dev {:source-paths ["src/cljs" "spec/cljs"]
