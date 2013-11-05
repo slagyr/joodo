@@ -22,8 +22,33 @@
         checksum (digest/md5 (io/input-stream resource))]
     (add-checksum-to-path checksum path)))
 
-(defn path-without-fingerprint [path])
+(defn remove-checksum-from-filename [filename]
+  (let [split-string (string/split filename #"\.")]
+    (cond (< 2 (count split-string))
+          (string/join "."
+            (conj (vec (butlast (butlast split-string)))
+              (last split-string)))
+          (< 1 (count split-string))
+          (apply str (butlast split-string)))))
 
-(defn resolve-fingerprint-in [request])
+(defn remove-checksum-from-path [path]
+  (let [split-string (string/split path #"/")]
+    (string/join "/"
+      (conj
+        (vec (butlast split-string))
+        (remove-checksum-from-filename (last split-string))))))
+
+(defn path-without-fingerprint [path]
+  (remove-checksum-from-path path))
+
+(defn path-has-fingerprint [path]
+  (let [split-by-slash (string/split path #"/")
+        split-string (string/split (last split-by-slash) #"\.")]
+          (not (nil? (some #(= 32 (count  %)) split-string)))))
+
+(defn resolve-fingerprint-in [request]
+  (if (path-has-fingerprint (:uri request))
+    (assoc request :uri (remove-checksum-from-path (:uri request)))
+    request))
 
 (defn wrap-asset-fingerprint [handler])

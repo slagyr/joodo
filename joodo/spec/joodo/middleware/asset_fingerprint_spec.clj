@@ -16,28 +16,32 @@
     (should= "file.abc123.xyz" (add-checksum-to-path "abc123" "file.xyz")))
 
   (it "removes fingerprint from path"
-    (pending))
+    (should= "/some/path.xyz" (remove-checksum-from-path "/some/path.abc123.xyz"))
+    (should= "/some/path.xyz" (remove-checksum-from-path "/some/path.abc456.xyz"))
+    (should= "/some/other.abc" (remove-checksum-from-path "/some/other.abc456.abc"))
+    (should= "/some/other.else.abc" (remove-checksum-from-path "/some/other.else.abc456.abc"))
+    (should= "/some/extensionless" (remove-checksum-from-path "/some/extensionless.abc123"))
+    (should= "/some.thing/extensionless" (remove-checksum-from-path "/some.thing/extensionless.abc123"))
+    (should= "extensionless" (remove-checksum-from-path "extensionless.abc123"))
+    (should= "file.xyz" (remove-checksum-from-path "file.abc123.xyz")))
 
   (it "adds checksum to path in classpath"
-    (pending)
     (let [path "joodo/middleware/asset_fingerprint_spec.clj"
           result (path-with-fingerprint "joodo/middleware/asset_fingerprint_spec.clj")]
+      ;(should-not= path result)
       (should-not= path result)
       (should= path (path-without-fingerprint result))))
 
   (it "ignored requests without finger prints"
-    (pending)
     (let [request {:stuff :blah :uri "/path/without/fingerprint.abc"}]
       (should= request (resolve-fingerprint-in request))))
 
   (it "resolves fingerprinted assets in request"
-    (pending)
     (let [fingerprint "abcdefghijklmnopqrstuvwxyz123456"
           request {:stuff :blah :uri (str "/path/with/fingerprint." fingerprint ".abc")}]
       (should=
         {:stuff :blah :uri "/path/with/fingerprint.abc"}
         (resolve-fingerprint-in request))))
-
 
   (it "middleware passes resolved requests"
     (pending)
