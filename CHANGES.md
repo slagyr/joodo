@@ -5,6 +5,8 @@
 * adds ring plugin to project.clj
 * removes joodo/handler.clj and joodo/main.clj
 * removes joodo/http package (was no longer used)
+* removes lein-joodo plugin project
+* moves pretty-map into chee
 
 # 1.2.2
 

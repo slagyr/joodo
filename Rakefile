@@ -1,4 +1,4 @@
-lein_exe = "lein2"
+lein_exe = "lein"
 
 def run_command(command)
   system command
@@ -19,7 +19,7 @@ ensure
 end
 
 
-DIRS = %w{chee joodo lein-joodo}
+DIRS = %w{chee joodo}
 
 DIRS.each do |dir|
 
@@ -48,6 +48,13 @@ DIRS.each do |dir|
         run_command "#{lein_exe} install"
       end
     end
+
+    desc "runs specs"
+    task :spec do
+      in_dir dir do
+        run_command "#{lein_exe} spec"
+      end
+    end
   end
 
 end
@@ -60,5 +67,8 @@ task :push => DIRS.map {|dir| "#{dir}:push"}
 
 desc "install all projects"
 task :install => DIRS.map {|dir| "#{dir}:install"}
+
+desc "run all specs"
+task :spec => DIRS.map {|dir| "#{dir}:spec"}
 
 task :default => :build

@@ -1,6 +1,6 @@
 (ns ^{:doc "Contains middleware to print requests and responses."}
   joodo.middleware.verbose
-  (:use [joodo.util.pretty-map :only (pretty-map)]))
+  (:require [chee.pretty-map :refer [pretty-map]]))
 
 (def request-count (atom 0))
 (def endl (System/getProperty "line.separator"))

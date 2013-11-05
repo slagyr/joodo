@@ -1,4 +1,4 @@
-(ns joodo.util.pretty-map)
+(ns chee.pretty-map)
 
 (declare ^:dynamic *buffer*)
 

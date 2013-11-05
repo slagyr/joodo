@@ -1,7 +1,6 @@
-(ns joodo.util.pretty-map-spec
-  (:use
-    [speclj.core]
-    [joodo.util.pretty-map]))
+(ns chee.pretty-map-spec
+  (:require [speclj.core :refer :all]
+            [chee.pretty-map :refer :all]))
 
 
 
