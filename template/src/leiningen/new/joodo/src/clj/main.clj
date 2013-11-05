@@ -34,7 +34,7 @@
     wrap-rpc))
 
 (defn- wrap-development-maybe [handler]
-  (if (env/development-env?)
+  (if (env/development?)
     (attempt-wrap handler 'joodo.middleware.verbose 'wrap-verbose)
     handler))
 

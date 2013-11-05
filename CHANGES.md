@@ -7,6 +7,7 @@
 * removes joodo/http package (was no longer used)
 * removes lein-joodo plugin project
 * moves pretty-map into chee
+* renames env/development-env? to env/development? (same with production)
 
 # 1.2.2
 

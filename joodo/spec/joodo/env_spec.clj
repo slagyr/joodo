@@ -1,21 +1,21 @@
 (ns joodo.env-spec
-  (:use [speclj.core]
-        [joodo.env])
+  (:require [speclj.core :refer :all]
+            [joodo.env :refer :all])
   (:import [filecabinet FakeFileSystem]))
 
 (describe "Env"
 
   (it "defaults to development joodo env"
     (alter-env! assoc :joodo-env "development")
-    (should= true (development-env?))
-    (should= false (production-env?))
+    (should= true (development?))
+    (should= false (production?))
     (should= "development" (env :joodo-env ))
     (should= "development" (env "joodo-env")))
 
   (it "can change to production env"
     (alter-env! assoc :joodo-env "production")
-    (should= false (development-env?))
-    (should= true (production-env?)))
+    (should= false (development?))
+    (should= true (production?)))
 
   (it "reads in all the system properties"
     (doseq [[key value] (System/getProperties)]

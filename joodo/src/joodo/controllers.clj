@@ -1,9 +1,7 @@
 (ns ^{:doc "This namespace contains functions that creates a ring-handler and dynamically loads controllers"}
   joodo.controllers
-  (:use
-    [compojure.core :only (routing)])
-  (:require
-    [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [compojure.core :refer [routing]]))
 
 (defn- namespaces-for-parts [root parts]
   (if (seq parts)

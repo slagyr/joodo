@@ -27,13 +27,13 @@
     (get *env* (name key))
     (System/getProperty (name key))))
 
-(defn development-env?
+(defn development?
   "Returns true if the application is running in the
   development environment and false otherwise"
   []
   (= "development" (env :joodo-env)))
 
-(defn production-env?
+(defn production?
   "Returns true if the application is running in the
   production environment and false otherwise"
   []

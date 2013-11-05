@@ -1,7 +1,7 @@
 (ns ^{:doc "This namespace contains functions that are used to display the view files."}
   joodo.views
   (:use [hiccup.core]
-        [joodo.env :only (development-env?)]
+        [joodo.env :only (development?)]
         [chee.util :only (->options)]))
 
 (def ^{:dynamic true
@@ -29,7 +29,7 @@
       ["hiccup" "hiccup.clj"])))
 
 (def ^:private read-template
-  ((if (development-env?)
+  ((if (development?)
      identity
      memoize)
    (fn [name]

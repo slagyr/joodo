@@ -1,6 +1,12 @@
 (ns ^{:doc "This namespace contains functions that interface with the fresh library. The fresh library automatically loads up files that have recently been changed."}
   joodo.middleware.refresh
-  (:require [fresh.core :refer [freshener ns-to-file]]))
+  (:require [fresh.core :refer [freshener ns-to-file]]
+            [joodo.env :as env]))
+
+;(def cache (ref {}))
+;
+;(def handler [ns-sym var-sym]
+;  (if (env/development?)))
 
 (defn- files-to-keep-fresh []
   (let [ns-es (all-ns)

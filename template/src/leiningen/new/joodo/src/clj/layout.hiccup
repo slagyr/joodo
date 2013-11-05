@@ -4,7 +4,7 @@
   [:meta {:http-equiv "Content-Type" :content "text/html" :charset "iso-8859-1"}]
   [:title "{{name}}"]
   (include-css "/stylesheets/{{name}}.css")
-  (include-js (format "/javascript/{{name}}%s.js" (if (env/development-env?) "_dev" "")))]
+  (include-js (format "/javascript/{{name}}%s.js" (if (env/development?) "_dev" "")))]
  [:body
   (eval (:template-body joodo.views/*view-context*))
 ]]
