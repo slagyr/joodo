@@ -1,4 +1,4 @@
-(defproject chee "1.2.1"
+(defproject chee "2.0.0"
   :description "Support utilities"
   :license {:name "The MIT License"
             :url "file://LICENSE"

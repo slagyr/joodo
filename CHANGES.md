@@ -8,6 +8,8 @@
 * removes lein-joodo plugin project
 * moves pretty-map into chee
 * renames env/development-env? to env/development? (same with production)
+* updates dependencies compojure, ring-core, hiccup
+* removes dependencies filecabinet, mmargs, ring-jetty-adapter
 
 # 1.2.2
 

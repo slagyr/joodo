@@ -28,14 +28,11 @@
            (System/setProperty "joodo.ignore.config" "false"))
 
     (it "loads a config file"
-      (.createTextFile @fs "config/environment.clj" "(alter-env! assoc :root-conf *ns*)")
       (.createTextFile @fs "config/test.clj" "(alter-env! assoc :env-conf *ns*)")
       (System/setProperty "joodo.env" "test")
       (load-configurations)
-      (should-not= nil (env :root-conf ))
       (should-not= nil (env :env-conf ))
-      (should= true (.startsWith (name (.getName (env :env-conf ))) "joodo.config-"))
-      (should= (env :root-conf ) (env :env-conf )))
+      (should= true (.startsWith (name (.getName (env :env-conf ))) "joodo.config-")))
 
     (it "loads a config file from env dir"
       (.createTextFile @fs "config/environment.clj" "(alter-env! assoc :root-conf *ns*)")

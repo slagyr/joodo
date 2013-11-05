@@ -24,7 +24,7 @@
 
 (defroutes app-routes
   (GET "/" [] (render-template "index"))
-  (route/resources "/")
+  (route/resources "/") ; this is rather redundant with the (wrap-file "public") below.
   (route/not-found (render-template "not_found" :template-root "{{nested-dirs}}" :ns `{{name}}.view-helpers)))
 
 (def app-handler
@@ -35,7 +35,9 @@
 
 (defn- wrap-development-maybe [handler]
   (if (env/development?)
-    (attempt-wrap handler 'joodo.middleware.verbose 'wrap-verbose)
+    (-> handler
+      (attempt-wrap 'joodo.middleware.verbose/wrap-verbose)
+      (attempt-wrap 'joodo.middleware.refresh/wrap-refresh))
     handler))
 
 (def app
@@ -49,6 +51,6 @@
     wrap-keyword-cookies
     wrap-session
     wrap-favicon-bouncer
-    (wrap-file "public")
+    (wrap-file "public") ; this is rather redundant with the route/resources above.
     wrap-file-info
     wrap-head))

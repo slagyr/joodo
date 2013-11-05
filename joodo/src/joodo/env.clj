@@ -1,7 +1,5 @@
 (ns ^{:doc "This namespace holds functions that read the current environment that the application is in (according to the system properties)."}
-  joodo.env
-  (:import
-    [filecabinet FileSystem]))
+  joodo.env)
 
 (def ^{:dynamic true
        :doc "Holds information about the current environment. That data can be
@@ -49,7 +47,7 @@
 (defn load-config
   "Loads a joodo config file."
   [ns path]
-  (let [src (.readTextFile (FileSystem/instance) path)]
+  (let [src (slurp path)]
     (binding [*ns* ns]
       (use 'clojure.core)
       (use 'joodo.env)
@@ -60,7 +58,6 @@
   []
   (let [environment (or (System/getProperty "joodo.env") (System/getenv "JOODO_ENV") "development")
         env-ns (create-ns (gensym (str "joodo.config-")))]
-    (load-config env-ns "config/environment.clj")
     (load-config env-ns (format "config/%s.clj" environment))))
 
 (defn load-config?
