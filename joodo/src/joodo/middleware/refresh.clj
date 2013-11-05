@@ -1,7 +1,6 @@
 (ns ^{:doc "This namespace contains functions that interface with the fresh library. The fresh library automatically loads up files that have recently been changed."}
   joodo.middleware.refresh
-  (:use
-    [fresh.core :only (freshener ns-to-file)]))
+  (:require [fresh.core :refer [freshener ns-to-file]]))
 
 (defn- files-to-keep-fresh []
   (let [ns-es (all-ns)
