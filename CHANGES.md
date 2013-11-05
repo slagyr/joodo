@@ -4,7 +4,7 @@
 * Adds lein-template for joodo apps
 * adds ring plugin to project.clj
 * removes joodo/handler.clj and joodo/main.clj
-* removes joodo/http packagage (was no longer used)
+* removes joodo/http package (was no longer used)
 
 # 1.2.2
 
