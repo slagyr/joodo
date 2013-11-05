@@ -27,8 +27,6 @@ DIRS.each do |dir|
     desc "full #{dir} build"
     task :build do
       in_dir dir do
-        run_command "#{lein_exe} deps"
-        run_command "#{lein_exe} javac"
         run_command "#{lein_exe} spec"
         run_command "#{lein_exe} install"
       end
@@ -37,7 +35,6 @@ DIRS.each do |dir|
     desc "push to clojars"
     task :push do
       in_dir dir do
-        run_command "#{lein_exe} jar"
         run_command "#{lein_exe} deploy clojars"
       end
     end
