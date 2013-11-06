@@ -3,6 +3,7 @@
             [compojure.handler :as handler]
             [compojure.route :as route]
             [joodo.env :as env]
+            [joodo.middleware.asset-fingerprint :refer [wrap-asset-fingerprint]]
             [joodo.middleware.favicon :refer [wrap-favicon-bouncer]]
             [joodo.middleware.keyword-cookies :refer [wrap-keyword-cookies]]
             [joodo.middleware.request :refer [wrap-bind-request]]
@@ -14,8 +15,8 @@
             [ring.middleware.head :refer [wrap-head]]
             [ring.middleware.keyword-params :refer [wrap-keyword-params]]
             [ring.middleware.multipart-params :refer [wrap-multipart-params]]
-            [ring.middleware.resource :refer [wrap-resource]]
             [ring.middleware.params :refer [wrap-params]]
+            [ring.middleware.resource :refer [wrap-resource]]
             [ring.middleware.session :refer [wrap-session]]
             [shoreleave.middleware.rpc :refer [wrap-rpc]]
             ))

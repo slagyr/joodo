@@ -4,4 +4,5 @@
              [hiccup.form :refer :all]
              [hiccup.page :refer :all]
              [joodo.env :as env]
+             [joodo.middleware.asset-fingerprint :refer [path-with-fingerprint]]
              [joodo.views :refer [render-partial *view-context*]]))
