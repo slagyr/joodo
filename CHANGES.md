@@ -11,6 +11,7 @@
 * updates dependencies compojure, ring-core, hiccup
 * removes dependencies filecabinet, mmargs, ring-jetty-adapter
 * removes controller/controller-router
+* moves config and public into resources dir.  Both are loaded as resources allowing apps to be deployed as jar files.
 
 # 1.2.2
 

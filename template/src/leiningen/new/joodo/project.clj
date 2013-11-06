@@ -23,18 +23,17 @@
             [lein-cljsbuild "0.3.4"]
             [lein-ring "0.8.8"]]
 
-  :cljsbuild ~(let [run-specs ["bin/specljs"  "public/javascript/{{name}}_dev.js"]]
+  :cljsbuild ~(let [run-specs ["bin/specljs"  "resources/public/javascript/{{name}}_dev.js"]]
           {:builds {:dev {:source-paths ["src/cljs" "spec/cljs"]
-                               :compiler {:output-to "public/javascript/{{name}}_dev.js"
+                               :compiler {:output-to "resources/public/javascript/{{name}}_dev.js"
                                           :optimizations :whitespace
                                           :pretty-print true}
                           :notify-command run-specs}
                      :prod {:source-paths ["src/cljs"]
-                             :compiler {:output-to "public/javascript/{{name}}.js"
+                             :compiler {:output-to "resources/public/javascript/{{name}}.js"
                                         :optimizations :simple}}}
             :test-commands {"test" run-specs}})
 
   :source-paths ["src/clj" "src/cljs"]
-  :resource-paths ["public"]
   :test-paths ["spec/clj"]
   :ring {:handler {{name}}.main/app})

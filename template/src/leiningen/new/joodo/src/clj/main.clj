@@ -9,12 +9,12 @@
             [joodo.middleware.util :refer [wrap-development-maybe]]
             [joodo.middleware.view-context :refer [wrap-view-context]]
             [joodo.views :refer [render-template render-html]]
-            [ring.middleware.file :refer [wrap-file]]
             [ring.middleware.file-info :refer [wrap-file-info]]
             [ring.middleware.flash :refer [wrap-flash]]
             [ring.middleware.head :refer [wrap-head]]
             [ring.middleware.keyword-params :refer [wrap-keyword-params]]
             [ring.middleware.multipart-params :refer [wrap-multipart-params]]
+            [ring.middleware.resource :refer [wrap-resource]]
             [ring.middleware.params :refer [wrap-params]]
             [ring.middleware.session :refer [wrap-session]]
             [shoreleave.middleware.rpc :refer [wrap-rpc]]
@@ -24,7 +24,6 @@
 
 (defroutes app-routes
   (GET "/" [] (render-template "index"))
-  (route/resources "/") ; this is rather redundant with the (wrap-file "public") below.
   (route/not-found (render-template "not_found" :template-root "{{nested-dirs}}" :ns `{{name}}.view-helpers)))
 
 (def app-handler
@@ -44,7 +43,7 @@
     wrap-keyword-cookies
     wrap-session
     wrap-favicon-bouncer
-    (wrap-file "public")
+    (wrap-resource "public")
     (wrap-checksummed-files)
     wrap-file-info
     wrap-head))

@@ -1,6 +1,7 @@
 (ns ^{:doc "This namespace holds functions that read the current environment that the application is in (according to the system properties)."}
   joodo.env
-  (:require [taoensso.timbre :as timbre]))
+  (:require [clojure.java.io :as io]
+            [taoensso.timbre :as timbre]))
 
 (def ^{:dynamic true
        :doc "Holds information about the current environment. That data can be
@@ -48,17 +49,21 @@
 (defn load-config
   "Loads a joodo config file."
   [ns path]
-  (let [src (slurp path)]
-    (binding [*ns* ns]
-      (use 'clojure.core)
-      (use 'joodo.env)
-      (read-src path src))))
+  (if-let [url (io/resource path)]
+    (let [src (slurp url)]
+      (binding [*ns* ns]
+        (use 'clojure.core)
+        (use 'joodo.env)
+        (read-src path src)))
+    (throw (Exception. (str "Missing config file: " path)))))
 
 (defn load-configurations-unchecked
   "Loads joodo configuration without checking if it should (load-config?)."
   []
   (let [environment (or (System/getProperty "joodo.env") (System/getenv "JOODO_ENV") "development")
-        env-ns (create-ns (gensym (str "joodo.config-")))]
+        env-ns (create-ns (gensym (str "joodo.config-")))
+
+        ]
     (timbre/info "Loading environment '" environment "'")
     (load-config env-ns (format "config/%s.clj" environment))))
 

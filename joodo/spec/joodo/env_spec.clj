@@ -1,7 +1,8 @@
 (ns joodo.env-spec
-  (:require [speclj.core :refer :all]
+  (:require [clojure.java.io :as io]
             [joodo.env :refer :all]
-            [joodo.spec-helper]))
+            [joodo.spec-helper]
+            [speclj.core :refer :all]))
 
 (describe "Env"
 
@@ -25,7 +26,8 @@
 
     (with fs (atom {}))
     (around [it]
-      (with-redefs [slurp (fn [path] (get @@fs path))]
+      (with-redefs [io/resource identity
+                    slurp (fn [path] (get @@fs path))]
         (it)))
     (after (System/setProperty "joodo.env" "development")
            (System/setProperty "joodo.ignore.config" "false"))
