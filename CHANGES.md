@@ -10,6 +10,7 @@
 * renames env/development-env? to env/development? (same with production)
 * updates dependencies compojure, ring-core, hiccup
 * removes dependencies filecabinet, mmargs, ring-jetty-adapter
+* removes controller/controller-router
 
 # 1.2.2
 

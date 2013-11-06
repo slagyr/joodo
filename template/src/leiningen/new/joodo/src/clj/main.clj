@@ -6,7 +6,7 @@
             [joodo.middleware.favicon :refer [wrap-favicon-bouncer]]
             [joodo.middleware.keyword-cookies :refer [wrap-keyword-cookies]]
             [joodo.middleware.request :refer [wrap-bind-request]]
-            [joodo.middleware.util :refer [attempt-wrap]]
+            [joodo.middleware.util :refer [wrap-development-maybe]]
             [joodo.middleware.view-context :refer [wrap-view-context]]
             [joodo.views :refer [render-template render-html]]
             [ring.middleware.file :refer [wrap-file]]
@@ -32,13 +32,6 @@
     app-routes
     (wrap-view-context :template-root "{{nested-dirs}}" :ns `{{name}}.view-helpers)
     wrap-rpc))
-
-(defn- wrap-development-maybe [handler]
-  (if (env/development?)
-    (-> handler
-      (attempt-wrap 'joodo.middleware.verbose/wrap-verbose)
-      (attempt-wrap 'joodo.middleware.refresh/wrap-refresh))
-    handler))
 
 (def app
   (-> app-handler

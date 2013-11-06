@@ -24,7 +24,10 @@
         (alter cache assoc-in [ns-file var-sym] {:handler handler :ns ns-sym :var var-sym})
         handler))))
 
-(defn handler [handler-sym]
+(defn handler
+  "In development, returns a dynamic handler that reloads the specified handler when changed.
+  In non-development, loads the handler. No fluff."
+  [handler-sym]
   (let [[ns-sym var-sym] (handler-symbols handler-sym)]
     (if (env/development?)
       (let [ns-file (ns-to-file (name ns-sym))]
@@ -55,21 +58,10 @@
       ))
   true)
 
-(defn- clear-controller-caches []
-  (try
-    ; To avoid dependency on kake, we dynamically invoke the clear-controller-caches fn.
-    (require 'joodo.controllers)
-    (let [controllers-ns (find-ns 'joodo.controllers)
-          clear-fn (ns-resolve controllers-ns 'clear-controller-caches)]
-      (clear-fn))
-    (catch Exception e
-      (println "ON NO!!!  Can't clear controller cache." e))))
-
 (defn wrap-refresh
   "When integrated with the current ring handler, this function reloads newly saved files (such as controllers) while in development mode."
   [handler]
   (let [refresh! (freshener files-to-keep-fresh audit-refresh)]
     (fn [request]
       (refresh!)
-      (clear-controller-caches)
       (handler request))))

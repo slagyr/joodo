@@ -1,4 +1,5 @@
-(ns joodo.middleware.util)
+(ns joodo.middleware.util
+  (:require [joodo.env :as env]))
 
 (defn- attempt-to-load-var [qualified-sym]
   (let [ns-sym (symbol (namespace qualified-sym))
@@ -22,3 +23,10 @@
     (do
       (println "Bypassing" middleware-sym)
       handler)))
+
+(defn wrap-development-maybe [handler]
+  (if (env/development?)
+    (-> handler
+      (attempt-wrap 'joodo.middleware.verbose/wrap-verbose)
+      (attempt-wrap 'joodo.middleware.refresh/wrap-refresh))
+    handler))

@@ -1,7 +1,6 @@
 (ns joodo.env-spec
   (:require [speclj.core :refer :all]
-            [joodo.env :refer :all])
-  (:import [filecabinet FakeFileSystem]))
+            [joodo.env :refer :all]))
 
 (describe "Env"
 
