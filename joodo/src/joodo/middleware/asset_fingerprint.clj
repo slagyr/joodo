@@ -10,10 +10,15 @@
   (let [matches (re-matches path-regex file-path)]
     (str (second matches) ".fp" hash (last matches))))
 
-(defn path-with-fingerprint [path]
-  (let [resource (io/resource path)
-        checksum (digest/md5 (io/input-stream resource))]
-    (add-fingerprint-to-path checksum path)))
+(def path-with-fingerprint
+  (memoize
+    (fn
+      ([path] (path-with-fingerprint path "public"))
+      ([path prefix]
+        (if-let [resource (io/resource (str prefix path))]
+          (let [checksum (digest/md5 (io/input-stream resource))]
+            (add-fingerprint-to-path checksum path))
+          path)))))
 
 (defn path-without-fingerprint [path]
   (if-let [match (re-matches fingerprinted-regex path)]

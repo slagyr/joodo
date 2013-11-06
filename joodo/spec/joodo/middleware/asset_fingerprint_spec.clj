@@ -1,6 +1,7 @@
 (ns joodo.middleware.asset-fingerprint-spec
-  (:require [speclj.core :refer :all]
-            [joodo.middleware.asset-fingerprint :refer :all ]))
+  (:require [clojure.java.io :as io]
+            [speclj.core :refer :all]
+            [joodo.middleware.asset-fingerprint :refer :all]))
 
 
 (describe "asset fingerprint"
@@ -26,10 +27,23 @@
     (should= "file.xyz" (path-without-fingerprint "file.fpabcdefghijklmnopqrstuvwxyz123456.xyz")))
 
   (it "adds checksum to path in classpath"
-    (let [path "joodo/middleware/asset_fingerprint_spec.clj"
-          result (path-with-fingerprint "joodo/middleware/asset_fingerprint_spec.clj")]
+    (let [path "/middleware/asset_fingerprint_spec.clj"
+          result (path-with-fingerprint "/middleware/asset_fingerprint_spec.clj" "joodo")]
       (should-not= path result)
       (should= path (path-without-fingerprint result))))
+
+  (it "missing pathspass through"
+    (should= "/some/missing/file" (path-with-fingerprint "/some/missing/file")))
+
+  (it "reuses known fingerprints"
+    (let [tally (atom 0)
+          path "/middleware/asset_fingerprint.clj"
+          response (io/resource (str "joodo" path))]
+      (with-redefs [io/resource (fn [p] (swap! tally inc) response)]
+        (let [result (path-with-fingerprint path "joodo")]
+          (should-not= path result)
+          (should= result (path-with-fingerprint path "joodo"))))
+      (should= 1 @tally)))
 
   (it "ignored requests without finger prints"
     (let [request {:stuff :blah :uri "/path/without/fingerprint.abc"}]

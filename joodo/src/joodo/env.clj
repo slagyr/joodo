@@ -19,6 +19,11 @@
   (alter-var-root (var *env*)
     (fn [_] env)))
 
+(defn read-config [path]
+  (if-let [result (io/resource path)]
+    (read-string (slurp result))
+    (throw (str "Failed to read config: " path))))
+
 (defn env
   "Retrieves an entry from the current environment. nil if not found"
   [key]

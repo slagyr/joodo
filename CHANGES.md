@@ -11,7 +11,10 @@
 * updates dependencies compojure, ring-core, hiccup
 * removes dependencies filecabinet, mmargs, ring-jetty-adapter
 * removes controller/controller-router
+* adds joodo.middleware.refresh/handler for reloadable handlers
+* config/environment.clj does not get loaded anymore
 * moves config and public into resources dir.  Both are loaded as resources allowing apps to be deployed as jar files.
+* add asset fingerprinting: joodo.middleware.asset-fingerprint
 
 # 1.2.2
 

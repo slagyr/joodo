@@ -44,6 +44,6 @@
     wrap-session
     wrap-favicon-bouncer
     (wrap-resource "public")
-    (wrap-checksummed-files)
+    wrap-asset-fingerprint
     wrap-file-info
     wrap-head))
