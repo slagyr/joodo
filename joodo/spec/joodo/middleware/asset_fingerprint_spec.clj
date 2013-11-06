@@ -28,7 +28,6 @@
   (it "adds checksum to path in classpath"
     (let [path "joodo/middleware/asset_fingerprint_spec.clj"
           result (path-with-fingerprint "joodo/middleware/asset_fingerprint_spec.clj")]
-      ;(should-not= path result)
       (should-not= path result)
       (should= path (path-without-fingerprint result))))
 
@@ -44,17 +43,13 @@
         (resolve-fingerprint-in request))))
 
   (it "middleware passes resolved requests"
-    (pending)
     (let [uri (atom nil)
           inner-handler (fn [request] (reset! uri (:uri request)))
           wrapped-handler (wrap-asset-fingerprint inner-handler)
           fingerprint "abcdefghijklmnopqrstuvwxyz123456"
           request {:uri (str "/path/with/fingerprint." fingerprint ".abc")}]
       (wrapped-handler request)
-      (should= "/path/with/fingerprint.abc" @uri)))
-
-
-  )
+      (should= "/path/with/fingerprint.abc" @uri))))
 
 
 

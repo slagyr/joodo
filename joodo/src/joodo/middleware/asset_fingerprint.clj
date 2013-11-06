@@ -51,4 +51,7 @@
     (assoc request :uri (remove-checksum-from-path (:uri request)))
     request))
 
-(defn wrap-asset-fingerprint [handler])
+(defn wrap-asset-fingerprint [handler]
+  (fn [request]
+    (let [request (resolve-fingerprint-in request)]
+      (handler request))))
