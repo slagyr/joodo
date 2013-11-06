@@ -7,6 +7,7 @@
   :dependencies [[chee "2.0.0"]
                  [com.taoensso/timbre "2.6.3"]
                  [compojure "1.1.6"]
+                 [digest "1.4.3"]
                  [hiccup "1.0.4"]
                  [org.clojure/clojure "1.5.1"]
                  [ring/ring-core "1.1.8"]]
