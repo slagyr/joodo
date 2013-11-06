@@ -1,5 +1,6 @@
 (ns ^{:doc "This namespace holds functions that read the current environment that the application is in (according to the system properties)."}
-  joodo.env)
+  joodo.env
+  (:require [taoensso.timbre :as timbre]))
 
 (def ^{:dynamic true
        :doc "Holds information about the current environment. That data can be
@@ -58,6 +59,7 @@
   []
   (let [environment (or (System/getProperty "joodo.env") (System/getenv "JOODO_ENV") "development")
         env-ns (create-ns (gensym (str "joodo.config-")))]
+    (timbre/info "Loading environment '" environment "'")
     (load-config env-ns (format "config/%s.clj" environment))))
 
 (defn load-config?

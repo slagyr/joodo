@@ -1,5 +1,6 @@
 (ns joodo.middleware.util
-  (:require [joodo.env :as env]))
+  (:require [joodo.env :as env]
+            [taoensso.timbre :as timbre]))
 
 (defn- attempt-to-load-var [qualified-sym]
   (let [ns-sym (symbol (namespace qualified-sym))
@@ -9,7 +10,7 @@
       (let [ns (the-ns ns-sym)]
         (ns-resolve ns var-sym))
       (catch Exception e
-        (println "Failed to load var:" var-sym "from ns:" ns-sym e)
+        (timbre/warn "Failed to load var:" var-sym "from ns:" ns-sym e)
         nil))))
 
 (defn attempt-wrap
@@ -21,7 +22,7 @@
   (if-let [wrapper (attempt-to-load-var middleware-sym)]
     (wrapper handler)
     (do
-      (println "Bypassing" middleware-sym)
+      (timbre/warn "Bypassing" middleware-sym)
       handler)))
 
 (defn wrap-development-maybe [handler]

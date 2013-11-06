@@ -1,7 +1,11 @@
 (ns ^{:doc "This namespace contains functions that interface with the fresh library. The fresh library automatically loads up files that have recently been changed."}
   joodo.middleware.refresh
-  (:require [fresh.core :refer [freshener ns-to-file]]
-            [joodo.env :as env]))
+  (:require [clojure.string :as string]
+            [fresh.core :refer [freshener ns-to-file]]
+            [joodo.env :as env]
+            [taoensso.timbre :as timbre]))
+
+(def endl (System/getProperty "line.separator"))
 
 (def cache (ref {}))
 
@@ -44,18 +48,15 @@
 
 (defn audit-refresh [report]
   (when-let [reloaded (seq (:reloaded report))]
-    (println "Reloading...")
-    (doseq [file reloaded] (println (.getAbsolutePath file)))
-    (println "")
+    (timbre/info (str "Reloading..." endl "\t"
+        (string/join (str endl "\t") (map #(.getAbsolutePath %) reloaded))))
     (when-let [cached-entries (seq (filter #(contains? @cache %) reloaded))]
-      (println "Clearing handlers from cache...")
       (let [records (mapcat #(vals (get @cache %)) cached-entries)]
-        (doseq [record records]
-          (println (str (:ns record) "/" (:var record)))))
+        (timbre/info (str "Clearing handlers from cache..." endl "\t"
+            (string/join (str endl "\t") (map #(str (:ns %) "/" (:var %)) records)))))
       (dosync
         (doseq [file cached-entries]
-          (alter cache dissoc file)))
-      ))
+          (alter cache dissoc file)))))
   true)
 
 (defn wrap-refresh

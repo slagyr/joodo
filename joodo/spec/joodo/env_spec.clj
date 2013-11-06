@@ -1,6 +1,7 @@
 (ns joodo.env-spec
   (:require [speclj.core :refer :all]
-            [joodo.env :refer :all]))
+            [joodo.env :refer :all]
+            [joodo.spec-helper]))
 
 (describe "Env"
 
