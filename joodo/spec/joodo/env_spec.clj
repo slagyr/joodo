@@ -23,26 +23,27 @@
 
   (context "with fs"
 
-    (with fs (FakeFileSystem/installed))
+    (with fs (atom {}))
+    (around [it]
+      (with-redefs [slurp (fn [path] (get @@fs path))]
+        (it)))
     (after (System/setProperty "joodo.env" "development")
            (System/setProperty "joodo.ignore.config" "false"))
 
     (it "loads a config file"
-      (.createTextFile @fs "config/test.clj" "(alter-env! assoc :env-conf *ns*)")
+      (swap! @fs assoc "config/test.clj" "(alter-env! assoc :env-conf *ns*)")
       (System/setProperty "joodo.env" "test")
       (load-configurations)
       (should-not= nil (env :env-conf ))
       (should= true (.startsWith (name (.getName (env :env-conf ))) "joodo.config-")))
 
     (it "loads a config file from env dir"
-      (.createTextFile @fs "config/environment.clj" "(alter-env! assoc :root-conf *ns*)")
-      (.createTextFile @fs "config/test.clj" "(alter-env! assoc :env-conf *ns*)")
+      (swap! @fs assoc "config/test.clj" "(alter-env! assoc :env-conf *ns*)")
       (System/setProperty "joodo.env" "test")
       (System/setProperty "joodo.ignore.config" "true")
       (set-env! {:joodo.root.namespace "joodo.test-override-core"})
       (load-configurations)
-      (should= nil (env :root-conf ))
-      (should= nil (env :env-conf )))
+      (should= nil (env :env-conf)))
     )
 
   )

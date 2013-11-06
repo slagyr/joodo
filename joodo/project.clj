@@ -9,8 +9,8 @@
                  [compojure "1.1.6"]
                  [hiccup "1.0.4"]
                  [chee "2.0.0"]]
-  :profiles {:dev {:dependencies [[speclj "2.6.1"]]}}
-  :plugins [[speclj "2.6.1"]]
+  :profiles {:dev {:dependencies [[speclj "2.8.0"]]}}
+  :plugins [[speclj "2.8.0"]]
   :test-paths ["spec/"]
   :java-source-paths ["src/"]
   )

@@ -10,7 +10,7 @@
     [(symbol namespace-str) (symbol (name handler-sym))]
     [(symbol (name handler-sym)) 'handler]))
 
-(defn- resolve-handler [ns-sym var-sym]
+(defn resolve-handler [ns-sym var-sym]
   (require ns-sym)
   (if-let [handler-var (ns-resolve (the-ns ns-sym) var-sym)]
     @handler-var

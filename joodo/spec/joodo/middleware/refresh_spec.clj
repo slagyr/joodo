@@ -25,7 +25,7 @@
     (it "fails with missing namespace"
       (should-throw FileNotFoundException (refresh/handler 'no-such-namespace)))
 
-    (it "fails with missing namespace"
+    (it "fails with missing var"
       (should-throw Exception "No such var joodo.fake-handler/no-such-handler" (refresh/handler 'joodo.fake-handler/no-such-handler)))
 
     )

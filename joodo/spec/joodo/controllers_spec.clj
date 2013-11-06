@@ -1,7 +1,6 @@
 (ns joodo.controllers-spec
-  (:use
-    [speclj.core]
-    [joodo.controllers]))
+  (:use [speclj.core]
+        [joodo.controllers]))
 
 (describe "Controllers"
 
@@ -27,8 +26,8 @@
     (with controller-to-resolve (atom (fn [request] (str "RESPONSE: " (:uri request)))))
     (around [spec]
       (with-redefs [require (fn [name] (swap! @required-nses conj name))
-                find-ns (fn [name] @@ns-to-find)
-                ns-resolve (fn [ns var] (reset! @resolved-var var) @@controller-to-resolve)]
+                    find-ns (fn [name] @@ns-to-find)
+                    ns-resolve (fn [ns var] (reset! @resolved-var var) @@controller-to-resolve)]
         (spec)))
 
     (it "controller-router creates a ring-handler that will dynamically load controllers"
@@ -66,8 +65,8 @@
       (let [router (controller-router 'root)]
         (should= nil (router {:uri "/one"})))))
 
-(it "handles nonexisting namespaces"
-  (with-redefs [require (fn [name] (throw (java.io.FileNotFoundException. "Doesn't exist.")))]
-    (should= nil (resolve-controller 'the.missing-controller)))))
+  (it "handles nonexisting namespaces"
+    (with-redefs [require (fn [name] (throw (java.io.FileNotFoundException. "Doesn't exist.")))]
+      (should= nil (resolve-controller 'the.missing-controller)))))
 
 (run-specs)
