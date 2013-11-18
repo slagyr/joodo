@@ -32,7 +32,7 @@
       (should-not= path result)
       (should= path (path-without-fingerprint result))))
 
-  (it "missing pathspass through"
+  (it "missing paths pass through"
     (should= "/some/missing/file" (path-with-fingerprint "/some/missing/file")))
 
   (it "reuses known fingerprints"

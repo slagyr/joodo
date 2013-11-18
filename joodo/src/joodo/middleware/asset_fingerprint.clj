@@ -1,4 +1,5 @@
-(ns joodo.middleware.asset-fingerprint
+(ns ^{:doc "This namespace contains middleware that adds and removes asset-fingerprints from public files"}
+  joodo.middleware.asset-fingerprint
   (:require [clojure.string :as string]
             [clojure.java.io :as io]
             [digest]))
@@ -11,6 +12,7 @@
     (str (second matches) ".fp" hash (last matches))))
 
 (def path-with-fingerprint
+  "Adds asset-fingerprint to path in classpath. Missing paths will pass through without asset-fingerprint. Fingerprint takes the form of '.fp' plus a 32 character MD5 hash"
   (memoize
     (fn
       ([path] (path-with-fingerprint path "public"))
@@ -29,6 +31,8 @@
   (assoc request :uri (path-without-fingerprint (:uri request))))
 
 (defn wrap-asset-fingerprint [handler]
+  "Middleware function that remove asset fingerprint from the requested uri if an asset fingerprint exists in the filepath.
+  otherwise it passes the request on to next middleware/request handler"
   (fn [request]
     (let [request (resolve-fingerprint-in request)]
       (handler request))))
