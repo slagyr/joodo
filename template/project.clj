@@ -1,6 +1,6 @@
 (defproject joodo/lein-template "2.0.0"
-  :description "FIXME: write description"
+  :description "Leiningen template to create bare joodo app"
   :url "http://example.com/FIXME"
-  :license {:name "Eclipse Public License"
-            :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :license {:name "MIT"
+            :url "http://opensource.org/licenses/MIT"}
   :eval-in-leiningen true)
