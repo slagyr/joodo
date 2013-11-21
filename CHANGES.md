@@ -1,3 +1,10 @@
+# 2.1.0
+* renames asset-fingerprint fns
+    - path-with-fingerprint => add-fingerprint
+    - path-without-fingerprint => remove-fingerprint
+* adds missing documentation
+* updates dependencies
+
 # 2.0.0
 
 * Joodo is a library, not a plugin

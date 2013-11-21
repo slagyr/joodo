@@ -1,4 +1,4 @@
-(defproject joodo/lein-template "2.0.0"
+(defproject joodo/lein-template "2.1.0"
   :description "Leiningen template to create bare joodo app"
   :url "http://example.com/FIXME"
   :license {:name "MIT"

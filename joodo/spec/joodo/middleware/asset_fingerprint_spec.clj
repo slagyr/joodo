@@ -1,10 +1,15 @@
 (ns joodo.middleware.asset-fingerprint-spec
   (:require [clojure.java.io :as io]
             [speclj.core :refer :all]
+            [joodo.env :as env]
             [joodo.middleware.asset-fingerprint :refer :all]))
 
 
 (describe "asset fingerprint"
+
+  (around [it]
+    (with-redefs [env/development? (constantly false)]
+      (it)))
 
   (it "adds an md5 to a path"
     (should= "/some/path.fpabc123.xyz" (add-fingerprint-to-path "abc123" "/some/path.xyz"))
@@ -17,32 +22,38 @@
     (should= "file.fpabc123.xyz" (add-fingerprint-to-path "abc123" "file.xyz")))
 
   (it "removes fingerprint from path"
-    (should= "/some/path.xyz" (path-without-fingerprint "/some/path.fpabcdefghijklmnopqrstuvwxyz123456.xyz"))
-    (should= "/some/path.xyz" (path-without-fingerprint "/some/path.fpabcdefghijklmnopqrstuvwxyz123456.xyz"))
-    (should= "/some/other.abc" (path-without-fingerprint "/some/other.fpabcdefghijklmnopqrstuvwxyz123456.abc"))
-    (should= "/some/other.else.abc" (path-without-fingerprint "/some/other.else.fpabcdefghijklmnopqrstuvwxyz123456.abc"))
-    (should= "/some/extensionless" (path-without-fingerprint "/some/extensionless.fpabcdefghijklmnopqrstuvwxyz123456"))
-    (should= "/some.thing/extensionless" (path-without-fingerprint "/some.thing/extensionless.fpabcdefghijklmnopqrstuvwxyz123456"))
-    (should= "extensionless" (path-without-fingerprint "extensionless.fpabcdefghijklmnopqrstuvwxyz123456"))
-    (should= "file.xyz" (path-without-fingerprint "file.fpabcdefghijklmnopqrstuvwxyz123456.xyz")))
+    (should= "/some/path.xyz" (remove-fingerprint "/some/path.fpabcdefghijklmnopqrstuvwxyz123456.xyz"))
+    (should= "/some/path.xyz" (remove-fingerprint "/some/path.fpabcdefghijklmnopqrstuvwxyz123456.xyz"))
+    (should= "/some/other.abc" (remove-fingerprint "/some/other.fpabcdefghijklmnopqrstuvwxyz123456.abc"))
+    (should= "/some/other.else.abc" (remove-fingerprint "/some/other.else.fpabcdefghijklmnopqrstuvwxyz123456.abc"))
+    (should= "/some/extensionless" (remove-fingerprint "/some/extensionless.fpabcdefghijklmnopqrstuvwxyz123456"))
+    (should= "/some.thing/extensionless" (remove-fingerprint "/some.thing/extensionless.fpabcdefghijklmnopqrstuvwxyz123456"))
+    (should= "extensionless" (remove-fingerprint "extensionless.fpabcdefghijklmnopqrstuvwxyz123456"))
+    (should= "file.xyz" (remove-fingerprint "file.fpabcdefghijklmnopqrstuvwxyz123456.xyz")))
 
   (it "adds checksum to path in classpath"
     (let [path "/middleware/asset_fingerprint_spec.clj"
-          result (path-with-fingerprint "/middleware/asset_fingerprint_spec.clj" "joodo")]
+          result (add-fingerprint "/middleware/asset_fingerprint_spec.clj" "joodo")]
       (should-not= path result)
-      (should= path (path-without-fingerprint result))))
+      (should= path (remove-fingerprint result))))
+
+  (it "fingerprinting is disabled in development environment"
+    (with-redefs [env/development? (constantly true)]
+      (let [path "/env_spec.clj"
+            result (add-fingerprint "/env_spec.clj" "joodo")]
+        (should= path result))))
 
   (it "missing pathspass through"
-    (should= "/some/missing/file" (path-with-fingerprint "/some/missing/file")))
+    (should= "/some/missing/file" (add-fingerprint "/some/missing/file")))
 
   (it "reuses known fingerprints"
     (let [tally (atom 0)
           path "/middleware/asset_fingerprint.clj"
           response (io/resource (str "joodo" path))]
       (with-redefs [io/resource (fn [p] (swap! tally inc) response)]
-        (let [result (path-with-fingerprint path "joodo")]
+        (let [result (add-fingerprint path "joodo")]
           (should-not= path result)
-          (should= result (path-with-fingerprint path "joodo"))))
+          (should= result (add-fingerprint path "joodo"))))
       (should= 1 @tally)))
 
   (it "ignored requests without finger prints"
