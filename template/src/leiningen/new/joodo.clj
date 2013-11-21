@@ -13,6 +13,7 @@
               :year (year)}]
     (println "Generating a Joodo project called" name)
     (->files data
+      [".gitignore" (render "gitignore")]
       ["bin/specljs" (render "bin/specljs")]
       ["project.clj" (render "project.clj" data)]
       ["README.md" (render "README.md" data)]
