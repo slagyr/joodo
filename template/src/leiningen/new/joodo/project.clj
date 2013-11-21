@@ -36,4 +36,5 @@
 
   :source-paths ["src/clj" "src/cljs"]
   :test-paths ["spec/clj"]
-  :ring {:handler {{name}}.main/app})
+  :ring {:handler {{name}}.main/app
+         :init {{name}}.init/init})

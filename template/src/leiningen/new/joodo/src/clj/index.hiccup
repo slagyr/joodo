@@ -1,5 +1,5 @@
 [:div {:style "text-align: center;"}
- [:img {:src "https://raw.github.com/slagyr/joodoweb/master/public/images/logo.png"}]
+ [:img {:src "https://raw.github.com/slagyr/joodoweb/master/resources/public/images/logo.png"}]
  [:h1 "Welcome To Joodo!"]]
 
 [:h3 "Intro"]

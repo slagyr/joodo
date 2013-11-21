@@ -19,6 +19,7 @@
       ["README.md" (render "README.md" data)]
       ["resources/config/development.clj" (render "resources/config/development.clj" data)]
       ["resources/public/stylesheets/{{name}}.css" (render "resources/public/stylesheets/default.css" data)]
+      ["src/clj/{{nested-dirs}}/init.clj" (render "src/clj/init.clj" data)]
       ["spec/clj/{{nested-dirs}}/main_spec.clj" (render "spec/clj/main_spec.clj" data)]
       ["spec/cljs/{{nested-dirs}}/main_spec.cljs" (render "spec/cljs/main_spec.cljs" data)]
       ["src/clj/{{nested-dirs}}/main.clj" (render "src/clj/main.clj" data)]

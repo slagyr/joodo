@@ -2,7 +2,6 @@
   (:require [compojure.core :refer :all]
             [compojure.handler :as handler]
             [compojure.route :as route]
-            [joodo.env :as env]
             [joodo.middleware.asset-fingerprint :refer [wrap-asset-fingerprint]]
             [joodo.middleware.favicon :refer [wrap-favicon-bouncer]]
             [joodo.middleware.keyword-cookies :refer [wrap-keyword-cookies]]
@@ -18,10 +17,7 @@
             [ring.middleware.params :refer [wrap-params]]
             [ring.middleware.resource :refer [wrap-resource]]
             [ring.middleware.session :refer [wrap-session]]
-            [shoreleave.middleware.rpc :refer [wrap-rpc]]
-            ))
-
-(env/load-configurations)
+            [shoreleave.middleware.rpc :refer [wrap-rpc]]))
 
 (defroutes app-routes
   (GET "/" [] (render-template "index"))
