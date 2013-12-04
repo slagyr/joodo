@@ -1,4 +1,7 @@
-(ns joodo.middleware.rpc
+(ns^{:doc "Provides near transparent RPC behavior between Clojure backends and ClojureScipt front ends.
+
+  Based on Shoreleave (https://github.com/shoreleave)"}
+  joodo.middleware.rpc
   (:require [clojure.tools.reader.edn :as edn]
             [chee.util :refer [->options]]))
 
