@@ -9,6 +9,7 @@
                  [org.clojars.trptcolin/domina "1.0.2.1"] ; waiting on release including https://github.com/levand/domina/pull/65
                  [org.clojars.trptcolin/shoreleave-remote "0.3.0.1"] ; waiting on release including]
                  [org.clojure/clojure "1.5.1"]
+                 [ring-server/ring-server "0.3.1"]
                  [shoreleave/shoreleave-remote-ring "0.3.0" :exclusions [[org.clojure/tools.reader]]]
                  ]
 

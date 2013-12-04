@@ -1,6 +1,5 @@
 (ns {{name}}.main
   (:require [compojure.core :refer :all]
-            [compojure.handler :as handler]
             [compojure.route :as route]
             [joodo.middleware.asset-fingerprint :refer [wrap-asset-fingerprint]]
             [joodo.middleware.favicon :refer [wrap-favicon-bouncer]]

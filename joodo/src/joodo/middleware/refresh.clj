@@ -15,7 +15,8 @@
     [(symbol (name handler-sym)) 'handler]))
 
 (defn resolve-handler [ns-sym var-sym]
-  (require ns-sym)
+  (when-not (contains? (loaded-libs) ns-sym)
+    (require ns-sym))
   (if-let [handler-var (ns-resolve (the-ns ns-sym) var-sym)]
     @handler-var
     (throw (Exception. (str "No such var " (name ns-sym) "/" (name var-sym))))))
@@ -49,11 +50,11 @@
 (defn audit-refresh [report]
   (when-let [reloaded (seq (:reloaded report))]
     (timbre/info (str "Reloading..." endl "\t"
-        (string/join (str endl "\t") (map #(.getAbsolutePath %) reloaded))))
+                   (string/join (str endl "\t") (map #(.getAbsolutePath %) reloaded))))
     (when-let [cached-entries (seq (filter #(contains? @cache %) reloaded))]
       (let [records (mapcat #(vals (get @cache %)) cached-entries)]
         (timbre/info (str "Clearing handlers from cache..." endl "\t"
-            (string/join (str endl "\t") (map #(str (:ns %) "/" (:var %)) records)))))
+                       (string/join (str endl "\t") (map #(str (:ns %) "/" (:var %)) records)))))
       (dosync
         (doseq [file cached-entries]
           (alter cache dissoc file)))))

@@ -11,8 +11,8 @@
                  [hiccup "1.0.4"]
                  [org.clojure/clojure "1.5.1"]
                  [ring/ring-core "1.2.1"]]
-  :profiles {:dev {:dependencies [[speclj "2.8.1"]]}}
-  :plugins [[speclj "2.8.1"]]
+  :profiles {:dev {:dependencies [[speclj "2.9.0"]]}}
+  :plugins [[speclj "2.9.0"]]
   :test-paths ["spec/"]
   :java-source-paths ["src/"]
   )
