@@ -62,8 +62,8 @@
         (handler (rpc-request 'rpc-spec/echo [:foo])))))
 
   (it "can add rpc middleware"
-    (let [nester (fn [handler] (fn [remote request params] (handler remote request [params])))
-          whammy (fn [handler] (fn [remote request params] (assoc (handler remote request params) :stop :whammy)))
+    (let [nester (fn [handler] (fn [request remote params] (handler remote request [params])))
+          whammy (fn [handler] (fn [request remote params] (assoc (handler remote request params) :stop :whammy)))
           handler (wrap-rpc (fn [_] :pass-through) :middleware [nester whammy])
           response (handler (rpc-request 'joodo.middleware.rpc-spec/echo [:foo]))]
       (should= "([:foo])" (:body response))
