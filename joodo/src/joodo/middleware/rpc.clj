@@ -10,17 +10,22 @@
   (let [remote-sym (symbol remote)
         ns-sym (symbol (str prefix (namespace remote-sym)))
         var-sym (symbol (name remote-sym))]
-    (when-not (contains? (loaded-libs) ns-sym)
-      (require ns-sym))
-    (let [var (ns-resolve (the-ns ns-sym) var-sym)]
-      (when (:remote (meta var))
-        var))))
+    (try
+      (when-not (contains? (loaded-libs) ns-sym)
+        (require ns-sym))
+      (let [var (ns-resolve (the-ns ns-sym) var-sym)]
+        (when (:remote (meta var))
+          var))
+      (catch java.io.FileNotFoundException e nil))))
 
 (defn serialize-response [response]
-  (pr-str response) ;; force any lazy STDOUT printing so it doesn't get into the response
-  {:status 202
-   :headers {"Content-Type" "application/edn; charset=utf-8"}
-   :body (pr-str response)})
+  (let [response-map (:response (meta response) {})]
+    (pr-str response) ;; force any lazy STDOUT printing so it doesn't get into the response
+    (merge
+      {:status 202
+       :headers {"Content-Type" "application/edn; charset=utf-8"}
+       :body (pr-str response)}
+      response-map)))
 
 (defn base-rpc-handler [remote request params]
   (serialize-response (apply remote params)))
@@ -32,13 +37,16 @@
       (handler remote-fn request parsed-params)
       not-found)))
 
-(defn wrap-rpc [handler & args]
+(defn wrap-rpc
+  "Middleware to process RPC calls.  "
+  [handler & args]
   (let [options (->options args)
         prefix (name (:prefix options ""))
         middleware (:middleware options [])
+        trigger-uri (:uri options "/_rpc")
         rpc-handler (reduce #(%2 %1) base-rpc-handler middleware)]
     (fn [{:keys [request-method uri] :as request}]
-      (if (and (= :post request-method) (= "/_rpc" uri))
+      (if (and (= :post request-method) (= trigger-uri uri))
         (process-remote request prefix rpc-handler)
         (handler request)))))
 
