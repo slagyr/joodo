@@ -1,7 +1,3 @@
-# 2.2.0
-
-* adds joodo.middleware.rpc
-
 # 2.1.0
 
 * renames asset-fingerprint fns
@@ -9,6 +5,7 @@
     - path-without-fingerprint => remove-fingerprint
 * adds missing documentation
 * updates dependencies
+* adds joodo.middleware.rpc
 
 # 2.0.0
 
