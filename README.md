@@ -42,10 +42,16 @@ $ cd my_new_project
 $ lein deps
 ```
 
-3. Start the development server
+3. Start the development server with the following if you're using a joodo version below 2.0.0:
 
 ```bash
 $ lein joodo server
+```
+
+When you are using a version of 2.0.0 or higher use the following command:
+
+```bash
+$ lein ring server
 ```
 
 ## License
