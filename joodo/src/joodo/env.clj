@@ -3,10 +3,14 @@
   (:require [clojure.java.io :as io]
             [taoensso.timbre :as timbre]))
 
+
+(defn- joodo-env []
+  (or (System/getProperty "joodo.env") (System/getenv "JOODO_ENV") "development"))
+
 (def ^{:dynamic true
        :doc "Holds information about the current environment. That data can be
-  retrieved with the following syntax: (env :joodo-env)"}
-  *env* {:joodo-env (or (System/getProperty "joodo.env") "development")})
+            retrieved with the following syntax: (env :joodo-env)"}
+  *env* {:joodo-env (joodo-env)})
 
 (defn alter-env!
   "Alter the joodo environment by calling the given function on *env* with the given args."
@@ -65,10 +69,8 @@
 (defn load-configurations-unchecked
   "Loads joodo configuration without checking if it should (load-config?)."
   []
-  (let [environment (or (System/getProperty "joodo.env") (System/getenv "JOODO_ENV") "development")
-        env-ns (create-ns (gensym (str "joodo.config-")))
-
-        ]
+  (let [environment (joodo-env)
+        env-ns (create-ns (gensym (str "joodo.config-")))]
     (timbre/info "Loading environment '" environment "'")
     (load-config env-ns (format "config/%s.clj" environment))))
 
